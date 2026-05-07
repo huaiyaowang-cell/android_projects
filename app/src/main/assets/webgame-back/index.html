@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Web Game Container Demo</title>
+    <script src="native-admob-jssdk.js"></script>
+    <style>
+        body { font-family: sans-serif; background: #111; color: #fff; padding: 20px; }
+        button { margin: 8px 8px 0 0; padding: 10px 14px; }
+        #log { margin-top: 16px; white-space: pre-wrap; background: #1b1b1b; padding: 12px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<h2>H5 Game Host Page</h2>
+<p>This page is loaded from APK assets and can call native AdMob bridge.</p>
+<button onclick="showInterstitial()">Interstitial</button>
+<button onclick="showRewarded()">Rewarded</button>
+<button onclick="showBanner()">Show Banner</button>
+<button onclick="hideBanner()">Hide Banner</button>
+<div id="log"></div>
+
+<script>
+    function log(msg) {
+        document.getElementById("log").textContent += msg + "\n";
+    }
+
+    window.onNativeAdEvent = function (event) {
+        log("[native] " + JSON.stringify(event));
+    };
+
+    function showInterstitial() {
+        NativeAdmobJSSDK.showInterstitial("demo_interstitial");
+    }
+    function showRewarded() {
+        NativeAdmobJSSDK.showRewarded("demo_rewarded");
+    }
+    function showBanner() {
+        NativeAdmobJSSDK.showBanner("bottom", "demo_banner");
+    }
+    function hideBanner() {
+        NativeAdmobJSSDK.hideBanner("demo_banner");
+    }
+</script>
+</body>
+</html>

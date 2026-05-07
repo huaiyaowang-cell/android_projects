@@ -1,0 +1,9 @@
+One Line Description (English)
+Draw paths to fill the glass and make it smile
+
+
+HOW TO PLAY (English)
+*Draw lines to guide water from faucet to glassHappy Glass
+*Use gravity to direct water flow efficientlyHappy Glass
+*Fill glass above marked line to pass levelHappy Glass
+*Use minimal lines to earn 3 stars

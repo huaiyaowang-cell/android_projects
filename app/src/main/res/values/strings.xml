@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">rabigame-apk</string>
+    <string name="title_welcome">Hello Android</string>
+    <string name="subtitle_ready">项目能跑起来了：点下面按钮试试</string>
+    <string name="subtitle_clicks">已点击 %1$d 次</string>
+    <string name="button_click_me">点我</string>
+    <string name="section_demo">Demo</string>
+</resources>

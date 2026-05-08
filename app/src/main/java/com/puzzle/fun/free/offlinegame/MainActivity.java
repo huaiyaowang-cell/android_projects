@@ -34,6 +34,11 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 public class MainActivity extends AppCompatActivity {
     private static final String WEB_GAME_URL = "https://appassets.androidplatform.net/assets/webgame/index.html";
     private static final String ALLOWED_PREFIX = "https://appassets.androidplatform.net/assets/webgame/";
@@ -317,5 +322,12 @@ public class MainActivity extends AppCompatActivity {
             }
         } catch (JSONException ignored) {
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onAdSdkInitComplete(AdSdkInitComplete event) {
+
+        
+        Log.d("SDK-AD", "load banner");
     }
 }

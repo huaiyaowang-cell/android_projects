@@ -1,47 +1,38 @@
 pluginManagement {
     repositories {
-        google {
-            content {
-                includeGroupByRegex("com\\.android.*")
-                includeGroupByRegex("com\\.google.*")
-                includeGroupByRegex("androidx.*")
-            }
-        }
+        google()
         mavenCentral()
         gradlePluginPortal()
     }
 }
+
+include ':app'
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
         google()
         mavenCentral()
-        maven { url "https://jitpack.io" }
-        maven { url = uri("https://artifacts.applovin.com/android") }
+        maven { url 'https://www.jitpack.io' }
+        maven { url "https://artifacts.applovin.com/android" }
         maven { url "https://cboost.jfrog.io/artifactory/chartboost-ads/" }
         maven { url "https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea" }
         maven { url "https://verve.jfrog.io/artifactory/verve-gradle-release" }
         maven { url "https://s01.oss.sonatype.org/content/groups/public" }
-        maven { url "https://repo.pubmatic.com/artifactory/public-repos" }
+        maven { url 'https://repo.pubmatic.com/artifactory/public-repos' }
         maven { url "https://artifactory.bidmachine.io/bidmachine" }
         maven { url "https://repo.premiumads.net/artifactory/mobile-ads-sdk/" }
         maven {
-            url "https://internal-sdk.lexinshengwen.com/nexus/repository/maven-public/"
+            url 'https://maven.aliyun.com/repository/public'
+        }
+        maven {
+            url = 'https://packages.aliyun.com/maven/repository/2315769-snapshot-4H4gQv'
             credentials {
-                username = "meevii-read"
-                password = "meevii-code"
+                username = '62f46a2501acbf842a3ac705'
+                password = 'cBNv]fE3Dhs6'
             }
         }
-        maven { url "https://maven.aliyun.com/repository/public" }
         maven {
-            credentials {
-                username = "62451fe6ec85cdece2301c51"
-                password = "DOLwP7r)UMxU"
-            }
-            url "https://packages.aliyun.com/maven/repository/2315769-snapshot-4H4gQv"
+            url "https://bitbucket.org/sdkcenter/sdkcenter/raw/release"
         }
     }
 }
-
-rootProject.name = "rabigame-apk"
-include ':app'

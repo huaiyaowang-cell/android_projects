@@ -31,6 +31,17 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
+
+}
+
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        variant.outputs.each { output ->
+            def buildTypeName = variant.buildType
+            def version = android.defaultConfig.versionName ?: "1.0"
+            output.outputFileName.set("${buildTypeName}_v${version}.apk")
+        }
+    }
 }
 
 dependencies {

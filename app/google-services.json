@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "722972032672",
+    "project_id": "happyglass-808fb",
+    "storage_bucket": "happyglass-808fb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:722972032672:android:af15abef5170e916c0d3c5",
+        "android_client_info": {
+          "package_name": "com.puzzle.fun.free.offlinegame"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrsKEecpAIEAqCCg62Pyp1mk_63EgEcX0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -159,10 +159,26 @@
     return showRewardedBreak();
   }
 
+  function hideBannerOnGameplayStart() {
+    if (isNativeBridgeReady()) {
+      return nativeRequest("banner_hide", "poki_gameplay", "bottom");
+    }
+    return Promise.resolve({});
+  }
+
+  function showBannerOnGameplayStop() {
+    if (isNativeBridgeReady()) {
+      return nativeRequest("banner_show", "poki_gameplay", "bottom");
+    }
+    return Promise.resolve({});
+  }
+
   function handle(payload) {
     payload = payload || {};
     if (payload.kind === "commercialBreak") return showCommercialBreakNativeFirst();
     if (payload.kind === "rewardedBreak") return showRewardedBreakNativeFirst();
+    if (payload.kind === "gameplayStart") return hideBannerOnGameplayStart();
+    if (payload.kind === "gameplayStop") return showBannerOnGameplayStop();
     return Promise.reject(new Error("invalid_poki_ad_kind"));
   }
 

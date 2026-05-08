@@ -56,6 +56,14 @@
     typeof PokiSDK.commercialBreak === "function"
       ? PokiSDK.commercialBreak.bind(PokiSDK)
       : null;
+  var origGameplayStart =
+    typeof PokiSDK.gameplayStart === "function"
+      ? PokiSDK.gameplayStart.bind(PokiSDK)
+      : null;
+  var origGameplayStop =
+    typeof PokiSDK.gameplayStop === "function"
+      ? PokiSDK.gameplayStop.bind(PokiSDK)
+      : null;
 
   PokiSDK.commercialBreak = function () {
     return postRequest({ kind: "commercialBreak" }).catch(function (err) {
@@ -72,6 +80,26 @@
       .catch(function (err) {
         console.warn("[poki-ad-client] rewardedBreak 失败，回退本地:", err);
         return Promise.resolve(false);
+      });
+  };
+
+  PokiSDK.gameplayStart = function () {
+    return postRequest({ kind: "gameplayStart" })
+      .catch(function (err) {
+        console.warn("[poki-ad-client] gameplayStart 失败，回退本地:", err);
+      })
+      .then(function () {
+        if (origGameplayStart) origGameplayStart();
+      });
+  };
+
+  PokiSDK.gameplayStop = function () {
+    return postRequest({ kind: "gameplayStop" })
+      .catch(function (err) {
+        console.warn("[poki-ad-client] gameplayStop 失败，回退本地:", err);
+      })
+      .then(function () {
+        if (origGameplayStop) origGameplayStop();
       });
   };
 })();

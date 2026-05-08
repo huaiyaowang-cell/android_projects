@@ -1,24 +1,22 @@
-plugins {
-    alias(libs.plugins.android.application)
-    id 'com.google.gms.google-services'
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'applovin-quality-service'
+applovin {
+    apiKey = "Do7qR6FHTExrl8KTepl4WgT8HXalr0ytRTrlSomLL6gFBg20yXxobfUoJUzW7BHU9sxdcZp0aXNQQdRBEFAdvA"
 }
-
 android {
     namespace 'com.puzzle.fun.free.offlinegame'
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
-
+    compileSdkVersion 35
     defaultConfig {
-        applicationId "com.puzzle.fun.free.offlinegame"
-        minSdk 24
-        targetSdk 36
-        versionCode 11
-        versionName "1.1.1"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        minSdkVersion 23
+        targetSdkVersion 35
+        buildToolsVersion '30.0.3'
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
+        }
+        versionCode 20
+        versionName '1.2.0'
     }
 
     buildTypes {
@@ -52,7 +50,5 @@ dependencies {
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
-    implementation platform('com.google.firebase:firebase-bom:34.12.0')
-    implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.bidderdesk.sdk.admob.mediation:baseLib:1.0.12'
 }

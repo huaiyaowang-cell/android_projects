@@ -51,4 +51,7 @@ dependencies {
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
     implementation 'com.bidderdesk.sdk.admob.mediation:baseLib:1.0.12'
+
+    implementation 'com.getkeepsafe.relinker:relinker:1.4.4' //relinker
+    implementation 'org.greenrobot:eventbus:3.3.1'
 }

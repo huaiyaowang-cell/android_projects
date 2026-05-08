@@ -2,6 +2,7 @@ package com.puzzle.fun.free.offlinegame;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
@@ -19,6 +20,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.webkit.WebViewAssetLoader;
 
+import com.bidderdesk.ad.event.AdSdkInitComplete;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         setupWebView();
         preloadInterstitial();
         preloadRewarded();
+        EventBus.getDefault().register(this);
     }
 
     private void enterFullscreen() {

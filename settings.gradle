@@ -11,14 +11,35 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-plugins {
-    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
-}
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
+        maven { url "https://jitpack.io" }
+        maven { url = uri("https://artifacts.applovin.com/android") }
+        maven { url "https://cboost.jfrog.io/artifactory/chartboost-ads/" }
+        maven { url "https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea" }
+        maven { url "https://verve.jfrog.io/artifactory/verve-gradle-release" }
+        maven { url "https://s01.oss.sonatype.org/content/groups/public" }
+        maven { url "https://repo.pubmatic.com/artifactory/public-repos" }
+        maven { url "https://artifactory.bidmachine.io/bidmachine" }
+        maven { url "https://repo.premiumads.net/artifactory/mobile-ads-sdk/" }
+        maven {
+            url "https://internal-sdk.lexinshengwen.com/nexus/repository/maven-public/"
+            credentials {
+                username = "meevii-read"
+                password = "meevii-code"
+            }
+        }
+        maven { url "https://maven.aliyun.com/repository/public" }
+        maven {
+            credentials {
+                username = "62451fe6ec85cdece2301c51"
+                password = "DOLwP7r)UMxU"
+            }
+            url "https://packages.aliyun.com/maven/repository/2315769-snapshot-4H4gQv"
+        }
     }
 }
 

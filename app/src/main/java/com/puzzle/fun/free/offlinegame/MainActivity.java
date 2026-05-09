@@ -11,6 +11,7 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import androidx.annotation.Nullable;
@@ -59,27 +60,45 @@ public class MainActivity extends AppCompatActivity {
     private static final String[] BIDDER_DESK_PLACEMENTS = new String[]{
             "reward_01", "interstitial_01",
             "banner_01",
+            "open"
     };
     private static final String PLACEMENT_REWARDED = "reward_01";
     private static final String PLACEMENT_INTERSTITIAL = "interstitial_01";
     private static final String PLACEMENT_BANNER = "banner_01";
+    private static final String PLACEMENT_OPEN = "open";
+    private static final int OPEN_AD_MAX_RETRIES = 3;
+    private static final long OPEN_AD_RETRY_DELAY_MS = 2000L;
+    private static final long OPEN_AD_FIRST_TRY_DELAY_MS = 2000L;
+    /** Toggle auto open-ad flow on app launch. */
+    private static final boolean ENABLE_OPEN_AD_AUTO_FLOW = true;
+    /** Toggle a manual test button to trigger open ad. */
+    private static final boolean ENABLE_OPEN_AD_TEST_BUTTON = false;
 
     private static final String TEST_BANNER_ID = "ca-app-pub-2915030877224461/9728916209";
     private static final String TEST_INTERSTITIAL_ID = "ca-app-pub-2915030877224461/5570997584";
     private static final String TEST_REWARDED_ID = "ca-app-pub-2915030877224461/4285017834";
+    /** Interstitial frequency cap in seconds (0 = no cap). */
+    private static final int INTERSTITIAL_MIN_INTERVAL_SECONDS = 30;
     /** Toggle AdMob test ad fallback (TEST_* ids) in code. */
     private static final boolean ENABLE_ADMOB_TEST_FALLBACK = false;
 
     private FrameLayout rootLayout;
     private WebView gameWebView;
     private WebViewAssetLoader assetLoader;
+    private Button openAdTestButton;
 
     private InterstitialAd interstitialAd;
     private RewardedAd rewardedAd;
     private AdView bannerView;
+    private long lastInterstitialShownAtMs;
 
     /** When true, fullscreen ads from H5 use {@link AdHelper}; banner still uses Web-driven AdMob unless you rely on BidderDesk banner only. */
     private volatile boolean bidderDeskAdsReady;
+    /** Guard to show native splash(open) ad only once on cold start. */
+    private boolean hasTriedOpenAdOnLaunch;
+    private int openAdRetryCount;
+    private final Runnable openAdRetryTask = () -> maybeShowNativeOpenAd("retry");
+    private final Runnable openAdFirstTryTask = () -> maybeShowNativeOpenAd("delayed_first_try");
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,11 +106,25 @@ public class MainActivity extends AppCompatActivity {
         enterFullscreen();
         setupRoot();
         setupWebView();
+        setupOpenAdTestButton();
         if (ENABLE_ADMOB_TEST_FALLBACK) {
+            preloadInterstitial();
+            preloadRewarded();
+        } else {
+            preloadOpenAd();
             preloadInterstitial();
             preloadRewarded();
         }
         EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (ENABLE_OPEN_AD_AUTO_FLOW) {
+            rootLayout.removeCallbacks(openAdFirstTryTask);
+            rootLayout.postDelayed(openAdFirstTryTask, OPEN_AD_FIRST_TRY_DELAY_MS);
+        }
     }
 
     private void enterFullscreen() {
@@ -147,6 +180,26 @@ public class MainActivity extends AppCompatActivity {
         gameWebView.loadUrl(WEB_GAME_URL);
     }
 
+    private void setupOpenAdTestButton() {
+        if (!ENABLE_OPEN_AD_TEST_BUTTON) {
+            return;
+        }
+        openAdTestButton = new Button(this);
+        openAdTestButton.setText("Test Open Ad");
+        openAdTestButton.setAllCaps(false);
+        openAdTestButton.setAlpha(0.85f);
+        openAdTestButton.setOnClickListener(v -> triggerOpenAdForTest());
+
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.gravity = android.view.Gravity.TOP | android.view.Gravity.END;
+        params.topMargin = 80;
+        params.rightMargin = 24;
+        rootLayout.addView(openAdTestButton, params);
+    }
+
     private boolean isTrustedWebSource() {
         if (gameWebView == null || gameWebView.getUrl() == null) {
             return false;
@@ -185,7 +238,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showInterstitial(String placement, String callbackId) {
+        if (!canShowInterstitialNow()) {
+            long remainMs = getInterstitialRemainingMs();
+            sendAdEvent("interstitial", placement, callbackId, "failed", null, "FREQUENCY_CAPPED",
+                    "Try again in " + Math.max(1, (remainMs + 999) / 1000) + "s");
+            return;
+        }
         if (tryShowBidderDeskFullscreenAd("interstitial", placement, callbackId)) {
+            markInterstitialShownNow();
             return;
         }
         Log.d(TAG, "BidderDesk interstitial not shown, ready=" + bidderDeskAdsReady + ", placement=" + placement);
@@ -203,7 +263,16 @@ public class MainActivity extends AppCompatActivity {
         current.setFullScreenContentCallback(new FullScreenContentCallback() {
             @Override
             public void onAdShowedFullScreenContent() {
+                markInterstitialShownNow();
                 sendAdEvent("interstitial", placement, callbackId, "opened", null, null, null);
+            }
+
+            @Override
+            public void onAdFailedToShowFullScreenContent(com.google.android.gms.ads.AdError adError) {
+                String msg = adError == null ? "Interstitial failed to show" : adError.getMessage();
+                String code = adError == null ? "SHOW_FAILED" : String.valueOf(adError.getCode());
+                sendAdEvent("interstitial", placement, callbackId, "failed", null, code, msg);
+                preloadInterstitial();
             }
 
             @Override
@@ -213,6 +282,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         current.show(this);
+    }
+
+    private boolean canShowInterstitialNow() {
+        return getInterstitialRemainingMs() <= 0;
+    }
+
+    private long getInterstitialRemainingMs() {
+        if (INTERSTITIAL_MIN_INTERVAL_SECONDS <= 0) {
+            return 0;
+        }
+        long intervalMs = INTERSTITIAL_MIN_INTERVAL_SECONDS * 1000L;
+        long elapsedMs = System.currentTimeMillis() - lastInterstitialShownAtMs;
+        return Math.max(0L, intervalMs - elapsedMs);
+    }
+
+    private void markInterstitialShownNow() {
+        lastInterstitialShownAtMs = System.currentTimeMillis();
     }
 
     private void showRewarded(String placement, String callbackId) {
@@ -235,6 +321,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAdShowedFullScreenContent() {
                 sendAdEvent("rewarded", placement, callbackId, "opened", null, null, null);
+            }
+
+            @Override
+            public void onAdFailedToShowFullScreenContent(com.google.android.gms.ads.AdError adError) {
+                String msg = adError == null ? "Rewarded failed to show" : adError.getMessage();
+                String code = adError == null ? "SHOW_FAILED" : String.valueOf(adError.getCode());
+                sendAdEvent("rewarded", placement, callbackId, "failed", null, code, msg);
+                preloadRewarded();
             }
 
             @Override
@@ -286,6 +380,73 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException ignored) {
         }
         sendAdEvent("rewarded", placement, callbackId, "reward", reward, null, null);
+    }
+
+    private void preloadOpenAd() {
+        try {
+            ADManager.Companion.getAsInstance().loadAdByPlacement(this, new String[]{PLACEMENT_OPEN});
+            Log.d(TAG, "Preload open ad placement=" + PLACEMENT_OPEN);
+        } catch (Exception e) {
+            Log.e(TAG, "Preload open ad failed", e);
+        }
+    }
+
+    /**
+     * Native splash/open ad entrypoint (independent of H5).
+     * Standard timing: cold-start first foreground, or immediately after SDK init if start came earlier.
+     */
+    private void maybeShowNativeOpenAd(String source) {
+        if (hasTriedOpenAdOnLaunch) {
+            return;
+        }
+        if (!bidderDeskAdsReady) {
+            Log.d(TAG, "Skip open ad (" + source + "): SDK not ready");
+            return;
+        }
+        preloadOpenAd();
+        try {
+            Log.d(TAG, "Try open ad (" + source + "), placement=" + PLACEMENT_OPEN + ", retry=" + openAdRetryCount);
+            boolean shown = AdHelper.INSTANCE.showAd(this, PLACEMENT_OPEN, new Function0<Unit>() {
+                @Override
+                public Unit invoke() {
+                    Log.d(TAG, "Open ad callback invoke");
+                    return Unit.INSTANCE;
+                }
+            });
+            if (shown) {
+                hasTriedOpenAdOnLaunch = true;
+                rootLayout.removeCallbacks(openAdRetryTask);
+                rootLayout.removeCallbacks(openAdFirstTryTask);
+                Log.d(TAG, "Open ad shown successfully");
+                return;
+            }
+            Log.d(TAG, "Open ad not ready yet, keep retrying");
+        } catch (Exception e) {
+            Log.e(TAG, "Show native open ad failed (" + source + ")", e);
+        }
+
+        openAdRetryCount++;
+        if (!hasTriedOpenAdOnLaunch && openAdRetryCount <= OPEN_AD_MAX_RETRIES) {
+            Log.d(TAG, "Schedule open ad retry #" + openAdRetryCount);
+            rootLayout.removeCallbacks(openAdRetryTask);
+            rootLayout.postDelayed(openAdRetryTask, OPEN_AD_RETRY_DELAY_MS);
+        } else if (!hasTriedOpenAdOnLaunch) {
+            Log.d(TAG, "Open ad retries exhausted, try ShowOpenAD fallback once");
+            try {
+                ADManager.Companion.getAsInstance().ShowOpenAD(this);
+                hasTriedOpenAdOnLaunch = true;
+            } catch (Exception e) {
+                Log.e(TAG, "ShowOpenAD fallback failed", e);
+            }
+        }
+    }
+
+    private void triggerOpenAdForTest() {
+        hasTriedOpenAdOnLaunch = false;
+        openAdRetryCount = 0;
+        rootLayout.removeCallbacks(openAdFirstTryTask);
+        rootLayout.removeCallbacks(openAdRetryTask);
+        maybeShowNativeOpenAd("manual_test_button");
     }
 
     /**
@@ -373,6 +534,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        rootLayout.removeCallbacks(openAdFirstTryTask);
+        rootLayout.removeCallbacks(openAdRetryTask);
         EventBus.getDefault().unregister(this);
         if (gameWebView != null) {
             gameWebView.removeJavascriptInterface("AndroidBridge");
@@ -420,7 +583,9 @@ public class MainActivity extends AppCompatActivity {
                     sendAdEvent(action, "", callbackId, "failed", null, "UNKNOWN_ACTION", "Unsupported action");
                     break;
             }
-        } catch (JSONException ignored) {
+        } catch (JSONException e) {
+            sendAdEvent("requestAd", "", "", "failed", null, "BAD_JSON", e.getMessage());
+            Log.e(TAG, "requestAd json parse failed: " + json, e);
         }
     }
 
@@ -430,6 +595,10 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "AdSdkInitComplete: loadAdByPlacement + createBanner");
 
         ADManager.Companion.getAsInstance().loadAdByPlacement(this, BIDDER_DESK_PLACEMENTS);
+        preloadOpenAd();
+        if (ENABLE_OPEN_AD_AUTO_FLOW) {
+            maybeShowNativeOpenAd("onAdSdkInitComplete");
+        }
 
         ADManager.Companion.getAsInstance().createBanner(this, rootLayout, "banner", new IAdListener() {
             @Override

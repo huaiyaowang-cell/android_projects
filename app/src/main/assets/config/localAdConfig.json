@@ -1,52 +1,63 @@
 {
   "groups": [
-    {
-      "placements": [
-        "reward_01"
-      ],
-      "type": "reward",
-      "units": [
-        {
-          "channel": "Admob",
-          "unit_id": "ca-app-pub-2915030877224461/4285017834"
-        }
-      ],
-      "fake": 0
-    },
-    {
-      "placements": [
-        "interstitial_01"
-      ],
-      "type": "interstitial",
-      "units": [
-        {
-          "channel": "Admob",
-          "unit_id": "ca-app-pub-2915030877224461/5570997584"
-        }
-      ],
-      "fake": 0
-    },
-    {
-      "placements": [
-        "banner_01"
-      ],
-      "type": "banner",
-      "units": [
-        {
-          "channel": "Admob",
-          "unit_id": "ca-app-pub-2915030877224461/9728916209"
-        }
-      ],
-      "fake": 0
-    }
+      {
+          "placements": [
+              "reward_01"
+          ],
+          "type": "reward",
+          "units": [
+              {
+                  "channel": "Admob",
+                  "unit_id": "ca-app-pub-2915030877224461/4285017834"
+              }
+          ],
+          "fake": 0
+      },
+      {
+          "placements": [
+              "interstitial_01"
+          ],
+          "type": "interstitial",
+          "units": [
+              {
+                  "channel": "Admob",
+                  "unit_id": "ca-app-pub-2915030877224461/5570997584"
+              }
+          ],
+          "fake": 0
+      },
+      {
+          "placements": [
+              "banner_01"
+          ],
+          "type": "banner",
+          "units": [
+              {
+                  "channel": "Admob",
+                  "unit_id": "ca-app-pub-2915030877224461/9728916209"
+              }
+          ],
+          "fake": 0
+      },
+      {
+          "placements": [
+              "open"
+          ],
+          "type": "splash",
+          "units": [
+              {
+                  "channel": "Admob",
+                  "unit_id": "ca-app-pub-2915030877224461/8994419036"
+              }
+          ],
+          "fake": 0
+      }
   ],
   "mediations": [
-    {
-      "channel": "Admob",
-      "config": {
-
+      {
+          "channel": "Admob",
+          "config": {}
       }
-    }
   ],
-  "tag": "QIood0"
+  "tag": "NLTsN0"
 }

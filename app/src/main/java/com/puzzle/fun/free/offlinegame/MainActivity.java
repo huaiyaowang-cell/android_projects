@@ -20,13 +20,15 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.webkit.WebViewAssetLoader;
 
+import com.bidderdesk.ad.ADManager;
+import com.bidderdesk.ad.AdHelper;
+import com.bidderdesk.ad.IAdListener;
 import com.bidderdesk.ad.event.AdSdkInitComplete;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.ads.rewarded.RewardItem;
@@ -36,18 +38,37 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function0;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "SDK-AD";
+
     private static final String WEB_GAME_URL = "https://appassets.androidplatform.net/assets/webgame/index.html";
     private static final String ALLOWED_PREFIX = "https://appassets.androidplatform.net/assets/webgame/";
     
+    /**
+     * Placement ids preloaded after BidderDesk SDK init (aligned with {@code UnityHelper.LoadAD}).
+     */
+    private static final String[] BIDDER_DESK_PLACEMENTS = new String[]{
+            "reward_01", "interstitial_01",
+            "banner_01",
+    };
+    private static final String PLACEMENT_REWARDED = "reward_01";
+    private static final String PLACEMENT_INTERSTITIAL = "interstitial_01";
+    private static final String PLACEMENT_BANNER = "banner_01";
+
     private static final String TEST_BANNER_ID = "ca-app-pub-2915030877224461/9728916209";
     private static final String TEST_INTERSTITIAL_ID = "ca-app-pub-2915030877224461/5570997584";
     private static final String TEST_REWARDED_ID = "ca-app-pub-2915030877224461/4285017834";
+    /** Toggle AdMob test ad fallback (TEST_* ids) in code. */
+    private static final boolean ENABLE_ADMOB_TEST_FALLBACK = false;
 
     private FrameLayout rootLayout;
     private WebView gameWebView;
@@ -57,15 +78,19 @@ public class MainActivity extends AppCompatActivity {
     private RewardedAd rewardedAd;
     private AdView bannerView;
 
+    /** When true, fullscreen ads from H5 use {@link AdHelper}; banner still uses Web-driven AdMob unless you rely on BidderDesk banner only. */
+    private volatile boolean bidderDeskAdsReady;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         enterFullscreen();
         setupRoot();
-        setupAds();
         setupWebView();
-        preloadInterstitial();
-        preloadRewarded();
+        if (ENABLE_ADMOB_TEST_FALLBACK) {
+            preloadInterstitial();
+            preloadRewarded();
+        }
         EventBus.getDefault().register(this);
     }
 
@@ -89,10 +114,6 @@ public class MainActivity extends AppCompatActivity {
         rootLayout = new FrameLayout(this);
         rootLayout.setBackgroundColor(Color.BLACK);
         setContentView(rootLayout);
-    }
-
-    private void setupAds() {
-        MobileAds.initialize(this, status -> {});
     }
 
     private void setupWebView() {
@@ -164,6 +185,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showInterstitial(String placement, String callbackId) {
+        if (tryShowBidderDeskFullscreenAd("interstitial", placement, callbackId)) {
+            return;
+        }
+        Log.d(TAG, "BidderDesk interstitial not shown, ready=" + bidderDeskAdsReady + ", placement=" + placement);
+        if (!ENABLE_ADMOB_TEST_FALLBACK) {
+            sendAdEvent("interstitial", placement, callbackId, "failed", null, "NOT_READY", "BidderDesk not ready and AdMob fallback disabled");
+            return;
+        }
         if (interstitialAd == null) {
             sendAdEvent("interstitial", placement, callbackId, "failed", null, "NOT_READY", "Interstitial not loaded");
             preloadInterstitial();
@@ -187,6 +216,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showRewarded(String placement, String callbackId) {
+        if (tryShowBidderDeskFullscreenAd("rewarded", placement, callbackId)) {
+            return;
+        }
+        Log.d(TAG, "BidderDesk rewarded not shown, ready=" + bidderDeskAdsReady + ", placement=" + placement);
+        if (!ENABLE_ADMOB_TEST_FALLBACK) {
+            sendAdEvent("rewarded", placement, callbackId, "failed", null, "NOT_READY", "BidderDesk not ready and AdMob fallback disabled");
+            return;
+        }
         if (rewardedAd == null) {
             sendAdEvent("rewarded", placement, callbackId, "failed", null, "NOT_READY", "Rewarded not loaded");
             preloadRewarded();
@@ -210,6 +247,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showBanner(String placement, String callbackId, String position) {
+        if (!ENABLE_ADMOB_TEST_FALLBACK) {
+            sendAdEvent("banner_show", placement, callbackId, "opened", null, null, null);
+            return;
+        }
         if (bannerView == null) {
             bannerView = new AdView(this);
             bannerView.setAdUnitId(TEST_BANNER_ID);
@@ -247,6 +288,43 @@ public class MainActivity extends AppCompatActivity {
         sendAdEvent("rewarded", placement, callbackId, "reward", reward, null, null);
     }
 
+    /**
+     * BidderDesk mediation path (same idea as {@code UnityHelper.ShowAD}).
+     *
+     * @return true if SDK accepted the show request
+     */
+    private boolean tryShowBidderDeskFullscreenAd(String action, String placement, String callbackId) {
+        long startMs = System.currentTimeMillis();
+        try {
+            Log.d(TAG, "BidderDesk showAd start: action=" + action
+                    + ", placement=" + placement
+                    + ", callbackId=" + callbackId
+                    + ", ready=" + bidderDeskAdsReady);
+            boolean shown = AdHelper.INSTANCE.showAd(this, placement, new Function0<Unit>() {
+                @Override
+                public Unit invoke() {
+                    Log.d(TAG, "BidderDesk showAd callback invoke: placement=" + placement
+                            + ", costMs=" + (System.currentTimeMillis() - startMs));
+                    runOnUiThread(() -> sendAdEvent(action, placement, callbackId, "closed", null, null, null));
+                    return Unit.INSTANCE;
+                }
+            });
+            Log.d(TAG, "BidderDesk showAd result: placement=" + placement
+                    + ", shown=" + shown
+                    + ", costMs=" + (System.currentTimeMillis() - startMs));
+            if (shown) {
+                sendAdEvent(action, placement, callbackId, "opened", null, null, null);
+            }
+            return shown;
+        } catch (Exception e) {
+            Log.e(TAG, "BidderDesk showAd exception: action=" + action
+                    + ", placement=" + placement
+                    + ", callbackId=" + callbackId
+                    + ", costMs=" + (System.currentTimeMillis() - startMs), e);
+            return false;
+        }
+    }
+
     private void sendAdEvent(String action, String placement, String callbackId, String phase,
                              JSONObject reward, String errorCode, String errorMessage) {
         if (gameWebView == null) {
@@ -277,6 +355,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
         if (gameWebView != null) {
             gameWebView.removeJavascriptInterface("AndroidBridge");
             gameWebView.destroy();
@@ -303,24 +382,24 @@ public class MainActivity extends AppCompatActivity {
         try {
             JSONObject req = new JSONObject(json);
             String action = req.optString("action", "");
-            String placement = req.optString("placement", "");
             String callbackId = req.optString("callbackId", "");
             String position = req.optString("position", "bottom");
+            Log.d(TAG, "requestAd action=" + action + ", callbackId=" + callbackId + ", bidderDeskReady=" + bidderDeskAdsReady);
             switch (action) {
                 case "rewarded":
-                    showRewarded(placement, callbackId);
+                    showRewarded(PLACEMENT_REWARDED, callbackId);
                     break;
                 case "interstitial":
-                    showInterstitial(placement, callbackId);
+                    showInterstitial(PLACEMENT_INTERSTITIAL, callbackId);
                     break;
                 case "banner_show":
-                    showBanner(placement, callbackId, position);
+                    showBanner(PLACEMENT_BANNER, callbackId, position);
                     break;
                 case "banner_hide":
-                    hideBanner(placement, callbackId);
+                    hideBanner(PLACEMENT_BANNER, callbackId);
                     break;
                 default:
-                    sendAdEvent(action, placement, callbackId, "failed", null, "UNKNOWN_ACTION", "Unsupported action");
+                    sendAdEvent(action, "", callbackId, "failed", null, "UNKNOWN_ACTION", "Unsupported action");
                     break;
             }
         } catch (JSONException ignored) {
@@ -329,8 +408,27 @@ public class MainActivity extends AppCompatActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onAdSdkInitComplete(AdSdkInitComplete event) {
+        bidderDeskAdsReady = true;
+        Log.d(TAG, "AdSdkInitComplete: loadAdByPlacement + createBanner");
 
-        
-        Log.d("SDK-AD", "load banner");
+        ADManager.Companion.getAsInstance().loadAdByPlacement(this, BIDDER_DESK_PLACEMENTS);
+
+        ADManager.Companion.getAsInstance().createBanner(this, rootLayout, "banner", new IAdListener() {
+            @Override
+            public void reward(@Nullable String s, boolean b, @Nullable HashMap<String, Object> hashMap) {
+            }
+
+            @Override
+            public void loadAd(@Nullable String s) {
+            }
+
+            @Override
+            public void loadAd(@Nullable HashMap<String, Object> hashMap) {
+            }
+
+            @Override
+            public void close(@Nullable String s) {
+            }
+        });
     }
 }

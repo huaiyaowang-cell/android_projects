@@ -305,7 +305,12 @@ public class MainActivity extends AppCompatActivity {
                 public Unit invoke() {
                     Log.d(TAG, "BidderDesk showAd callback invoke: placement=" + placement
                             + ", costMs=" + (System.currentTimeMillis() - startMs));
-                    runOnUiThread(() -> sendAdEvent(action, placement, callbackId, "closed", null, null, null));
+                    runOnUiThread(() -> {
+                        if ("rewarded".equals(action)) {
+                            sendBidderDeskRewardEvent(placement, callbackId);
+                        }
+                        sendAdEvent(action, placement, callbackId, "closed", null, null, null);
+                    });
                     return Unit.INSTANCE;
                 }
             });
@@ -323,6 +328,19 @@ public class MainActivity extends AppCompatActivity {
                     + ", costMs=" + (System.currentTimeMillis() - startMs), e);
             return false;
         }
+    }
+
+    /**
+     * BidderDesk callback does not expose RewardItem, so we emit a normalized reward payload for H5.
+     */
+    private void sendBidderDeskRewardEvent(String placement, String callbackId) {
+        JSONObject reward = new JSONObject();
+        try {
+            reward.put("type", "reward");
+            reward.put("amount", 1);
+        } catch (JSONException ignored) {
+        }
+        sendAdEvent("rewarded", placement, callbackId, "reward", reward, null, null);
     }
 
     private void sendAdEvent(String action, String placement, String callbackId, String phase,

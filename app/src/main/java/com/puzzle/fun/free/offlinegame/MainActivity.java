@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -17,6 +19,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,7 +43,6 @@ import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -92,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String PREFS_DEBUG = DebugDualWebViewPrefs.PREFS_NAME;
     private static final String KEY_TOP_ALPHA_PERCENT = DebugDualWebViewPrefs.KEY_TOP_ALPHA_PERCENT;
     private static final String GAME_CONFIG_URL = DebugDualWebViewPrefs.GAME_CONFIG_URL;
-    private static final String FALLBACK_BG_URL = "https://rabigame.fun/r_game/__game_center_back__/index.html";
 
     /**
      * Injected into the background WebView to mute DOM audio/video and new elements.
@@ -127,6 +128,11 @@ public class MainActivity extends AppCompatActivity {
     private PassthroughWebView gameWebView;
     private WebViewAssetLoader assetLoader;
     private Button openAdTestButton;
+    private LinearLayout debugControlsContainer;
+    private float debugDragTouchDx;
+    private float debugDragTouchDy;
+    private boolean debugDragMode;
+    private final Runnable debugEnableDragRunnable = () -> debugDragMode = true;
 
     private InterstitialAd interstitialAd;
     private RewardedAd rewardedAd;
@@ -260,6 +266,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void destroyBackgroundLayers() {
+        if (gameWebView != null) {
+            gameWebView.setPassthroughTargets(null);
+        }
         for (WebView webView : backgroundWebViews) {
             webView.removeJavascriptInterface("NativeDebugBridge");
             webView.destroy();
@@ -274,37 +283,28 @@ public class MainActivity extends AppCompatActivity {
         return getSharedPreferences(PREFS_DEBUG, MODE_PRIVATE);
     }
 
-    private List<String> readPassthroughUrls(String json) throws JSONException {
-        JSONObject root = new JSONObject(json);
-        JSONObject data = root.optJSONObject("data");
-        JSONObject config = data == null ? null : data.optJSONObject("config");
-        JSONArray urls = config == null ? null : config.optJSONArray("passthroughUrls");
-        List<String> result = new ArrayList<>();
-        if (urls != null) {
-            for (int i = 0; i < urls.length(); i++) {
-                String url = urls.optString(i, "").trim();
-                if (!url.isEmpty()) {
-                    result.add(url);
-                }
-            }
-        }
-        if (result.isEmpty()) {
-            result.add(FALLBACK_BG_URL);
-        }
-        return result;
+    private List<String> readPassthroughUrls(String json) {
+        return new ArrayList<>(DebugDualWebViewPrefs.parsePassthroughUrlsFromGameConfigJson(json));
     }
 
     private void setupDebugEntryButton() {
         if (!ENABLE_DUAL_WEBVIEW_DEBUG) {
             return;
         }
+        float density = getResources().getDisplayMetrics().density;
+        int margin = (int) (12 * density);
+
+        debugControlsContainer = new LinearLayout(this);
+        debugControlsContainer.setOrientation(LinearLayout.HORIZONTAL);
+
         Button debugBtn = new Button(this);
         debugBtn.setText("DEBUG");
         debugBtn.setAllCaps(false);
         debugBtn.setAlpha(0.9f);
-        debugBtn.setOnClickListener(v -> startActivity(new Intent(this, DebugPanelActivity.class)));
-        float density = getResources().getDisplayMetrics().density;
-        int margin = (int) (12 * density);
+        debugBtn.setOnTouchListener(this::handleDebugButtonTouch);
+
+        debugControlsContainer.addView(debugBtn);
+
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT
@@ -312,7 +312,51 @@ public class MainActivity extends AppCompatActivity {
         lp.gravity = android.view.Gravity.TOP | android.view.Gravity.END;
         lp.topMargin = (int) (48 * density);
         lp.rightMargin = margin;
-        rootLayout.addView(debugBtn, lp);
+        rootLayout.addView(debugControlsContainer, lp);
+    }
+
+    private boolean handleDebugButtonTouch(View view, MotionEvent event) {
+        if (debugControlsContainer == null) {
+            return false;
+        }
+        switch (event.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+                debugDragMode = false;
+                debugControlsContainer.removeCallbacks(debugEnableDragRunnable);
+                debugControlsContainer.postDelayed(
+                        debugEnableDragRunnable,
+                        ViewConfiguration.getLongPressTimeout()
+                );
+                debugDragTouchDx = event.getRawX() - debugControlsContainer.getX();
+                debugDragTouchDy = event.getRawY() - debugControlsContainer.getY();
+                return true;
+            case MotionEvent.ACTION_MOVE:
+                if (!debugDragMode) {
+                    return true;
+                }
+                float newX = Math.max(0f, event.getRawX() - debugDragTouchDx);
+                float newY = Math.max(0f, event.getRawY() - debugDragTouchDy);
+                if (rootLayout != null) {
+                    newX = Math.min(newX, Math.max(0, rootLayout.getWidth() - debugControlsContainer.getWidth()));
+                    newY = Math.min(newY, Math.max(0, rootLayout.getHeight() - debugControlsContainer.getHeight()));
+                }
+                debugControlsContainer.setX(newX);
+                debugControlsContainer.setY(newY);
+                return true;
+            case MotionEvent.ACTION_UP:
+                debugControlsContainer.removeCallbacks(debugEnableDragRunnable);
+                if (!debugDragMode) {
+                    startActivity(new Intent(this, DebugPanelActivity.class));
+                }
+                debugDragMode = false;
+                return true;
+            case MotionEvent.ACTION_CANCEL:
+                debugControlsContainer.removeCallbacks(debugEnableDragRunnable);
+                debugDragMode = false;
+                return true;
+            default:
+                return false;
+        }
     }
 
     private void triggerBackgroundInterstitial() {
@@ -346,9 +390,23 @@ public class MainActivity extends AppCompatActivity {
 
     private void applyBackgroundLayerAlphasFromPrefs() {
         for (int i = 0; i < backgroundWebViews.size(); i++) {
-            int percent = debugPrefs().getInt(DebugDualWebViewPrefs.bgLayerAlphaKey(i), 100);
-            backgroundWebViews.get(i).setAlpha(DebugDualWebViewPrefs.clampPercent(percent) / 100f);
+            int percent = debugPrefs().getInt(
+                    DebugDualWebViewPrefs.bgLayerAlphaKey(i),
+                    DebugDualWebViewPrefs.defaultBgLayerAlphaPercent(i)
+            );
+            setBackgroundLayerAlphaPercent(i, percent, false);
         }
+    }
+
+    private void setBackgroundLayerAlphaPercent(int layerIndex, int percent, boolean persist) {
+        int clamped = DebugDualWebViewPrefs.clampPercent(percent);
+        if (persist) {
+            debugPrefs().edit().putInt(DebugDualWebViewPrefs.bgLayerAlphaKey(layerIndex), clamped).apply();
+        }
+        if (layerIndex < 0 || layerIndex >= backgroundWebViews.size()) {
+            return;
+        }
+        backgroundWebViews.get(layerIndex).setAlpha(clamped / 100f);
     }
 
     private void rebuildBackgroundLayers(List<String> urls) {
@@ -364,13 +422,14 @@ public class MainActivity extends AppCompatActivity {
                     FrameLayout.LayoutParams.MATCH_PARENT
             ));
         }
+        Log.d(TAG, "Background layers rebuilt, count=" + backgroundWebViews.size() + ", urls=" + backgroundLayerUrls);
         applyBackgroundLayerAlphasFromPrefs();
         if (backgroundLayersContainer != null) {
-            backgroundLayersContainer.setVisibility(View.VISIBLE);
+            backgroundLayersContainer.setVisibility(
+                    backgroundWebViews.isEmpty() ? View.GONE : View.VISIBLE);
         }
-        WebView target = getTopMostBackgroundWebView();
-        if (target != null) {
-            gameWebView.setPassthroughTarget(target);
+        if (gameWebView != null) {
+            gameWebView.setPassthroughTargets(backgroundWebViews);
         }
     }
 
@@ -384,22 +443,23 @@ public class MainActivity extends AppCompatActivity {
                 conn.setConnectTimeout(8000);
                 conn.setReadTimeout(8000);
                 conn.connect();
-                InputStream stream = conn.getResponseCode() >= 200 && conn.getResponseCode() < 300
-                        ? conn.getInputStream() : conn.getErrorStream();
+                int code = conn.getResponseCode();
                 StringBuilder sb = new StringBuilder();
-                if (stream != null) {
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        sb.append(line);
+                if (code >= 200 && code < 300) {
+                    InputStream stream = conn.getInputStream();
+                    if (stream != null) {
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            sb.append(line);
+                        }
+                        reader.close();
                     }
-                    reader.close();
                 }
                 urls = readPassthroughUrls(sb.toString());
             } catch (Exception e) {
                 urls.clear();
-                urls.add(FALLBACK_BG_URL);
-                Log.e(TAG, "Fetch passthrough config failed, using fallback", e);
+                Log.e(TAG, "Fetch passthrough config failed", e);
             } finally {
                 if (conn != null) {
                     conn.disconnect();
@@ -784,11 +844,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void applyTopWebViewAlphaFromPrefs() {
+        int p = debugPrefs().getInt(KEY_TOP_ALPHA_PERCENT, 100);
+        setTopWebViewAlphaPercent(p, false);
+    }
+
+    private void setTopWebViewAlphaPercent(int percent, boolean persist) {
+        int clamped = DebugDualWebViewPrefs.clampPercent(percent);
+        if (persist) {
+            debugPrefs().edit().putInt(KEY_TOP_ALPHA_PERCENT, clamped).apply();
+        }
         if (gameWebView == null) {
             return;
         }
-        int p = debugPrefs().getInt(KEY_TOP_ALPHA_PERCENT, 100);
-        gameWebView.setAlpha(Math.max(0f, Math.min(1f, p / 100f)));
+        gameWebView.setAlpha(clamped / 100f);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -798,19 +866,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDebugTopAlpha(DebugWebViewEvents.TopAlphaPercent e) {
-        if (gameWebView != null) {
-            gameWebView.setAlpha(Math.max(0f, Math.min(1f, e.percent / 100f)));
-        }
+        setTopWebViewAlphaPercent(e.percent, true);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDebugBgLayerAlpha(DebugWebViewEvents.BgLayerAlphaPercent e) {
-        if (e.layerIndex < 0 || e.layerIndex >= backgroundWebViews.size()) {
-            return;
-        }
-        int clamped = DebugDualWebViewPrefs.clampPercent(e.percent);
-        backgroundWebViews.get(e.layerIndex).setAlpha(clamped / 100f);
-        debugPrefs().edit().putInt(DebugDualWebViewPrefs.bgLayerAlphaKey(e.layerIndex), clamped).apply();
+        setBackgroundLayerAlphaPercent(e.layerIndex, e.percent, true);
     }
 
     @Override

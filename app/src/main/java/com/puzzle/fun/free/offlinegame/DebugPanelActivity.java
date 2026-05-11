@@ -2,6 +2,7 @@ package com.puzzle.fun.free.offlinegame;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -15,13 +16,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -36,6 +39,9 @@ public class DebugPanelActivity extends AppCompatActivity {
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
     private final ExecutorService networkExecutor = Executors.newSingleThreadExecutor();
     private LinearLayout bgAlphaContainer;
+    private TextView gameConfigStatusText;
+    private TextView gameConfigSummaryText;
+    private TextView gameConfigRawText;
 
     private SharedPreferences prefs() {
         return getSharedPreferences(DebugDualWebViewPrefs.PREFS_NAME, MODE_PRIVATE);
@@ -63,6 +69,46 @@ public class DebugPanelActivity extends AppCompatActivity {
         title.setTextSize(18);
         title.setText("Dual WebView DEBUG");
         root.addView(title);
+
+        TextView apiSection = new TextView(this);
+        apiSection.setTextColor(Color.LTGRAY);
+        apiSection.setTextSize(14);
+        apiSection.setText("Game config API");
+        root.addView(apiSection);
+
+        TextView urlText = new TextView(this);
+        urlText.setTextColor(0xFFAAAAAA);
+        urlText.setTextSize(11);
+        urlText.setTypeface(Typeface.MONOSPACE);
+        urlText.setTextIsSelectable(true);
+        urlText.setText(DebugDualWebViewPrefs.GAME_CONFIG_URL);
+        root.addView(urlText);
+
+        gameConfigStatusText = new TextView(this);
+        gameConfigStatusText.setTextColor(Color.WHITE);
+        gameConfigStatusText.setTextSize(13);
+        gameConfigStatusText.setText("Game config: loading…");
+        root.addView(gameConfigStatusText);
+
+        gameConfigSummaryText = new TextView(this);
+        gameConfigSummaryText.setTextColor(0xFFE0E0E0);
+        gameConfigSummaryText.setTextSize(12);
+        gameConfigSummaryText.setTypeface(Typeface.MONOSPACE);
+        gameConfigSummaryText.setTextIsSelectable(true);
+        root.addView(gameConfigSummaryText);
+
+        gameConfigRawText = new TextView(this);
+        gameConfigRawText.setTextColor(0xFFCCCCCC);
+        gameConfigRawText.setTextSize(10);
+        gameConfigRawText.setTypeface(Typeface.MONOSPACE);
+        gameConfigRawText.setTextIsSelectable(true);
+        root.addView(gameConfigRawText);
+
+        Button btnRefreshConfig = new Button(this);
+        btnRefreshConfig.setText("Refresh game config");
+        btnRefreshConfig.setAllCaps(false);
+        btnRefreshConfig.setOnClickListener(v -> fetchConfigAndRenderLayerAlphas());
+        root.addView(btnRefreshConfig);
 
         Button btnBgInterstitial = new Button(this);
         btnBgInterstitial.setText("BG Interstitial (adBreak)");
@@ -123,9 +169,17 @@ public class DebugPanelActivity extends AppCompatActivity {
     }
 
     private void fetchConfigAndRenderLayerAlphas() {
+        mainHandler.post(() -> {
+            if (gameConfigStatusText != null) {
+                gameConfigStatusText.setText("Game config: loading…");
+            }
+        });
         networkExecutor.execute(() -> {
             int apiCount = 0;
             boolean httpOk = false;
+            int httpCode = -1;
+            String body = "";
+            String fetchError = null;
             HttpURLConnection conn = null;
             try {
                 conn = (HttpURLConnection) new URL(DebugDualWebViewPrefs.GAME_CONFIG_URL).openConnection();
@@ -133,26 +187,29 @@ public class DebugPanelActivity extends AppCompatActivity {
                 conn.setConnectTimeout(8000);
                 conn.setReadTimeout(8000);
                 conn.connect();
-                int code = conn.getResponseCode();
+                httpCode = conn.getResponseCode();
                 StringBuilder sb = new StringBuilder();
-                if (code >= 200 && code < 300) {
-                    httpOk = true;
-                    InputStream stream = conn.getInputStream();
-                    if (stream != null) {
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-                        String line;
-                        while ((line = reader.readLine()) != null) {
-                            sb.append(line);
-                        }
-                        reader.close();
+                InputStream stream = httpCode >= 200 && httpCode < 300
+                        ? conn.getInputStream()
+                        : conn.getErrorStream();
+                if (stream != null) {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        sb.append(line);
                     }
+                    reader.close();
                 }
-                if (httpOk) {
-                    List<String> urls = DebugDualWebViewPrefs.parsePassthroughUrlsFromGameConfigJson(sb.toString());
-                    apiCount = urls.size();
+                body = sb.toString();
+                if (httpCode >= 200 && httpCode < 300) {
+                    httpOk = true;
+                    DebugDualWebViewPrefs.PassthroughGameConfig cfg =
+                            DebugDualWebViewPrefs.parsePassthroughGameConfig(body);
+                    apiCount = cfg.passthroughEnabled ? cfg.passthroughUrls.size() : 0;
                 }
-            } catch (Exception ignored) {
+            } catch (Exception e) {
                 httpOk = false;
+                fetchError = e.getMessage() != null ? e.getMessage() : e.toString();
             } finally {
                 if (conn != null) {
                     conn.disconnect();
@@ -160,12 +217,59 @@ public class DebugPanelActivity extends AppCompatActivity {
             }
             final int layerCount = apiCount;
             final boolean refreshFromApi = httpOk;
+            final int finalHttpCode = httpCode;
+            final String finalBody = body;
+            final String finalFetchError = fetchError;
+            final boolean finalHttpOk = httpOk;
             mainHandler.post(() -> {
+                applyGameConfigToDebugUi(finalHttpCode, finalHttpOk, finalBody, finalFetchError);
                 if (refreshFromApi) {
                     renderBgLayerAlphaControls(Math.max(0, layerCount));
                 }
             });
         });
+    }
+
+    private static String prettyJsonOrRaw(String raw) {
+        if (raw == null || raw.isEmpty()) {
+            return "(empty body)";
+        }
+        try {
+            return new JSONObject(raw).toString(2);
+        } catch (JSONException ignored) {
+        }
+        try {
+            return new JSONArray(raw).toString(2);
+        } catch (JSONException ignored) {
+        }
+        return raw;
+    }
+
+    private void applyGameConfigToDebugUi(int httpCode, boolean httpOk, String body, String fetchError) {
+        if (gameConfigStatusText == null) {
+            return;
+        }
+        if (fetchError != null) {
+            gameConfigStatusText.setText("Game config: request failed — " + fetchError);
+            gameConfigSummaryText.setText("");
+            gameConfigRawText.setText("");
+            return;
+        }
+        gameConfigStatusText.setText("Game config: HTTP " + httpCode + (httpOk ? " OK" : ""));
+        if (httpOk) {
+            DebugDualWebViewPrefs.PassthroughGameConfig cfg =
+                    DebugDualWebViewPrefs.parsePassthroughGameConfig(body);
+            StringBuilder sum = new StringBuilder();
+            sum.append("passthroughEnabled: ").append(cfg.passthroughEnabled).append('\n');
+            sum.append("passthroughUrls (").append(cfg.passthroughUrls.size()).append("):\n");
+            for (int i = 0; i < cfg.passthroughUrls.size(); i++) {
+                sum.append("  [").append(i).append("] ").append(cfg.passthroughUrls.get(i)).append('\n');
+            }
+            gameConfigSummaryText.setText(sum.toString().trim());
+        } else {
+            gameConfigSummaryText.setText("(HTTP " + httpCode + " — summary only for 2xx)");
+        }
+        gameConfigRawText.setText(prettyJsonOrRaw(body));
     }
 
     private void renderBgLayerAlphaControls(int layerCount) {

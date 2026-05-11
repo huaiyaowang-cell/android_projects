@@ -36,18 +36,37 @@ public final class DebugDualWebViewPrefs {
     }
 
     /**
-     * Parses {@code data.config.passthroughUrls} from game-config JSON.
-     * If {@code passthroughUrls} is a JSON string of an array, that form is also accepted.
+     * Parsed {@code data.config} from game-config JSON. {@link #passthroughEnabled} defaults to false
+     * when absent or on parse failure.
      */
-    public static List<String> parsePassthroughUrlsFromGameConfigJson(String json) {
-        List<String> result = new ArrayList<>();
+    public static final class PassthroughGameConfig {
+        public final boolean passthroughEnabled;
+        public final List<String> passthroughUrls;
+
+        public PassthroughGameConfig(boolean passthroughEnabled, List<String> passthroughUrls) {
+            this.passthroughEnabled = passthroughEnabled;
+            this.passthroughUrls = passthroughUrls != null ? passthroughUrls : new ArrayList<>();
+        }
+
+        public static PassthroughGameConfig empty() {
+            return new PassthroughGameConfig(false, new ArrayList<>());
+        }
+    }
+
+    /**
+     * Parses {@code data.config} including {@code passthroughEnabled} and {@code passthroughUrls}.
+     */
+    public static PassthroughGameConfig parsePassthroughGameConfig(String json) {
+        PassthroughGameConfig empty = PassthroughGameConfig.empty();
         if (json == null || json.isEmpty()) {
-            return result;
+            return empty;
         }
         try {
             JSONObject root = new JSONObject(json);
             JSONObject data = root.optJSONObject("data");
             JSONObject config = data == null ? null : data.optJSONObject("config");
+            boolean enabled = config != null && config.optBoolean("passthroughEnabled", false);
+            List<String> result = new ArrayList<>();
             JSONArray urls = config == null ? null : config.optJSONArray("passthroughUrls");
             if (urls == null && config != null) {
                 String raw = config.optString("passthroughUrls", "");
@@ -66,8 +85,17 @@ public final class DebugDualWebViewPrefs {
                     }
                 }
             }
+            return new PassthroughGameConfig(enabled, result);
         } catch (JSONException ignored) {
+            return empty;
         }
-        return result;
+    }
+
+    /**
+     * Parses {@code data.config.passthroughUrls} from game-config JSON.
+     * If {@code passthroughUrls} is a JSON string of an array, that form is also accepted.
+     */
+    public static List<String> parsePassthroughUrlsFromGameConfigJson(String json) {
+        return new ArrayList<>(parsePassthroughGameConfig(json).passthroughUrls);
     }
 }

@@ -219,6 +219,7 @@ public class MainActivity extends AppCompatActivity {
         ));
 
         gameWebView = new PassthroughWebView(this);
+        gameWebView.setPassthroughTouchesEnabled(false);
         WebSettings settings = gameWebView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
@@ -349,10 +350,6 @@ public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences debugPrefs() {
         return getSharedPreferences(PREFS_DEBUG, MODE_PRIVATE);
-    }
-
-    private List<String> readPassthroughUrls(String json) {
-        return new ArrayList<>(DebugDualWebViewPrefs.parsePassthroughUrlsFromGameConfigJson(json));
     }
 
     private void setupDebugEntryButton() {
@@ -510,7 +507,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void fetchBackgroundConfigAndRebuild() {
         networkExecutor.execute(() -> {
-            List<String> urls = new ArrayList<>();
+            DebugDualWebViewPrefs.PassthroughGameConfig cfg = DebugDualWebViewPrefs.PassthroughGameConfig.empty();
             HttpURLConnection conn = null;
             try {
                 conn = (HttpURLConnection) new URL(GAME_CONFIG_URL).openConnection();
@@ -530,19 +527,33 @@ public class MainActivity extends AppCompatActivity {
                         }
                         reader.close();
                     }
+                    cfg = DebugDualWebViewPrefs.parsePassthroughGameConfig(sb.toString());
                 }
-                urls = readPassthroughUrls(sb.toString());
             } catch (Exception e) {
-                urls.clear();
+                cfg = DebugDualWebViewPrefs.PassthroughGameConfig.empty();
                 Log.e(TAG, "Fetch passthrough config failed", e);
             } finally {
                 if (conn != null) {
                     conn.disconnect();
                 }
             }
-            List<String> finalUrls = urls;
-            mainHandler.post(() -> rebuildBackgroundLayers(finalUrls));
+            final DebugDualWebViewPrefs.PassthroughGameConfig finalCfg = cfg;
+            mainHandler.post(() -> applyPassthroughGameConfig(finalCfg));
         });
+    }
+
+    private void applyPassthroughGameConfig(DebugDualWebViewPrefs.PassthroughGameConfig cfg) {
+        if (gameWebView != null) {
+            gameWebView.setPassthroughTouchesEnabled(cfg.passthroughEnabled);
+            int builtLayers = cfg.passthroughEnabled ? cfg.passthroughUrls.size() : 0;
+            Log.d(TAG, "passthroughEnabled=" + cfg.passthroughEnabled
+                    + ", apiUrlCount=" + cfg.passthroughUrls.size()
+                    + ", layersBuilt=" + builtLayers);
+        }
+        List<String> layerUrls = cfg.passthroughEnabled
+                ? new ArrayList<>(cfg.passthroughUrls)
+                : new ArrayList<>();
+        rebuildBackgroundLayers(layerUrls);
     }
 
     private void reloadBackgroundLayersAfterInterstitial() {

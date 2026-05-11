@@ -2,10 +2,13 @@ package com.puzzle.fun.free.offlinegame;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -54,6 +57,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -148,6 +152,9 @@ public class MainActivity extends AppCompatActivity {
     private final Runnable openAdFirstTryTask = () -> maybeShowNativeOpenAd("delayed_first_try");
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
     private final ExecutorService networkExecutor = Executors.newSingleThreadExecutor();
+    private final Random bgRecoverRandom = new Random();
+    /** Pending {@code loadUrl(recover)} when a background layer navigates off {@code rabigame.fun}. */
+    private final ArrayMap<WebView, Runnable> bgOffDomainRecoverRunnables = new ArrayMap<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -239,7 +246,54 @@ public class MainActivity extends AppCompatActivity {
         fetchBackgroundConfigAndRebuild();
     }
 
-    private WebView createBackgroundLayerWebView() {
+    private void cancelBgOffDomainRecover(WebView w) {
+        if (w == null) {
+            return;
+        }
+        Runnable pending = bgOffDomainRecoverRunnables.remove(w);
+        if (pending != null) {
+            mainHandler.removeCallbacks(pending);
+        }
+    }
+
+    /**
+     * If the layer opens an http(s) page whose host is not {@code rabigame.fun}, reload the API URL
+     * for this layer after a random delay in {@code [3000, 4000]} ms.
+     */
+    private void scheduleBgOffDomainRecoverIfNeeded(WebView w, String navigatedUrl, String recoverToUrl) {
+        if (PassthroughWebView.isRabigameFunHttpUrl(navigatedUrl)) {
+            cancelBgOffDomainRecover(w);
+            return;
+        }
+        if (navigatedUrl == null || navigatedUrl.isEmpty()) {
+            return;
+        }
+        Uri uri = Uri.parse(navigatedUrl);
+        String scheme = uri.getScheme();
+        if (scheme == null) {
+            return;
+        }
+        String sl = scheme.toLowerCase();
+        if (!"http".equals(sl) && !"https".equals(sl)) {
+            return;
+        }
+        cancelBgOffDomainRecover(w);
+        if (recoverToUrl == null || recoverToUrl.isEmpty()) {
+            return;
+        }
+        int delayMs = 3000 + bgRecoverRandom.nextInt(1001);
+        Runnable task = () -> {
+            bgOffDomainRecoverRunnables.remove(w);
+            if (w != null) {
+                w.loadUrl(recoverToUrl);
+            }
+        };
+        bgOffDomainRecoverRunnables.put(w, task);
+        mainHandler.postDelayed(task, delayMs);
+        Log.d(TAG, "Background layer off-domain, recover in " + delayMs + "ms url=" + navigatedUrl);
+    }
+
+    private WebView createBackgroundLayerWebView(final String initialPassthroughUrl) {
         WebView webView = new WebView(this);
         WebSettings bgSettings = webView.getSettings();
         bgSettings.setJavaScriptEnabled(true);
@@ -250,6 +304,19 @@ public class MainActivity extends AppCompatActivity {
         webView.setWebChromeClient(new WebChromeClient());
         webView.addJavascriptInterface(new BackgroundJsBridge(), "NativeDebugBridge");
         webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                if (request != null && request.getUrl() != null) {
+                    scheduleBgOffDomainRecoverIfNeeded(view, request.getUrl().toString(), initialPassthroughUrl);
+                }
+                return super.shouldOverrideUrlLoading(view, request);
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                scheduleBgOffDomainRecoverIfNeeded(view, url, initialPassthroughUrl);
+            }
+
             @Override
             public void onPageFinished(WebView view, String url) {
                 injectBackgroundWebMuteScript(view);
@@ -270,6 +337,7 @@ public class MainActivity extends AppCompatActivity {
             gameWebView.setPassthroughTargets(null);
         }
         for (WebView webView : backgroundWebViews) {
+            cancelBgOffDomainRecover(webView);
             webView.removeJavascriptInterface("NativeDebugBridge");
             webView.destroy();
         }
@@ -346,7 +414,9 @@ public class MainActivity extends AppCompatActivity {
             case MotionEvent.ACTION_UP:
                 debugControlsContainer.removeCallbacks(debugEnableDragRunnable);
                 if (!debugDragMode) {
-                    startActivity(new Intent(this, DebugPanelActivity.class));
+                    Intent intent = new Intent(this, DebugPanelActivity.class);
+                    intent.putExtra(DebugPanelActivity.EXTRA_PASSTHROUGH_LAYER_COUNT, backgroundWebViews.size());
+                    startActivity(intent);
                 }
                 debugDragMode = false;
                 return true;
@@ -415,7 +485,7 @@ public class MainActivity extends AppCompatActivity {
         destroyBackgroundLayers();
         List<WebView> ordered = new ArrayList<>();
         for (String url : backgroundLayerUrls) {
-            WebView webView = createBackgroundLayerWebView();
+            WebView webView = createBackgroundLayerWebView(url);
             webView.loadUrl(url);
             ordered.add(webView);
         }

@@ -29,6 +29,10 @@ import java.util.concurrent.Executors;
  * Full-screen debug controls for the stacked WebViews in {@link MainActivity}.
  */
 public class DebugPanelActivity extends AppCompatActivity {
+    /** Current passthrough layer count from {@link MainActivity} for instant UI; not a cache of URL strings. */
+    public static final String EXTRA_PASSTHROUGH_LAYER_COUNT =
+            "com.puzzle.fun.free.offlinegame.DebugPanelActivity.EXTRA_PASSTHROUGH_LAYER_COUNT";
+
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
     private final ExecutorService networkExecutor = Executors.newSingleThreadExecutor();
     private LinearLayout bgAlphaContainer;
@@ -111,12 +115,17 @@ public class DebugPanelActivity extends AppCompatActivity {
         root.addView(bgAlphaContainer);
         root.addView(btnBack);
 
+        int hintCount = getIntent().getIntExtra(EXTRA_PASSTHROUGH_LAYER_COUNT, Integer.MIN_VALUE);
+        if (hintCount != Integer.MIN_VALUE) {
+            renderBgLayerAlphaControls(Math.max(0, hintCount));
+        }
         fetchConfigAndRenderLayerAlphas();
     }
 
     private void fetchConfigAndRenderLayerAlphas() {
         networkExecutor.execute(() -> {
             int apiCount = 0;
+            boolean httpOk = false;
             HttpURLConnection conn = null;
             try {
                 conn = (HttpURLConnection) new URL(DebugDualWebViewPrefs.GAME_CONFIG_URL).openConnection();
@@ -127,6 +136,7 @@ public class DebugPanelActivity extends AppCompatActivity {
                 int code = conn.getResponseCode();
                 StringBuilder sb = new StringBuilder();
                 if (code >= 200 && code < 300) {
+                    httpOk = true;
                     InputStream stream = conn.getInputStream();
                     if (stream != null) {
                         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
@@ -137,17 +147,24 @@ public class DebugPanelActivity extends AppCompatActivity {
                         reader.close();
                     }
                 }
-                List<String> urls = DebugDualWebViewPrefs.parsePassthroughUrlsFromGameConfigJson(sb.toString());
-                apiCount = urls.size();
+                if (httpOk) {
+                    List<String> urls = DebugDualWebViewPrefs.parsePassthroughUrlsFromGameConfigJson(sb.toString());
+                    apiCount = urls.size();
+                }
             } catch (Exception ignored) {
-                apiCount = 0;
+                httpOk = false;
             } finally {
                 if (conn != null) {
                     conn.disconnect();
                 }
             }
             final int layerCount = apiCount;
-            mainHandler.post(() -> renderBgLayerAlphaControls(Math.max(0, layerCount)));
+            final boolean refreshFromApi = httpOk;
+            mainHandler.post(() -> {
+                if (refreshFromApi) {
+                    renderBgLayerAlphaControls(Math.max(0, layerCount));
+                }
+            });
         });
     }
 

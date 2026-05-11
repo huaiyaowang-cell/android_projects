@@ -1,6 +1,7 @@
 package com.puzzle.fun.free.offlinegame;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,8 +13,11 @@ import java.util.List;
 
 /**
  * Forwards touch events to lower {@link WebView}s (same coordinates), then handles normally.
+ * Events are only forwarded when the target's current URL host is {@code rabigame.fun} (including subdomains).
  */
 public class PassthroughWebView extends WebView {
+
+    private static final String ALLOWED_PASSTHROUGH_ROOT_HOST = "rabigame.fun";
 
     private final List<WebView> passthroughTargets = new ArrayList<>();
     private boolean passthroughTouchesEnabled = true;
@@ -53,11 +57,42 @@ public class PassthroughWebView extends WebView {
         this.passthroughTouchesEnabled = enabled;
     }
 
+    /** Only {@code http(s)://*.rabigame.fun/...} URLs (including subdomains). */
+    public static boolean isRabigameFunHttpUrl(String url) {
+        if (url == null || url.isEmpty()) {
+            return false;
+        }
+        Uri uri = Uri.parse(url);
+        String scheme = uri.getScheme();
+        if (scheme == null
+                || (!"http".equalsIgnoreCase(scheme) && !"https".equalsIgnoreCase(scheme))) {
+            return false;
+        }
+        String host = uri.getHost();
+        if (host == null) {
+            return false;
+        }
+        host = host.toLowerCase();
+        return ALLOWED_PASSTHROUGH_ROOT_HOST.equals(host)
+                || host.endsWith("." + ALLOWED_PASSTHROUGH_ROOT_HOST);
+    }
+
+    /** Only {@code http(s)://*.rabigame.fun/...} targets receive passthrough touches. */
+    static boolean isPassthroughAllowedForTarget(WebView target) {
+        if (target == null) {
+            return false;
+        }
+        return isRabigameFunHttpUrl(target.getUrl());
+    }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (passthroughTouchesEnabled && !passthroughTargets.isEmpty()) {
             for (WebView target : passthroughTargets) {
                 if (target == null || target.getVisibility() != View.VISIBLE) {
+                    continue;
+                }
+                if (!isPassthroughAllowedForTarget(target)) {
                     continue;
                 }
                 MotionEvent copy = MotionEvent.obtain(ev);

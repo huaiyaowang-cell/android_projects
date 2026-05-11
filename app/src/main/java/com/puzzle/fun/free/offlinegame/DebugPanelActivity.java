@@ -154,16 +154,14 @@ public class DebugPanelActivity extends AppCompatActivity {
     private void renderBgLayerAlphaControls(int layerCount) {
         bgAlphaContainer.removeAllViews();
         for (int i = 0; i < layerCount; i++) {
-            final int displayIndex = i;
-            final int layerIndex = layerCount - 1 - displayIndex;
+            final int layerIndex = i;
             int initial = prefs().getInt(
                     DebugDualWebViewPrefs.bgLayerAlphaKey(layerIndex),
                     DebugDualWebViewPrefs.defaultBgLayerAlphaPercent(layerIndex)
             );
             TextView label = new TextView(this);
             label.setTextColor(Color.WHITE);
-            String layerName = "Overlay #" + (displayIndex + 1)
-                    + " (idx " + layerIndex + ")";
+            String layerName = "Overlay #" + (layerIndex + 1) + " (index " + layerIndex + ")";
             label.setText(layerName + " alpha: " + initial + "%");
 
             SeekBar seekBar = new SeekBar(this);

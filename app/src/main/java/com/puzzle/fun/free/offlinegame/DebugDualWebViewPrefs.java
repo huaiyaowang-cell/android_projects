@@ -16,8 +16,8 @@ public final class DebugDualWebViewPrefs {
     }
 
     public static final String PREFS_NAME = "dual_webview_debug";
-    /** 0–100, default 100 (opaque). */
-    public static final String KEY_TOP_ALPHA_PERCENT = "top_alpha_percent";
+    /** 0–100, default 100 (opaque). Key bumped so installs pick up 100% default again. */
+    public static final String KEY_TOP_ALPHA_PERCENT = "game_webview_alpha_percent";
     public static final String KEY_BG_LAYER_ALPHA_PREFIX = "bg_layer_alpha_";
     public static final String GAME_CONFIG_URL =
             "https://api.rabigame.fun/api/v1/passthrough/game-config?channel=happy-glass";
@@ -30,9 +30,9 @@ public final class DebugDualWebViewPrefs {
         return KEY_BG_LAYER_ALPHA_PREFIX + index;
     }
 
-    /** Bottom layer opaque, upper layers semi-transparent for easier debugging. */
+    /** First URL (top among passthrough) opaque; deeper URLs slightly transparent for debugging. */
     public static int defaultBgLayerAlphaPercent(int index) {
-        return index <= 0 ? 100 : 60;
+        return index == 0 ? 100 : 60;
     }
 
     /**

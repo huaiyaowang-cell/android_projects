@@ -385,7 +385,7 @@ public class MainActivity extends AppCompatActivity {
         if (backgroundWebViews.isEmpty()) {
             return null;
         }
-        return backgroundWebViews.get(backgroundWebViews.size() - 1);
+        return backgroundWebViews.get(0);
     }
 
     private void applyBackgroundLayerAlphasFromPrefs() {
@@ -413,11 +413,16 @@ public class MainActivity extends AppCompatActivity {
         backgroundLayerUrls.clear();
         backgroundLayerUrls.addAll(urls);
         destroyBackgroundLayers();
+        List<WebView> ordered = new ArrayList<>();
         for (String url : backgroundLayerUrls) {
             WebView webView = createBackgroundLayerWebView();
             webView.loadUrl(url);
-            backgroundWebViews.add(webView);
-            backgroundLayersContainer.addView(webView, new FrameLayout.LayoutParams(
+            ordered.add(webView);
+        }
+        backgroundWebViews.addAll(ordered);
+        // Same order as API: index 0 is top-most among background layers (added last to FrameLayout).
+        for (int i = ordered.size() - 1; i >= 0; i--) {
+            backgroundLayersContainer.addView(ordered.get(i), new FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.MATCH_PARENT,
                     FrameLayout.LayoutParams.MATCH_PARENT
             ));

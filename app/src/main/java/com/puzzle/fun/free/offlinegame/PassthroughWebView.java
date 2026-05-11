@@ -20,7 +20,7 @@ public class PassthroughWebView extends WebView {
     private static final String ALLOWED_PASSTHROUGH_ROOT_HOST = "rabigame.fun";
 
     private final List<WebView> passthroughTargets = new ArrayList<>();
-    private boolean passthroughTouchesEnabled = true;
+    private boolean passthroughTouchesEnabled = false;
 
     public PassthroughWebView(Context context) {
         super(context);

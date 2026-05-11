@@ -8,16 +8,6 @@ public final class DebugWebViewEvents {
     private DebugWebViewEvents() {
     }
 
-    public static final class BgLayerShow {
-    }
-
-    public static final class BgLayerHide {
-    }
-
-    /** Posted after user saves a new background URL in {@link DebugPanelActivity}. */
-    public static final class BgUrlChanged {
-    }
-
     public static final class BgInterstitial {
     }
 
@@ -25,6 +15,16 @@ public final class DebugWebViewEvents {
         public final int percent;
 
         public TopAlphaPercent(int percent) {
+            this.percent = percent;
+        }
+    }
+
+    public static final class BgLayerAlphaPercent {
+        public final int layerIndex;
+        public final int percent;
+
+        public BgLayerAlphaPercent(int layerIndex, int percent) {
+            this.layerIndex = layerIndex;
             this.percent = percent;
         }
     }

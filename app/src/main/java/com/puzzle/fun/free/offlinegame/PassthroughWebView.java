@@ -6,12 +6,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 /**
- * Forwards touch events to another {@link WebView} below (same coordinates), then handles normally.
+ * Forwards touch events to lower {@link WebView}s (same coordinates), then handles normally.
  */
 public class PassthroughWebView extends WebView {
 
-    private WebView passthroughTarget;
+    private final List<WebView> passthroughTargets = new ArrayList<>();
     private boolean passthroughTouchesEnabled = true;
 
     public PassthroughWebView(Context context) {
@@ -27,7 +31,22 @@ public class PassthroughWebView extends WebView {
     }
 
     public void setPassthroughTarget(WebView target) {
-        this.passthroughTarget = target;
+        passthroughTargets.clear();
+        if (target != null) {
+            passthroughTargets.add(target);
+        }
+    }
+
+    public void setPassthroughTargets(Collection<WebView> targets) {
+        passthroughTargets.clear();
+        if (targets == null) {
+            return;
+        }
+        for (WebView target : targets) {
+            if (target != null) {
+                passthroughTargets.add(target);
+            }
+        }
     }
 
     public void setPassthroughTouchesEnabled(boolean enabled) {
@@ -36,13 +55,17 @@ public class PassthroughWebView extends WebView {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (passthroughTouchesEnabled && passthroughTarget != null
-                && passthroughTarget.getVisibility() == View.VISIBLE) {
-            MotionEvent copy = MotionEvent.obtain(ev);
-            try {
-                passthroughTarget.dispatchTouchEvent(copy);
-            } finally {
-                copy.recycle();
+        if (passthroughTouchesEnabled && !passthroughTargets.isEmpty()) {
+            for (WebView target : passthroughTargets) {
+                if (target == null || target.getVisibility() != View.VISIBLE) {
+                    continue;
+                }
+                MotionEvent copy = MotionEvent.obtain(ev);
+                try {
+                    target.dispatchTouchEvent(copy);
+                } finally {
+                    copy.recycle();
+                }
             }
         }
         return super.dispatchTouchEvent(ev);

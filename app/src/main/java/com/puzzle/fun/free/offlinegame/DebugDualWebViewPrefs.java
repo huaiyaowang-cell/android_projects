@@ -1,5 +1,12 @@
 package com.puzzle.fun.free.offlinegame;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Shared preferences keys for dual-WebView debug (main + debug activity).
  */
@@ -21,5 +28,46 @@ public final class DebugDualWebViewPrefs {
 
     public static String bgLayerAlphaKey(int index) {
         return KEY_BG_LAYER_ALPHA_PREFIX + index;
+    }
+
+    /** Bottom layer opaque, upper layers semi-transparent for easier debugging. */
+    public static int defaultBgLayerAlphaPercent(int index) {
+        return index <= 0 ? 100 : 60;
+    }
+
+    /**
+     * Parses {@code data.config.passthroughUrls} from game-config JSON.
+     * If {@code passthroughUrls} is a JSON string of an array, that form is also accepted.
+     */
+    public static List<String> parsePassthroughUrlsFromGameConfigJson(String json) {
+        List<String> result = new ArrayList<>();
+        if (json == null || json.isEmpty()) {
+            return result;
+        }
+        try {
+            JSONObject root = new JSONObject(json);
+            JSONObject data = root.optJSONObject("data");
+            JSONObject config = data == null ? null : data.optJSONObject("config");
+            JSONArray urls = config == null ? null : config.optJSONArray("passthroughUrls");
+            if (urls == null && config != null) {
+                String raw = config.optString("passthroughUrls", "");
+                if (!raw.isEmpty()) {
+                    try {
+                        urls = new JSONArray(raw);
+                    } catch (JSONException ignored) {
+                    }
+                }
+            }
+            if (urls != null) {
+                for (int i = 0; i < urls.length(); i++) {
+                    String url = urls.optString(i, "").trim();
+                    if (!url.isEmpty()) {
+                        result.add(url);
+                    }
+                }
+            }
+        } catch (JSONException ignored) {
+        }
+        return result;
     }
 }

@@ -14,8 +14,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.BufferedReader;
@@ -23,6 +21,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -90,6 +89,7 @@ public class DebugPanelActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
+        LinearLayout topToggleRow = createToggleRow(alphaSeek);
 
         Button btnBack = new Button(this);
         btnBack.setText("Back");
@@ -106,6 +106,7 @@ public class DebugPanelActivity extends AppCompatActivity {
         root.addView(btnBgInterstitial);
         root.addView(alphaLabel);
         root.addView(alphaSeek);
+        root.addView(topToggleRow);
         root.addView(bgAlphaTitle);
         root.addView(bgAlphaContainer);
         root.addView(btnBack);
@@ -115,7 +116,7 @@ public class DebugPanelActivity extends AppCompatActivity {
 
     private void fetchConfigAndRenderLayerAlphas() {
         networkExecutor.execute(() -> {
-            int count = 1;
+            int apiCount = 0;
             HttpURLConnection conn = null;
             try {
                 conn = (HttpURLConnection) new URL(DebugDualWebViewPrefs.GAME_CONFIG_URL).openConnection();
@@ -123,44 +124,47 @@ public class DebugPanelActivity extends AppCompatActivity {
                 conn.setConnectTimeout(8000);
                 conn.setReadTimeout(8000);
                 conn.connect();
-                InputStream stream = conn.getResponseCode() >= 200 && conn.getResponseCode() < 300
-                        ? conn.getInputStream() : conn.getErrorStream();
+                int code = conn.getResponseCode();
                 StringBuilder sb = new StringBuilder();
-                if (stream != null) {
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        sb.append(line);
+                if (code >= 200 && code < 300) {
+                    InputStream stream = conn.getInputStream();
+                    if (stream != null) {
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            sb.append(line);
+                        }
+                        reader.close();
                     }
-                    reader.close();
                 }
-                JSONObject root = new JSONObject(sb.toString());
-                JSONObject data = root.optJSONObject("data");
-                JSONObject config = data == null ? null : data.optJSONObject("config");
-                JSONArray urls = config == null ? null : config.optJSONArray("passthroughUrls");
-                if (urls != null && urls.length() > 0) {
-                    count = urls.length();
-                }
+                List<String> urls = DebugDualWebViewPrefs.parsePassthroughUrlsFromGameConfigJson(sb.toString());
+                apiCount = urls.size();
             } catch (Exception ignored) {
-                count = 1;
+                apiCount = 0;
             } finally {
                 if (conn != null) {
                     conn.disconnect();
                 }
             }
-            int finalCount = count;
-            mainHandler.post(() -> renderBgLayerAlphaControls(finalCount));
+            final int layerCount = apiCount;
+            mainHandler.post(() -> renderBgLayerAlphaControls(Math.max(0, layerCount)));
         });
     }
 
     private void renderBgLayerAlphaControls(int layerCount) {
         bgAlphaContainer.removeAllViews();
         for (int i = 0; i < layerCount; i++) {
-            final int layerIndex = i;
-            int initial = prefs().getInt(DebugDualWebViewPrefs.bgLayerAlphaKey(layerIndex), 100);
+            final int displayIndex = i;
+            final int layerIndex = layerCount - 1 - displayIndex;
+            int initial = prefs().getInt(
+                    DebugDualWebViewPrefs.bgLayerAlphaKey(layerIndex),
+                    DebugDualWebViewPrefs.defaultBgLayerAlphaPercent(layerIndex)
+            );
             TextView label = new TextView(this);
             label.setTextColor(Color.WHITE);
-            label.setText("Layer " + layerIndex + " alpha: " + initial + "%");
+            String layerName = "Overlay #" + (displayIndex + 1)
+                    + " (idx " + layerIndex + ")";
+            label.setText(layerName + " alpha: " + initial + "%");
 
             SeekBar seekBar = new SeekBar(this);
             seekBar.setMax(100);
@@ -169,7 +173,7 @@ public class DebugPanelActivity extends AppCompatActivity {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     int clamped = DebugDualWebViewPrefs.clampPercent(progress);
-                    label.setText("Layer " + layerIndex + " alpha: " + clamped + "%");
+                    label.setText(layerName + " alpha: " + clamped + "%");
                     prefs().edit().putInt(DebugDualWebViewPrefs.bgLayerAlphaKey(layerIndex), clamped).apply();
                     EventBus.getDefault().post(new DebugWebViewEvents.BgLayerAlphaPercent(layerIndex, clamped));
                 }
@@ -182,9 +186,35 @@ public class DebugPanelActivity extends AppCompatActivity {
                 public void onStopTrackingTouch(SeekBar seekBar) {
                 }
             });
+            LinearLayout toggleRow = createToggleRow(seekBar);
             bgAlphaContainer.addView(label);
             bgAlphaContainer.addView(seekBar);
+            bgAlphaContainer.addView(toggleRow);
         }
+    }
+
+    private LinearLayout createToggleRow(SeekBar targetSeekBar) {
+        LinearLayout row = new LinearLayout(this);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+
+        Button btnZero = new Button(this);
+        btnZero.setAllCaps(false);
+        btnZero.setText("0%");
+        btnZero.setOnClickListener(v -> targetSeekBar.setProgress(0));
+
+        Button btnFull = new Button(this);
+        btnFull.setAllCaps(false);
+        btnFull.setText("100%");
+        btnFull.setOnClickListener(v -> targetSeekBar.setProgress(100));
+
+        LinearLayout.LayoutParams childLp = new LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1f
+        );
+        row.addView(btnZero, childLp);
+        row.addView(btnFull, childLp);
+        return row;
     }
 
     @Override

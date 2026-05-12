@@ -21,6 +21,11 @@
 
 
         <activity
+            android:name=".DebugPanelActivity"
+            android:exported="false"
+            android:label="DEBUG" />
+
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

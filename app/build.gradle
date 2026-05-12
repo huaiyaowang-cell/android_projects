@@ -8,6 +8,9 @@ applovin {
 android {
     namespace 'com.puzzle.fun.free.offlinegame'
     compileSdkVersion 35
+    buildFeatures {
+        buildConfig true
+    }
     defaultConfig {
         minSdkVersion 23
         targetSdkVersion 35

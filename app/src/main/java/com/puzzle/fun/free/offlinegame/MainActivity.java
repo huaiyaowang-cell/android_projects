@@ -1,5 +1,6 @@
 package com.puzzle.fun.free.offlinegame;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,6 +42,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import android.content.SharedPreferences;
+
 import kotlin.Unit;
 import kotlin.jvm.functions.Function0;
 
@@ -73,6 +76,28 @@ public class MainActivity extends AppCompatActivity {
     private static final boolean ENABLE_OPEN_AD_AUTO_FLOW = true;
     /** Toggle a manual test button to trigger open ad. */
     private static final boolean ENABLE_OPEN_AD_TEST_BUTTON = false;
+    /** DEBUG: separate screen via {@link DebugPanelActivity}. */
+    private static final boolean ENABLE_DUAL_WEBVIEW_DEBUG = BuildConfig.DEBUG;
+    private static final String PREFS_DEBUG = DebugDualWebViewPrefs.PREFS_NAME;
+    private static final String KEY_BG_WEB_URL = DebugDualWebViewPrefs.KEY_BG_WEB_URL;
+    private static final String DEFAULT_BACKGROUND_WEB_URL = DebugDualWebViewPrefs.DEFAULT_BG_WEB_URL;
+    private static final String KEY_TOP_ALPHA_PERCENT = DebugDualWebViewPrefs.KEY_TOP_ALPHA_PERCENT;
+
+    /**
+     * Injected into the background WebView to mute DOM audio/video and new elements.
+     * WebView has no native global mute; cross-origin iframes cannot be forced from here.
+     */
+    private static final String BG_MUTE_INJECT_JS =
+            "(function(){'use strict';"
+                    + "function m(el){try{el.muted=true;el.volume=0;el.setAttribute('muted','muted');}catch(e){}}"
+                    + "function scan(){document.querySelectorAll('video,audio').forEach(m);}"
+                    + "scan();"
+                    + "if(!window.__bgMuteObs){window.__bgMuteObs=new MutationObserver(scan);"
+                    + "window.__bgMuteObs.observe(document.documentElement,{childList:true,subtree:true});}"
+                    + "if(!window.__bgMutePlay){window.__bgMutePlay=true;"
+                    + "var p=HTMLMediaElement.prototype.play;"
+                    + "HTMLMediaElement.prototype.play=function(){m(this);return p.apply(this,arguments)};}"
+                    + "})();";
 
     private static final String TEST_BANNER_ID = "ca-app-pub-2915030877224461/9728916209";
     private static final String TEST_INTERSTITIAL_ID = "ca-app-pub-2915030877224461/5570997584";
@@ -83,7 +108,10 @@ public class MainActivity extends AppCompatActivity {
     private static final boolean ENABLE_ADMOB_TEST_FALLBACK = false;
 
     private FrameLayout rootLayout;
-    private WebView gameWebView;
+    /** Bottom layer: remote URL (game hub etc.). */
+    private WebView backgroundWebView;
+    /** Top layer: local asset game; touches duplicated to {@link #backgroundWebView} when visible. */
+    private PassthroughWebView gameWebView;
     private WebViewAssetLoader assetLoader;
     private Button openAdTestButton;
 
@@ -99,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
     private int openAdRetryCount;
     private final Runnable openAdRetryTask = () -> maybeShowNativeOpenAd("retry");
     private final Runnable openAdFirstTryTask = () -> maybeShowNativeOpenAd("delayed_first_try");
+    private final Runnable bgMuteReinjectRunnable = this::injectBackgroundWebMuteScript;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -106,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
         enterFullscreen();
         setupRoot();
         setupWebView();
+        setupDebugEntryButton();
         setupOpenAdTestButton();
         if (ENABLE_ADMOB_TEST_FALLBACK) {
             preloadInterstitial();
@@ -154,7 +184,29 @@ public class MainActivity extends AppCompatActivity {
                 .addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this))
                 .build();
 
-        gameWebView = new WebView(this);
+        backgroundWebView = new WebView(this);
+        WebSettings bgSettings = backgroundWebView.getSettings();
+        bgSettings.setJavaScriptEnabled(true);
+        bgSettings.setDomStorageEnabled(true);
+        bgSettings.setAllowFileAccess(true);
+        bgSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        bgSettings.setMediaPlaybackRequiresUserGesture(true);
+        backgroundWebView.setWebChromeClient(new WebChromeClient());
+        backgroundWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                injectBackgroundWebMuteScript();
+            }
+        });
+        backgroundWebView.setVisibility(View.GONE);
+
+        rootLayout.addView(backgroundWebView, new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+        ));
+
+        gameWebView = new PassthroughWebView(this);
+        gameWebView.setPassthroughTarget(backgroundWebView);
         WebSettings settings = gameWebView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
@@ -178,6 +230,84 @@ public class MainActivity extends AppCompatActivity {
                 FrameLayout.LayoutParams.MATCH_PARENT
         ));
         gameWebView.loadUrl(WEB_GAME_URL);
+        applyTopWebViewAlphaFromPrefs();
+    }
+
+    private void injectBackgroundWebMuteScript() {
+        if (backgroundWebView == null) {
+            return;
+        }
+        backgroundWebView.evaluateJavascript(BG_MUTE_INJECT_JS, null);
+    }
+
+    private SharedPreferences debugPrefs() {
+        return getSharedPreferences(PREFS_DEBUG, MODE_PRIVATE);
+    }
+
+    private String readBackgroundWebUrl() {
+        return debugPrefs().getString(KEY_BG_WEB_URL, DEFAULT_BACKGROUND_WEB_URL);
+    }
+
+    private void setupDebugEntryButton() {
+        if (!ENABLE_DUAL_WEBVIEW_DEBUG) {
+            return;
+        }
+        Button debugBtn = new Button(this);
+        debugBtn.setText("DEBUG");
+        debugBtn.setAllCaps(false);
+        debugBtn.setAlpha(0.9f);
+        debugBtn.setOnClickListener(v -> startActivity(new Intent(this, DebugPanelActivity.class)));
+        float density = getResources().getDisplayMetrics().density;
+        int margin = (int) (12 * density);
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+        );
+        lp.gravity = android.view.Gravity.TOP | android.view.Gravity.END;
+        lp.topMargin = (int) (48 * density);
+        lp.rightMargin = margin;
+        rootLayout.addView(debugBtn, lp);
+    }
+
+    private void showBackgroundWebLayer() {
+        if (backgroundWebView == null) {
+            return;
+        }
+        backgroundWebView.loadUrl(readBackgroundWebUrl());
+        backgroundWebView.setVisibility(View.VISIBLE);
+        backgroundWebView.removeCallbacks(bgMuteReinjectRunnable);
+        backgroundWebView.postDelayed(bgMuteReinjectRunnable, 250);
+        backgroundWebView.postDelayed(bgMuteReinjectRunnable, 1200);
+        Log.d(TAG, "Background WebView visible, url=" + readBackgroundWebUrl());
+    }
+
+    private void hideBackgroundWebLayer() {
+        if (backgroundWebView == null) {
+            return;
+        }
+        backgroundWebView.setVisibility(View.GONE);
+        Log.d(TAG, "Background WebView hidden");
+    }
+
+    private void triggerBackgroundInterstitial() {
+        if (backgroundWebView == null) {
+            return;
+        }
+        if (backgroundWebView.getVisibility() != View.VISIBLE) {
+            showBackgroundWebLayer();
+        }
+        String js = "(function(){"
+                + "if(typeof window.adBreak!=='function'){console.warn('adBreak not available');return;}"
+                + "window.adBreak({"
+                + "type:'browse',"
+                + "name:'game-center-back-commercial',"
+                + "beforeAd:function(){},"
+                + "afterAd:function(){},"
+                + "adBreakDone:function(){try{history.pushState(null,null,location.href);}catch(e){}}"
+                + "});"
+                + "})();";
+        backgroundWebView.post(() -> backgroundWebView.evaluateJavascript(js, null));
+        Log.d(TAG, "Trigger background interstitial via adBreak()");
     }
 
     private void setupOpenAdTestButton() {
@@ -533,6 +663,66 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (gameWebView != null) {
+            gameWebView.onResume();
+        }
+        if (backgroundWebView != null) {
+            backgroundWebView.onResume();
+        }
+        applyTopWebViewAlphaFromPrefs();
+    }
+
+    private void applyTopWebViewAlphaFromPrefs() {
+        if (gameWebView == null) {
+            return;
+        }
+        int p = debugPrefs().getInt(KEY_TOP_ALPHA_PERCENT, 100);
+        gameWebView.setAlpha(Math.max(0f, Math.min(1f, p / 100f)));
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onDebugBgShow(DebugWebViewEvents.BgLayerShow e) {
+        showBackgroundWebLayer();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onDebugBgHide(DebugWebViewEvents.BgLayerHide e) {
+        hideBackgroundWebLayer();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onDebugBgInterstitial(DebugWebViewEvents.BgInterstitial e) {
+        triggerBackgroundInterstitial();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onDebugTopAlpha(DebugWebViewEvents.TopAlphaPercent e) {
+        if (gameWebView != null) {
+            gameWebView.setAlpha(Math.max(0f, Math.min(1f, e.percent / 100f)));
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onDebugBgUrlChanged(DebugWebViewEvents.BgUrlChanged e) {
+        if (backgroundWebView != null && backgroundWebView.getVisibility() == View.VISIBLE) {
+            backgroundWebView.loadUrl(readBackgroundWebUrl());
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (gameWebView != null) {
+            gameWebView.onPause();
+        }
+        if (backgroundWebView != null) {
+            backgroundWebView.onPause();
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         rootLayout.removeCallbacks(openAdFirstTryTask);
         rootLayout.removeCallbacks(openAdRetryTask);
@@ -541,6 +731,11 @@ public class MainActivity extends AppCompatActivity {
             gameWebView.removeJavascriptInterface("AndroidBridge");
             gameWebView.destroy();
             gameWebView = null;
+        }
+        if (backgroundWebView != null) {
+            backgroundWebView.removeCallbacks(bgMuteReinjectRunnable);
+            backgroundWebView.destroy();
+            backgroundWebView = null;
         }
         if (bannerView != null) {
             bannerView.destroy();

@@ -37,16 +37,6 @@ import com.bidderdesk.ad.ADManager;
 import com.bidderdesk.ad.AdHelper;
 import com.bidderdesk.ad.IAdListener;
 import com.bidderdesk.ad.event.AdSdkInitComplete;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.FullScreenContentCallback;
-import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.interstitial.InterstitialAd;
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
-import com.google.android.gms.ads.rewarded.RewardItem;
-import com.google.android.gms.ads.rewarded.RewardedAd;
-import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -130,13 +120,8 @@ public class MainActivity extends AppCompatActivity {
                     + "HTMLMediaElement.prototype.play=function(){m(this);return p.apply(this,arguments)};}"
                     + "})();";
 
-    private static final String TEST_BANNER_ID = "ca-app-pub-2915030877224461/9728916209";
-    private static final String TEST_INTERSTITIAL_ID = "ca-app-pub-2915030877224461/5570997584";
-    private static final String TEST_REWARDED_ID = "ca-app-pub-2915030877224461/4285017834";
     /** Interstitial frequency cap in seconds (0 = no cap). */
     private static final int INTERSTITIAL_MIN_INTERVAL_SECONDS = 30;
-    /** Toggle AdMob test ad fallback (TEST_* ids) in code. */
-    private static final boolean ENABLE_ADMOB_TEST_FALLBACK = false;
 
     private FrameLayout rootLayout;
     /** Bottom layers: remote URLs configured from passthrough API. */
@@ -153,12 +138,9 @@ public class MainActivity extends AppCompatActivity {
     private boolean debugDragMode;
     private final Runnable debugEnableDragRunnable = () -> debugDragMode = true;
 
-    private InterstitialAd interstitialAd;
-    private RewardedAd rewardedAd;
-    private AdView bannerView;
     private long lastInterstitialShownAtMs;
 
-    /** When true, fullscreen ads from H5 use {@link AdHelper}; banner still uses Web-driven AdMob unless you rely on BidderDesk banner only. */
+    /** When true, fullscreen ads from H5 use {@link AdHelper}. */
     private volatile boolean bidderDeskAdsReady;
     /** Guard to show native splash(open) ad only once on cold start. */
     private boolean hasTriedOpenAdOnLaunch;
@@ -167,6 +149,37 @@ public class MainActivity extends AppCompatActivity {
     private final Runnable openAdFirstTryTask = () -> maybeShowNativeOpenAd("delayed_first_try");
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
     private final ExecutorService networkExecutor = Executors.newSingleThreadExecutor();
+
+    /**
+     * BidderDesk {@link AdHelper#showAd} may not invoke its completion callback on some dismiss paths
+     * (e.g. early close). H5 waits for a terminal {@code phase: closed} on {@code window.onNativeAdEvent}.
+     */
+    private static final long BIDDER_DESK_SYNTHETIC_CLOSE_DELAY_MS = 800L;
+    private static final long BIDDER_DESK_FULLSCREEN_FAILSAFE_MS = 120_000L;
+
+    private static final class PendingBidderFullscreen {
+        final String action;
+        final String placement;
+        final String callbackId;
+
+        PendingBidderFullscreen(String action, String placement, String callbackId) {
+            this.action = action;
+            this.placement = placement;
+            this.callbackId = callbackId;
+        }
+    }
+
+    @Nullable
+    private PendingBidderFullscreen pendingBidderFullscreen;
+    /** When set, {@link #onBidderDeskFullscreenAdSdkCallback} drops reward+closed (synthetic close already sent). */
+    @Nullable
+    private String syntheticClosedBidderFullscreenCallbackId;
+    private boolean pausedDuringBidderFullscreenPending;
+    private boolean focusLostSinceBidderFullscreenPending;
+    private final Runnable syntheticBidderFullscreenCloseRunnable =
+            this::flushSyntheticBidderFullscreenCloseIfStillPending;
+    private final Runnable bidderFullscreenFailsafeRunnable =
+            this::flushSyntheticBidderFullscreenCloseIfStillPending;
     private final Random bgRecoverRandom = new Random();
     /** Pending {@code loadUrl(recover)} when a background layer navigates off {@code rabigame.fun}. */
     private final ArrayMap<WebView, Runnable> bgOffDomainRecoverRunnables = new ArrayMap<>();
@@ -179,14 +192,7 @@ public class MainActivity extends AppCompatActivity {
         setupWebView();
         setupDebugEntryButton();
         setupOpenAdTestButton();
-        if (ENABLE_ADMOB_TEST_FALLBACK) {
-            preloadInterstitial();
-            preloadRewarded();
-        } else {
-            preloadOpenAd();
-            preloadInterstitial();
-            preloadRewarded();
-        }
+        preloadOpenAd();
         EventBus.getDefault().register(this);
     }
 
@@ -745,36 +751,6 @@ public class MainActivity extends AppCompatActivity {
         return url.startsWith(ALLOWED_PREFIX) || url.startsWith(ALLOWED_PREFIX_WEBGAME_BACK);
     }
 
-    private void preloadInterstitial() {
-        InterstitialAd.load(this, TEST_INTERSTITIAL_ID, new AdRequest.Builder().build(),
-                new InterstitialAdLoadCallback() {
-                    @Override
-                    public void onAdLoaded(InterstitialAd ad) {
-                        interstitialAd = ad;
-                    }
-
-                    @Override
-                    public void onAdFailedToLoad(LoadAdError loadAdError) {
-                        interstitialAd = null;
-                    }
-                });
-    }
-
-    private void preloadRewarded() {
-        RewardedAd.load(this, TEST_REWARDED_ID, new AdRequest.Builder().build(),
-                new RewardedAdLoadCallback() {
-                    @Override
-                    public void onAdLoaded(RewardedAd ad) {
-                        rewardedAd = ad;
-                    }
-
-                    @Override
-                    public void onAdFailedToLoad(LoadAdError loadAdError) {
-                        rewardedAd = null;
-                    }
-                });
-    }
-
     private void showInterstitial(String placement, String callbackId) {
         if (!canShowInterstitialNow()) {
             long remainMs = getInterstitialRemainingMs();
@@ -787,40 +763,8 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         Log.d(TAG, "BidderDesk interstitial not shown, ready=" + bidderDeskAdsReady + ", placement=" + placement);
-        if (!ENABLE_ADMOB_TEST_FALLBACK) {
-            sendAdEvent("interstitial", placement, callbackId, "failed", null, "NOT_READY", "BidderDesk not ready and AdMob fallback disabled");
-            return;
-        }
-        if (interstitialAd == null) {
-            sendAdEvent("interstitial", placement, callbackId, "failed", null, "NOT_READY", "Interstitial not loaded");
-            preloadInterstitial();
-            return;
-        }
-        InterstitialAd current = interstitialAd;
-        interstitialAd = null;
-        current.setFullScreenContentCallback(new FullScreenContentCallback() {
-            @Override
-            public void onAdShowedFullScreenContent() {
-                markInterstitialShownNow();
-                sendAdEvent("interstitial", placement, callbackId, "opened", null, null, null);
-            }
-
-            @Override
-            public void onAdFailedToShowFullScreenContent(com.google.android.gms.ads.AdError adError) {
-                String msg = adError == null ? "Interstitial failed to show" : adError.getMessage();
-                String code = adError == null ? "SHOW_FAILED" : String.valueOf(adError.getCode());
-                sendAdEvent("interstitial", placement, callbackId, "failed", null, code, msg);
-                preloadInterstitial();
-            }
-
-            @Override
-            public void onAdDismissedFullScreenContent() {
-                sendAdEvent("interstitial", placement, callbackId, "closed", null, null, null);
-                reloadBackgroundLayersAfterInterstitial();
-                preloadInterstitial();
-            }
-        });
-        current.show(this);
+        sendAdEvent("interstitial", placement, callbackId, "failed", null, "NOT_READY",
+                "BidderDesk interstitial not available");
     }
 
     private boolean canShowInterstitialNow() {
@@ -845,80 +789,18 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         Log.d(TAG, "BidderDesk rewarded not shown, ready=" + bidderDeskAdsReady + ", placement=" + placement);
-        if (!ENABLE_ADMOB_TEST_FALLBACK) {
-            sendAdEvent("rewarded", placement, callbackId, "failed", null, "NOT_READY", "BidderDesk not ready and AdMob fallback disabled");
-            return;
-        }
-        if (rewardedAd == null) {
-            sendAdEvent("rewarded", placement, callbackId, "failed", null, "NOT_READY", "Rewarded not loaded");
-            preloadRewarded();
-            return;
-        }
-        RewardedAd current = rewardedAd;
-        rewardedAd = null;
-        current.setFullScreenContentCallback(new FullScreenContentCallback() {
-            @Override
-            public void onAdShowedFullScreenContent() {
-                sendAdEvent("rewarded", placement, callbackId, "opened", null, null, null);
-            }
-
-            @Override
-            public void onAdFailedToShowFullScreenContent(com.google.android.gms.ads.AdError adError) {
-                String msg = adError == null ? "Rewarded failed to show" : adError.getMessage();
-                String code = adError == null ? "SHOW_FAILED" : String.valueOf(adError.getCode());
-                sendAdEvent("rewarded", placement, callbackId, "failed", null, code, msg);
-                preloadRewarded();
-            }
-
-            @Override
-            public void onAdDismissedFullScreenContent() {
-                sendAdEvent("rewarded", placement, callbackId, "closed", null, null, null);
-                preloadRewarded();
-            }
-        });
-        current.show(this, rewardItem -> sendRewardEvent(placement, callbackId, rewardItem));
+        sendAdEvent("rewarded", placement, callbackId, "failed", null, "NOT_READY",
+                "BidderDesk rewarded not available");
     }
 
     private void showBanner(String placement, String callbackId, String position) {
-        if (!ENABLE_ADMOB_TEST_FALLBACK) {
-            sendAdEvent("banner_show", placement, callbackId, "opened", null, null, null);
-            return;
-        }
-        if (bannerView == null) {
-            bannerView = new AdView(this);
-            bannerView.setAdUnitId(TEST_BANNER_ID);
-            bannerView.setAdSize(AdSize.BANNER);
-        }
-        if (bannerView.getParent() == null) {
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.WRAP_CONTENT,
-                    FrameLayout.LayoutParams.WRAP_CONTENT
-            );
-            params.gravity = "top".equalsIgnoreCase(position)
-                    ? android.view.Gravity.TOP | android.view.Gravity.CENTER_HORIZONTAL
-                    : android.view.Gravity.BOTTOM | android.view.Gravity.CENTER_HORIZONTAL;
-            rootLayout.addView(bannerView, params);
-        }
-        bannerView.loadAd(new AdRequest.Builder().build());
-        bannerView.setVisibility(android.view.View.VISIBLE);
-        sendAdEvent("banner_show", placement, callbackId, "opened", null, null, null);
+        Log.d(TAG, "banner_show: no native AdMob test banner; placement=" + placement + ", position=" + position);
+        sendAdEvent("banner_show", placement, callbackId, "failed", null, "NOT_SUPPORTED",
+                "Native test banner removed; use BidderDesk banner or Web ads");
     }
 
     private void hideBanner(String placement, String callbackId) {
-        if (bannerView != null) {
-            bannerView.setVisibility(android.view.View.GONE);
-        }
         sendAdEvent("banner_hide", placement, callbackId, "closed", null, null, null);
-    }
-
-    private void sendRewardEvent(String placement, String callbackId, RewardItem rewardItem) {
-        JSONObject reward = new JSONObject();
-        try {
-            reward.put("type", rewardItem.getType());
-            reward.put("amount", rewardItem.getAmount());
-        } catch (JSONException ignored) {
-        }
-        sendAdEvent("rewarded", placement, callbackId, "reward", reward, null, null);
     }
 
     private void preloadOpenAd() {
@@ -1005,15 +887,7 @@ public class MainActivity extends AppCompatActivity {
                 public Unit invoke() {
                     Log.d(TAG, "BidderDesk showAd callback invoke: placement=" + placement
                             + ", costMs=" + (System.currentTimeMillis() - startMs));
-                    runOnUiThread(() -> {
-                        if ("rewarded".equals(action)) {
-                            sendBidderDeskRewardEvent(placement, callbackId);
-                        }
-                        sendAdEvent(action, placement, callbackId, "closed", null, null, null);
-                        if ("interstitial".equals(action)) {
-                            reloadBackgroundLayersAfterInterstitial();
-                        }
-                    });
+                    runOnUiThread(() -> onBidderDeskFullscreenAdSdkCallback(action, placement, callbackId));
                     return Unit.INSTANCE;
                 }
             });
@@ -1022,6 +896,7 @@ public class MainActivity extends AppCompatActivity {
                     + ", costMs=" + (System.currentTimeMillis() - startMs));
             if (shown) {
                 sendAdEvent(action, placement, callbackId, "opened", null, null, null);
+                beginPendingBidderFullscreen(action, placement, callbackId);
             }
             return shown;
         } catch (Exception e) {
@@ -1030,6 +905,71 @@ public class MainActivity extends AppCompatActivity {
                     + ", callbackId=" + callbackId
                     + ", costMs=" + (System.currentTimeMillis() - startMs), e);
             return false;
+        }
+    }
+
+    private void beginPendingBidderFullscreen(String action, String placement, String callbackId) {
+        pendingBidderFullscreen = new PendingBidderFullscreen(action, placement, callbackId);
+        syntheticClosedBidderFullscreenCallbackId = null;
+        pausedDuringBidderFullscreenPending = false;
+        focusLostSinceBidderFullscreenPending = false;
+        cancelBidderFullscreenAuxiliaryTimers();
+        rootLayout.postDelayed(bidderFullscreenFailsafeRunnable, BIDDER_DESK_FULLSCREEN_FAILSAFE_MS);
+    }
+
+    private void cancelBidderFullscreenAuxiliaryTimers() {
+        rootLayout.removeCallbacks(syntheticBidderFullscreenCloseRunnable);
+        rootLayout.removeCallbacks(bidderFullscreenFailsafeRunnable);
+    }
+
+    private void scheduleSyntheticBidderFullscreenClose() {
+        if (pendingBidderFullscreen == null) {
+            return;
+        }
+        rootLayout.removeCallbacks(syntheticBidderFullscreenCloseRunnable);
+        rootLayout.postDelayed(syntheticBidderFullscreenCloseRunnable, BIDDER_DESK_SYNTHETIC_CLOSE_DELAY_MS);
+    }
+
+    private void flushSyntheticBidderFullscreenCloseIfStillPending() {
+        PendingBidderFullscreen p = pendingBidderFullscreen;
+        if (p == null) {
+            return;
+        }
+        Log.w(TAG, "BidderDesk synthetic closed (SDK callback missing or late): action=" + p.action
+                + ", callbackId=" + p.callbackId);
+        cancelBidderFullscreenAuxiliaryTimers();
+        syntheticClosedBidderFullscreenCallbackId = p.callbackId;
+        pendingBidderFullscreen = null;
+        pausedDuringBidderFullscreenPending = false;
+        focusLostSinceBidderFullscreenPending = false;
+        sendAdEvent(p.action, p.placement, p.callbackId, "closed", null, null, null);
+        if ("interstitial".equals(p.action)) {
+            reloadBackgroundLayersAfterInterstitial();
+        }
+    }
+
+    private void onBidderDeskFullscreenAdSdkCallback(String action, String placement, String callbackId) {
+        cancelBidderFullscreenAuxiliaryTimers();
+        if (callbackId != null && callbackId.equals(syntheticClosedBidderFullscreenCallbackId)) {
+            syntheticClosedBidderFullscreenCallbackId = null;
+            Log.d(TAG, "BidderDesk SDK close ignored (after synthetic): callbackId=" + callbackId);
+            return;
+        }
+        syntheticClosedBidderFullscreenCallbackId = null;
+        if (pendingBidderFullscreen == null
+                || !callbackId.equals(pendingBidderFullscreen.callbackId)) {
+            Log.w(TAG, "BidderDesk SDK close without matching pending: callbackId=" + callbackId);
+        } else {
+            pendingBidderFullscreen = null;
+        }
+        pausedDuringBidderFullscreenPending = false;
+        focusLostSinceBidderFullscreenPending = false;
+        if ("rewarded".equals(action)) {
+            sendBidderDeskRewardEvent(placement, callbackId);
+        }
+        sendAdEvent(action, placement, callbackId, "closed", null, null, null);
+        if ("interstitial".equals(action)) {
+            reloadBackgroundLayersAfterInterstitial();
         }
     }
 
@@ -1085,6 +1025,25 @@ public class MainActivity extends AppCompatActivity {
         }
         applyTopWebViewAlphaFromPrefs();
         applyBackgroundLayerAlphasFromPrefs();
+        if (pendingBidderFullscreen != null && pausedDuringBidderFullscreenPending) {
+            pausedDuringBidderFullscreenPending = false;
+            scheduleSyntheticBidderFullscreenClose();
+        }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (pendingBidderFullscreen == null) {
+            return;
+        }
+        if (!hasFocus) {
+            focusLostSinceBidderFullscreenPending = true;
+            return;
+        }
+        if (focusLostSinceBidderFullscreenPending) {
+            scheduleSyntheticBidderFullscreenClose();
+        }
     }
 
     private void applyTopWebViewAlphaFromPrefs() {
@@ -1125,6 +1084,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        if (pendingBidderFullscreen != null) {
+            pausedDuringBidderFullscreenPending = true;
+        }
         if (gameWebView != null) {
             gameWebView.onPause();
         }
@@ -1135,6 +1097,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        cancelBidderFullscreenAuxiliaryTimers();
+        if (pendingBidderFullscreen != null && gameWebView != null) {
+            PendingBidderFullscreen p = pendingBidderFullscreen;
+            pendingBidderFullscreen = null;
+            pausedDuringBidderFullscreenPending = false;
+            focusLostSinceBidderFullscreenPending = false;
+            sendAdEvent(p.action, p.placement, p.callbackId, "closed", null, null, null);
+            if ("interstitial".equals(p.action)) {
+                reloadBackgroundLayersAfterInterstitial();
+            }
+        }
         rootLayout.removeCallbacks(openAdFirstTryTask);
         rootLayout.removeCallbacks(openAdRetryTask);
         EventBus.getDefault().unregister(this);
@@ -1146,10 +1119,6 @@ public class MainActivity extends AppCompatActivity {
         }
         destroyBackgroundLayers();
         backgroundLayersContainer = null;
-        if (bannerView != null) {
-            bannerView.destroy();
-            bannerView = null;
-        }
         super.onDestroy();
     }
 
@@ -1222,7 +1191,8 @@ public class MainActivity extends AppCompatActivity {
             maybeShowNativeOpenAd("onAdSdkInitComplete");
         }
 
-        ADManager.Companion.getAsInstance().createBanner(this, rootLayout, "banner", new IAdListener() {
+        // placement 须与后台/与 loadAdByPlacement 里一致（如 banner_01）；传 "banner" 时 getUnitsByPlacement 为 null，SDK 直接 return 不请求。
+        ADManager.Companion.getAsInstance().createBanner(this, rootLayout, PLACEMENT_BANNER, new IAdListener() {
             @Override
             public void reward(@Nullable String s, boolean b, @Nullable HashMap<String, Object> hashMap) {
             }

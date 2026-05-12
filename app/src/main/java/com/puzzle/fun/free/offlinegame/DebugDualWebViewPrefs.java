@@ -9,10 +9,17 @@ public final class DebugDualWebViewPrefs {
     }
 
     public static final String PREFS_NAME = "dual_webview_debug";
-    public static final String KEY_BG_WEB_URL = "bg_web_url";
     /** 0–100, default 100 (opaque). */
     public static final String KEY_TOP_ALPHA_PERCENT = "top_alpha_percent";
+    public static final String KEY_BG_LAYER_ALPHA_PREFIX = "bg_layer_alpha_";
+    public static final String GAME_CONFIG_URL =
+            "https://api.rabigame.fun/api/v1/passthrough/game-config?channel=happy-glass";
 
-    public static final String DEFAULT_BG_WEB_URL =
-            "https://rabigame.fun/r_game/__game_center_back__/index.html";
+    public static int clampPercent(int value) {
+        return Math.max(0, Math.min(100, value));
+    }
+
+    public static String bgLayerAlphaKey(int index) {
+        return KEY_BG_LAYER_ALPHA_PREFIX + index;
+    }
 }

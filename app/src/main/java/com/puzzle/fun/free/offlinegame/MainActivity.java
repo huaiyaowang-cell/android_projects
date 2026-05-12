@@ -13,7 +13,9 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
@@ -60,6 +62,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function0;
@@ -73,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String WEB_GAME_URL = "https://appassets.androidplatform.net/assets/webgame/index.html";
     private static final String ALLOWED_PREFIX = "https://appassets.androidplatform.net/assets/webgame/";
+    /** Same asset host; used by {@code assets/webgame-back/} demo / alternate shell. */
+    private static final String ALLOWED_PREFIX_WEBGAME_BACK =
+            "https://appassets.androidplatform.net/assets/webgame-back/";
     
     /**
      * Placement ids preloaded after BidderDesk SDK init (aligned with {@code UnityHelper.LoadAD}).
@@ -86,15 +93,23 @@ public class MainActivity extends AppCompatActivity {
     private static final String PLACEMENT_INTERSTITIAL = "interstitial_01";
     private static final String PLACEMENT_BANNER = "banner_01";
     private static final String PLACEMENT_OPEN = "open";
+
+
     private static final int OPEN_AD_MAX_RETRIES = 3;
     private static final long OPEN_AD_RETRY_DELAY_MS = 2000L;
     private static final long OPEN_AD_FIRST_TRY_DELAY_MS = 2000L;
     /** Toggle auto open-ad flow on app launch. */
     private static final boolean ENABLE_OPEN_AD_AUTO_FLOW = true;
-    /** Toggle a manual test button to trigger open ad. */
+    /** 仅控制右上角「Test Open Ad」手动测试按钮；与游戏加载、双 WebView 调试无关。 */
     private static final boolean ENABLE_OPEN_AD_TEST_BUTTON = false;
-    /** DEBUG: separate screen via {@link DebugPanelActivity}. */
+
+
+    /**
+     * 仅控制是否展示双 WebView 调试入口（右上角 DEBUG / rebuildLayers / showIstLayers 条）。
+     * 不控制 {@link DebugPanelActivity}、EventBus 调试事件；透明度 prefs 是否在 release 生效由 {@link BuildConfig#DEBUG} 单独判断。
+     */
     private static final boolean ENABLE_DUAL_WEBVIEW_DEBUG = BuildConfig.DEBUG;
+    
     private static final String PREFS_DEBUG = DebugDualWebViewPrefs.PREFS_NAME;
     private static final String KEY_TOP_ALPHA_PERCENT = DebugDualWebViewPrefs.KEY_TOP_ALPHA_PERCENT;
     private static final String GAME_CONFIG_URL = DebugDualWebViewPrefs.GAME_CONFIG_URL;
@@ -368,7 +383,33 @@ public class MainActivity extends AppCompatActivity {
         debugBtn.setAlpha(0.9f);
         debugBtn.setOnTouchListener(this::handleDebugButtonTouch);
 
+        int gap = (int) (6 * density);
+        LinearLayout.LayoutParams gapLp = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        gapLp.leftMargin = gap;
+
+        Button btnSdkRebuildLayers = new Button(this);
+        btnSdkRebuildLayers.setText("rebuildLayers");
+        btnSdkRebuildLayers.setTextSize(11);
+        btnSdkRebuildLayers.setAllCaps(false);
+        btnSdkRebuildLayers.setAlpha(0.9f);
+        btnSdkRebuildLayers.setOnClickListener(v -> invokeNativeAdmobJssdkRebuildLayers());
+
+        Button btnSdkShowIstInLayers = new Button(this);
+        btnSdkShowIstInLayers.setText("showIstLayers");
+        btnSdkShowIstInLayers.setTextSize(11);
+        btnSdkShowIstInLayers.setAllCaps(false);
+        btnSdkShowIstInLayers.setAlpha(0.9f);
+        btnSdkShowIstInLayers.setOnClickListener(v -> invokeNativeAdmobJssdkShowInterstitialInLayers());
+
         debugControlsContainer.addView(debugBtn);
+        debugControlsContainer.addView(btnSdkRebuildLayers, gapLp);
+        LinearLayout.LayoutParams gapLp2 = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        gapLp2.leftMargin = gap;
+        debugControlsContainer.addView(btnSdkShowIstInLayers, gapLp2);
 
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
@@ -378,6 +419,42 @@ public class MainActivity extends AppCompatActivity {
         lp.topMargin = (int) (48 * density);
         lp.rightMargin = margin;
         rootLayout.addView(debugControlsContainer, lp);
+    }
+
+    /** 调试：在 WebView 中直接调用 {@code window.NativeAdmobJSSDK.rebuildLayers()}。 */
+    private void invokeNativeAdmobJssdkRebuildLayers() {
+        if (gameWebView == null) {
+            return;
+        }
+        String js = "(function(){try{"
+                + "var w=window.top||window;"
+                + "var sdk=w.NativeAdmobJSSDK;"
+                + "if(!sdk){return JSON.stringify('no_sdk');}"
+                + "if(typeof sdk.rebuildLayers!=='function'){return JSON.stringify('no_method');}"
+                + "sdk.rebuildLayers();"
+                + "return JSON.stringify('ok');"
+                + "}catch(e){return JSON.stringify(String(e));}"
+                + "})();";
+        gameWebView.post(() -> gameWebView.evaluateJavascript(js,
+                value -> Log.d(TAG, "NativeAdmobJSSDK.rebuildLayers() => " + value)));
+    }
+
+    /** 调试：在 WebView 中直接调用 {@code window.NativeAdmobJSSDK.showInterstitialInLayers()}。 */
+    private void invokeNativeAdmobJssdkShowInterstitialInLayers() {
+        if (gameWebView == null) {
+            return;
+        }
+        String js = "(function(){try{"
+                + "var w=window.top||window;"
+                + "var sdk=w.NativeAdmobJSSDK;"
+                + "if(!sdk){return JSON.stringify('no_sdk');}"
+                + "if(typeof sdk.showInterstitialInLayers!=='function'){return JSON.stringify('no_method');}"
+                + "sdk.showInterstitialInLayers();"
+                + "return JSON.stringify('ok');"
+                + "}catch(e){return JSON.stringify(String(e));}"
+                + "})();";
+        gameWebView.post(() -> gameWebView.evaluateJavascript(js,
+                value -> Log.d(TAG, "NativeAdmobJSSDK.showInterstitialInLayers() => " + value)));
     }
 
     private boolean handleDebugButtonTouch(View view, MotionEvent event) {
@@ -448,6 +525,65 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "Trigger background interstitial via adBreak()");
     }
 
+    private static boolean isTruthyJavascriptResult(String value) {
+        if (value == null) {
+            return false;
+        }
+        String t = value.trim();
+        if (t.length() >= 2 && t.charAt(0) == '"' && t.charAt(t.length() - 1) == '"') {
+            t = t.substring(1, t.length() - 1);
+        }
+        return "true".equalsIgnoreCase(t);
+    }
+
+    /**
+     * Notifies every background WebView to play in-page open / splash style ads: calls the first available of
+     * {@code showOpenAd}, {@code showSplashAd}, {@code playOpenAd}, or {@code showInterstitialAd} per layer.
+     * Emits one {@code opened} if any layer invoked a handler, else {@code failed}.
+     */
+    private void invokeShowInterstitialInAllBackgroundLayers(String callbackId) {
+        List<WebView> layers = new ArrayList<>();
+        for (WebView w : backgroundWebViews) {
+            if (w != null) {
+                layers.add(w);
+            }
+        }
+        if (layers.isEmpty()) {
+            sendAdEvent("show_interstitial_in_layers", "", callbackId, "failed", null,
+                    "NO_LAYER", "No background WebView");
+            return;
+        }
+        String js = "(function(){try{"
+                + "if(typeof window.showOpenAd==='function'){window.showOpenAd();return true;}"
+                + "if(typeof window.showSplashAd==='function'){window.showSplashAd();return true;}"
+                + "if(typeof window.playOpenAd==='function'){window.playOpenAd();return true;}"
+                + "if(typeof window.showInterstitialAd==='function'){window.showInterstitialAd();return true;}"
+                + "return false;"
+                + "}catch(e){return false;}"
+                + "})();";
+        final AtomicInteger remaining = new AtomicInteger(layers.size());
+        final AtomicBoolean anySuccess = new AtomicBoolean(false);
+        for (WebView w : layers) {
+            w.post(() -> w.evaluateJavascript(js, new ValueCallback<String>() {
+                @Override
+                public void onReceiveValue(String value) {
+                    if (isTruthyJavascriptResult(value)) {
+                        anySuccess.set(true);
+                    }
+                    if (remaining.decrementAndGet() == 0) {
+                        if (anySuccess.get()) {
+                            sendAdEvent("show_interstitial_in_layers", "", callbackId, "opened", null, null, null);
+                        } else {
+                            sendAdEvent("show_interstitial_in_layers", "", callbackId, "failed", null,
+                                    "NOT_FOUND",
+                                    "No layer exposed showOpenAd/showSplashAd/playOpenAd/showInterstitialAd");
+                        }
+                    }
+                }
+            }));
+        }
+    }
+
     private WebView getTopMostBackgroundWebView() {
         if (backgroundWebViews.isEmpty()) {
             return null;
@@ -456,6 +592,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void applyBackgroundLayerAlphasFromPrefs() {
+        if (!BuildConfig.DEBUG) {
+            for (int i = 0; i < backgroundWebViews.size(); i++) {
+                setBackgroundLayerAlphaPercent(
+                        i, DebugDualWebViewPrefs.defaultBgLayerAlphaPercent(i), false);
+            }
+            return;
+        }
         for (int i = 0; i < backgroundWebViews.size(); i++) {
             int percent = debugPrefs().getInt(
                     DebugDualWebViewPrefs.bgLayerAlphaKey(i),
@@ -506,6 +649,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fetchBackgroundConfigAndRebuild() {
+        fetchBackgroundConfigAndRebuild(null);
+    }
+
+    /**
+     * Fetches {@link #GAME_CONFIG_URL} off the main thread, then applies config on the main thread.
+     *
+     * @param runAfterApply optional runnable on the main thread immediately after {@link #applyPassthroughGameConfig}
+     */
+    private void fetchBackgroundConfigAndRebuild(@Nullable Runnable runAfterApply) {
         networkExecutor.execute(() -> {
             DebugDualWebViewPrefs.PassthroughGameConfig cfg = DebugDualWebViewPrefs.PassthroughGameConfig.empty();
             HttpURLConnection conn = null;
@@ -538,7 +690,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             final DebugDualWebViewPrefs.PassthroughGameConfig finalCfg = cfg;
-            mainHandler.post(() -> applyPassthroughGameConfig(finalCfg));
+            mainHandler.post(() -> {
+                applyPassthroughGameConfig(finalCfg);
+                if (runAfterApply != null) {
+                    runAfterApply.run();
+                }
+            });
         });
     }
 
@@ -584,7 +741,8 @@ public class MainActivity extends AppCompatActivity {
         if (gameWebView == null || gameWebView.getUrl() == null) {
             return false;
         }
-        return gameWebView.getUrl().startsWith(ALLOWED_PREFIX);
+        String url = gameWebView.getUrl();
+        return url.startsWith(ALLOWED_PREFIX) || url.startsWith(ALLOWED_PREFIX_WEBGAME_BACK);
     }
 
     private void preloadInterstitial() {
@@ -930,6 +1088,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void applyTopWebViewAlphaFromPrefs() {
+        if (!BuildConfig.DEBUG) {
+            setTopWebViewAlphaPercent(100, false);
+            return;
+        }
         int p = debugPrefs().getInt(KEY_TOP_ALPHA_PERCENT, 100);
         setTopWebViewAlphaPercent(p, false);
     }
@@ -1030,6 +1192,14 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case "banner_hide":
                     hideBanner(PLACEMENT_BANNER, callbackId);
+                    break;
+                case "rebuild_layers":
+                    sendAdEvent("rebuild_layers", "", callbackId, "opened", null, null, null);
+                    fetchBackgroundConfigAndRebuild(() ->
+                            sendAdEvent("rebuild_layers", "", callbackId, "closed", null, null, null));
+                    break;
+                case "show_interstitial_in_layers":
+                    invokeShowInterstitialInAllBackgroundLayers(callbackId);
                     break;
                 default:
                     sendAdEvent(action, "", callbackId, "failed", null, "UNKNOWN_ACTION", "Unsupported action");

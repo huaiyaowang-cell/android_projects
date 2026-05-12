@@ -1,11 +1,11 @@
 /**
  * Happy Glass — 父页面广告桥接（AdSense / adBreak）
+ * 与原生通信统一经 {@link window.NativeAdmobJSSDK}（见 native-admob-jssdk.js）。
  */
 (function () {
   "use strict";
 
   var gameFrame = document.getElementById("hgGameFrame");
-  var nativePending = Object.create(null);
 
   function isOfflineEnvironment() {
     var isFileProtocol = false;
@@ -65,110 +65,38 @@
     });
   }
 
+  function sdk() {
+    return window.NativeAdmobJSSDK;
+  }
+
   function isNativeBridgeReady() {
-    return !!(window.AndroidBridge && typeof window.AndroidBridge.requestAd === "function");
+    return sdk() && typeof sdk().isAvailable === "function" && sdk().isAvailable();
   }
-
-  function nativeRequest(action, placement, position) {
-    return new Promise(function (resolve, reject) {
-      if (!isNativeBridgeReady()) {
-        reject(new Error("native_bridge_unavailable"));
-        return;
-      }
-      var callbackId = "native_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2);
-      nativePending[callbackId] = { action: action, resolve: resolve, reject: reject, rewarded: false };
-      try {
-        window.AndroidBridge.requestAd(JSON.stringify({
-          action: action,
-          placement: placement || "",
-          position: position || "bottom",
-          callbackId: callbackId
-        }));
-      } catch (e) {
-        delete nativePending[callbackId];
-        reject(e);
-      }
-    });
-  }
-
-  function handleNativeEvent(event) {
-    if (!event || !event.callbackId) return;
-    var pending = nativePending[event.callbackId];
-    if (!pending) return;
-
-    if (event.phase === "reward") {
-      pending.rewarded = true;
-      return;
-    }
-
-    if (event.phase === "failed") {
-      delete nativePending[event.callbackId];
-      var errMsg = event.error && event.error.message ? event.error.message : "native_ad_failed";
-      pending.reject(new Error(errMsg));
-      return;
-    }
-
-    if (pending.action === "rewarded" && event.phase === "closed") {
-      delete nativePending[event.callbackId];
-      pending.resolve({ rewardGranted: !!pending.rewarded });
-      return;
-    }
-
-    if (pending.action === "interstitial" && event.phase === "closed") {
-      delete nativePending[event.callbackId];
-      pending.resolve({});
-      return;
-    }
-
-    if (pending.action === "banner_show" && event.phase === "opened") {
-      delete nativePending[event.callbackId];
-      pending.resolve({});
-      return;
-    }
-
-    if (pending.action === "banner_hide" && event.phase === "closed") {
-      delete nativePending[event.callbackId];
-      pending.resolve({});
-    }
-  }
-
-  var previousNativeAdEvent = window.onNativeAdEvent;
-  window.onNativeAdEvent = function (event) {
-    try {
-      handleNativeEvent(event);
-    } catch (e) {}
-    if (typeof previousNativeAdEvent === "function") {
-      try { previousNativeAdEvent(event); } catch (e) {}
-    }
-  };
 
   function showCommercialBreakNativeFirst() {
     if (isNativeBridgeReady()) {
-      return nativeRequest("interstitial", "poki_commercial", "bottom");
+      return sdk().showInterstitial("poki_commercial");
     }
     return showCommercialBreak();
   }
 
   function showRewardedBreakNativeFirst() {
     if (isNativeBridgeReady()) {
-      return nativeRequest("rewarded", "poki_rewarded", "bottom")
-        .then(function (result) {
-          return { rewardGranted: !!(result && result.rewardGranted) };
-        });
+      return sdk().showRewarded("poki_rewarded");
     }
     return showRewardedBreak();
   }
 
   function hideBannerOnGameplayStart() {
     if (isNativeBridgeReady()) {
-      return nativeRequest("banner_hide", "poki_gameplay", "bottom");
+      return sdk().hideBanner("poki_gameplay");
     }
     return Promise.resolve({});
   }
 
   function showBannerOnGameplayStop() {
     if (isNativeBridgeReady()) {
-      return nativeRequest("banner_show", "poki_gameplay", "bottom");
+      return sdk().showBanner("bottom", "poki_gameplay");
     }
     return Promise.resolve({});
   }
@@ -195,4 +123,3 @@
       });
   });
 })();
-

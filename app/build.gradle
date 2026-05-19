@@ -15,8 +15,8 @@ android {
         ndk {
             abiFilters 'armeabi-v7a', 'arm64-v8a'
         }
-        versionCode 20
-        versionName '1.2.0'
+        versionCode 31
+        versionName '1.3.1'
     }
 
     buildTypes {
@@ -28,6 +28,12 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
+    }
+
+    // AAPT 默认会忽略 assets 下以 _ 开头的目录（如 Unity Addressables 的 _prefabs），
+    // 导致 hudscreen 等 bundle 不会进入 APK。覆盖 ignore 规则即可正常打包。
+    androidResources {
+        ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:!CVS:!thumbs.db:!picasa.ini:!*~'
     }
 
 }

@@ -1,5 +1,7 @@
 /**
- * Happy Glass — iframe 内游戏侧广告桥接
+ * My Perfect Hotel — iframe 内游戏侧广告桥接
+ * 将 PokiSDK.commercialBreak / rewardedBreak 通过 postMessage 交给父页面执行。
+ * 需在 poki-sdk-stub.js 之后、Unity loader 之前加载。
  */
 (function () {
   "use strict";
@@ -32,7 +34,11 @@
       pending[requestId] = { resolve: resolve, reject: reject };
       try {
         parentWin.postMessage(
-          { type: "poki_ad_request", requestId: requestId, payload: payload || {} },
+          {
+            type: "poki_ad_request",
+            requestId: requestId,
+            payload: payload || {},
+          },
           "*"
         );
       } catch (e) {
@@ -42,7 +48,7 @@
     });
   }
 
-  window.addEventListener("message", function (event) {
+  function onMessage(event) {
     var data = event && event.data;
     if (!data || data.type !== "poki_ad_response") return;
     var p = pending[data.requestId];
@@ -50,19 +56,13 @@
     delete pending[data.requestId];
     if (data.ok) p.resolve(data.result || {});
     else p.reject(new Error(data.error || "poki_ad_request_failed"));
-  });
+  }
+
+  window.addEventListener("message", onMessage);
 
   var origCommercial =
     typeof PokiSDK.commercialBreak === "function"
       ? PokiSDK.commercialBreak.bind(PokiSDK)
-      : null;
-  var origGameplayStart =
-    typeof PokiSDK.gameplayStart === "function"
-      ? PokiSDK.gameplayStart.bind(PokiSDK)
-      : null;
-  var origGameplayStop =
-    typeof PokiSDK.gameplayStop === "function"
-      ? PokiSDK.gameplayStop.bind(PokiSDK)
       : null;
 
   PokiSDK.commercialBreak = function () {
@@ -83,24 +83,6 @@
       });
   };
 
-  PokiSDK.gameplayStart = function () {
-    return postRequest({ kind: "gameplayStart" })
-      .catch(function (err) {
-        console.warn("[poki-ad-client] gameplayStart 失败，回退本地:", err);
-      })
-      .then(function () {
-        if (origGameplayStart) origGameplayStart();
-      });
-  };
-
-  PokiSDK.gameplayStop = function () {
-    return postRequest({ kind: "gameplayStop" })
-      .catch(function (err) {
-        console.warn("[poki-ad-client] gameplayStop 失败，回退本地:", err);
-      })
-      .then(function () {
-        if (origGameplayStop) origGameplayStop();
-      });
-  };
+  console.log("[poki-ad-client] 已启用父页面广告代理（commercialBreak / rewardedBreak）");
 })();
 

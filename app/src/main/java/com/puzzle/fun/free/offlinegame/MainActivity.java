@@ -1,8 +1,12 @@
 package com.puzzle.fun.free.offlinegame;
 
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
@@ -39,7 +43,11 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function0;
@@ -53,12 +61,16 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String WEB_GAME_URL = "https://appassets.androidplatform.net/assets/webgame/index.html";
     private static final String ALLOWED_PREFIX = "https://appassets.androidplatform.net/assets/webgame/";
+    /** WebViewAssetLoader 虚拟域，与 {@link WebViewAssetLoader.Builder} 默认一致。 */
+    private static final String APP_ASSETS_HOST = "appassets.androidplatform.net";
+    /** 启动页 logo（与 game.html 中引用路径一致）。 */
+    private static final String WEBGAME_LOGO_ASSET_PATH = "webgame/__assets__/icon.png";
     
     /**
      * Placement ids preloaded after BidderDesk SDK init (aligned with {@code UnityHelper.LoadAD}).
      */
     private static final String[] BIDDER_DESK_PLACEMENTS = new String[]{
-            "reward_01", "interstitial_01",
+            "reward_01", "interstitial_01","native",
             "banner_01",
             "open"
     };
@@ -81,6 +93,14 @@ public class MainActivity extends AppCompatActivity {
     private static final int INTERSTITIAL_MIN_INTERVAL_SECONDS = 30;
     /** Toggle AdMob test ad fallback (TEST_* ids) in code. */
     private static final boolean ENABLE_ADMOB_TEST_FALLBACK = false;
+    /** 顶部 banner/native 区域预留（屏幕像素），避免遮挡游戏。 */
+    private static final float WEBVIEW_AD_TOP_RESERVE_PX = 120f;
+    /** 底部 banner/native 区域预留（屏幕像素）。 */
+    private static final float WEBVIEW_AD_BOTTOM_RESERVE_PX = 100f;
+    /**
+     * BidderDesk 激励若中途关闭且 SDK 不回调 {@code invoke}，H5 会一直等；超时补发 {@code closed}（与 web 端 120s 兜底一致）。
+     */
+    private static final long BIDDER_DESK_REWARDED_FALLBACK_CLOSED_MS = 120_000L;
 
     private FrameLayout rootLayout;
     private WebView gameWebView;
@@ -99,6 +119,9 @@ public class MainActivity extends AppCompatActivity {
     private int openAdRetryCount;
     private final Runnable openAdRetryTask = () -> maybeShowNativeOpenAd("retry");
     private final Runnable openAdFirstTryTask = () -> maybeShowNativeOpenAd("delayed_first_try");
+
+    private final Handler bidderDeskRewardedHandler = new Handler(Looper.getMainLooper());
+    private final ConcurrentHashMap<String, Runnable> bidderDeskRewardedFallbackByCallback = new ConcurrentHashMap<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -168,16 +191,78 @@ public class MainActivity extends AppCompatActivity {
                 if (request == null || request.getUrl() == null) {
                     return null;
                 }
-                return assetLoader.shouldInterceptRequest(request.getUrl());
+                Uri uri = request.getUrl();
+                WebResourceResponse logo = tryBuildLogoWebResourceResponse(uri);
+                if (logo != null) {
+                    return logo;
+                }
+                return assetLoader.shouldInterceptRequest(uri);
+            }
+
+            @SuppressWarnings("deprecation")
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+                if (url == null) {
+                    return null;
+                }
+                try {
+                    Uri uri = Uri.parse(url);
+                    WebResourceResponse logo = tryBuildLogoWebResourceResponse(uri);
+                    if (logo != null) {
+                        return logo;
+                    }
+                    return assetLoader.shouldInterceptRequest(uri);
+                } catch (Exception e) {
+                    return null;
+                }
             }
         });
         gameWebView.addJavascriptInterface(new JsBridge(), "AndroidBridge");
 
-        rootLayout.addView(gameWebView, new FrameLayout.LayoutParams(
+        int adTopReservePx = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_PX,
+                WEBVIEW_AD_TOP_RESERVE_PX,
+                getResources().getDisplayMetrics());
+        int adBottomReservePx = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_PX,
+                WEBVIEW_AD_BOTTOM_RESERVE_PX,
+                getResources().getDisplayMetrics());
+        FrameLayout.LayoutParams webLp = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT
-        ));
+        );
+        webLp.topMargin = adTopReservePx;
+        webLp.bottomMargin = adBottomReservePx;
+        rootLayout.addView(gameWebView, webLp);
         gameWebView.loadUrl(WEB_GAME_URL);
+    }
+
+    /**
+     * iframe 内请求 logo 时，部分 WebView 对 {@link WebViewAssetLoader} 返回的图片会做 ORB 拦截；
+     * 对约定 URL 从 assets 直出并附带 CORS / CORP 头，避免裂图。
+     */
+    @Nullable
+    private WebResourceResponse tryBuildLogoWebResourceResponse(@Nullable Uri uri) {
+        if (uri == null) {
+            return null;
+        }
+        if (!APP_ASSETS_HOST.equalsIgnoreCase(uri.getHost())) {
+            return null;
+        }
+        String path = uri.getPath();
+        if (path == null || !path.contains("/webgame/__assets__/icon.png")) {
+            return null;
+        }
+        try {
+            InputStream is = getAssets().open(WEBGAME_LOGO_ASSET_PATH);
+            Map<String, String> headers = new HashMap<>();
+            headers.put("Access-Control-Allow-Origin", "*");
+            headers.put("Cross-Origin-Resource-Policy", "cross-origin");
+            return new WebResourceResponse("image/png", null, 200, "OK", headers, is);
+        } catch (IOException e) {
+            Log.w(TAG, "Logo asset open failed: " + WEBGAME_LOGO_ASSET_PATH, e);
+            return null;
+        }
     }
 
     private void setupOpenAdTestButton() {
@@ -275,6 +360,7 @@ public class MainActivity extends AppCompatActivity {
                 preloadInterstitial();
             }
 
+            /** 全屏被关闭即回调（与是否“看完”无关），用于通知 H5 结束等待。 */
             @Override
             public void onAdDismissedFullScreenContent() {
                 sendAdEvent("interstitial", placement, callbackId, "closed", null, null, null);
@@ -331,6 +417,10 @@ public class MainActivity extends AppCompatActivity {
                 preloadRewarded();
             }
 
+            /**
+             * 激励全屏被关闭即回调（提前关或正常关都会走），与是否发放奖励无关；
+             * 奖励仅由 {@code show(..., OnUserEarnedRewardListener)} 触发 {@link #sendRewardEvent}。
+             */
             @Override
             public void onAdDismissedFullScreenContent() {
                 sendAdEvent("rewarded", placement, callbackId, "closed", null, null, null);
@@ -449,6 +539,23 @@ public class MainActivity extends AppCompatActivity {
         maybeShowNativeOpenAd("manual_test_button");
     }
 
+    private void scheduleBidderDeskRewardedFallbackClosed(String placement, String callbackId) {
+        cancelBidderDeskRewardedFallback(callbackId);
+        Runnable task = () -> {
+            bidderDeskRewardedFallbackByCallback.remove(callbackId);
+            sendAdEvent("rewarded", placement, callbackId, "closed", null, null, null);
+        };
+        bidderDeskRewardedFallbackByCallback.put(callbackId, task);
+        bidderDeskRewardedHandler.postDelayed(task, BIDDER_DESK_REWARDED_FALLBACK_CLOSED_MS);
+    }
+
+    private void cancelBidderDeskRewardedFallback(String callbackId) {
+        Runnable task = bidderDeskRewardedFallbackByCallback.remove(callbackId);
+        if (task != null) {
+            bidderDeskRewardedHandler.removeCallbacks(task);
+        }
+    }
+
     /**
      * BidderDesk mediation path (same idea as {@code UnityHelper.ShowAD}).
      *
@@ -468,6 +575,7 @@ public class MainActivity extends AppCompatActivity {
                             + ", costMs=" + (System.currentTimeMillis() - startMs));
                     runOnUiThread(() -> {
                         if ("rewarded".equals(action)) {
+                            cancelBidderDeskRewardedFallback(callbackId);
                             sendBidderDeskRewardEvent(placement, callbackId);
                         }
                         sendAdEvent(action, placement, callbackId, "closed", null, null, null);
@@ -480,6 +588,9 @@ public class MainActivity extends AppCompatActivity {
                     + ", costMs=" + (System.currentTimeMillis() - startMs));
             if (shown) {
                 sendAdEvent(action, placement, callbackId, "opened", null, null, null);
+                if ("rewarded".equals(action)) {
+                    scheduleBidderDeskRewardedFallbackClosed(placement, callbackId);
+                }
             }
             return shown;
         } catch (Exception e) {
@@ -536,6 +647,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         rootLayout.removeCallbacks(openAdFirstTryTask);
         rootLayout.removeCallbacks(openAdRetryTask);
+        bidderDeskRewardedHandler.removeCallbacksAndMessages(null);
+        bidderDeskRewardedFallbackByCallback.clear();
         EventBus.getDefault().unregister(this);
         if (gameWebView != null) {
             gameWebView.removeJavascriptInterface("AndroidBridge");
@@ -599,8 +712,8 @@ public class MainActivity extends AppCompatActivity {
         if (ENABLE_OPEN_AD_AUTO_FLOW) {
             maybeShowNativeOpenAd("onAdSdkInitComplete");
         }
-
-        ADManager.Companion.getAsInstance().createBanner(this, rootLayout, "banner", new IAdListener() {
+        ADManager.Companion.getAsInstance().ShowNativeAD(this);
+        ADManager.Companion.getAsInstance().createBanner(this, rootLayout, "banner_01", new IAdListener() {
             @Override
             public void reward(@Nullable String s, boolean b, @Nullable HashMap<String, Object> hashMap) {
             }

@@ -1,12 +1,10 @@
 package com.puzzle.fun.free.offlinegame;
 
 import android.app.ActivityManager;
-import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 import com.bidderdesk.BaseApp;
 import com.bidderdesk.SdkManager;
-import com.bidderdesk.SpUtil;
 import com.tencent.mmkv.MMKV;
 
 public class App extends BaseApp {

@@ -1,6 +1,13 @@
 /**
  * RequestGuard — 拦截 fetch / XMLHttpRequest / sendBeacon
- * 默认阻断部分广告/统计域名后缀，其余放行。
+ *
+ * 所有请求只通过「中间件」判定是否合法：
+ *   middleware(请求地址字符串) → true 放行，false 拦截（非 true 一律视为拦截）
+ *
+ * 默认中间件：禁止访问 `AD_HOST_SUFFIXES` 中配置的域名（hostname 精确匹配或后缀匹配），
+ * 其余 URL 一律放行；`blob:` / `data:` / `about:` 始终放行（无 hostname 拦截）。
+ *
+ * 预置：window.__REQUEST_GUARD_CONFIG__ = { blockedHostSuffixes: [...], middleware: fn };
  */
 (function (global) {
   "use strict";
@@ -12,6 +19,7 @@
     "game-cdn.poki.com",
     "game-cdn.poki.io",
     "game-cdn.poki.net",
+    "game-cdn.poki.org",
     "game-cdn.poki.org",
   ];
 
@@ -77,6 +85,8 @@
   var XHR = global.XMLHttpRequest;
   var _origXhrOpen = XHR && XHR.prototype.open;
   var _origXhrSend = XHR && XHR.prototype.send;
+
+  var installed = false;
 
   function logBlocked(url, kind, extra) {
     try {
@@ -157,8 +167,12 @@
           body: body,
         })
       ) {
-        try { this.dispatchEvent(new Event("error")); } catch (e) {}
-        try { if (typeof this.onerror === "function") this.onerror(); } catch (e2) {}
+        try {
+          this.dispatchEvent(new Event("error"));
+        } catch (e) {}
+        try {
+          if (typeof this.onerror === "function") this.onerror();
+        } catch (e2) {}
         return;
       }
       return _origXhrSend.apply(this, arguments);
@@ -179,12 +193,43 @@
   }
 
   function install() {
+    if (installed) return;
     installFetch();
     installXHR();
     installBeacon();
+    installed = true;
   }
 
-  global.RequestGuard = {
+  function uninstall() {
+    if (_origFetch && global.fetch.__requestGuardPatched) {
+      global.fetch = _origFetch;
+      delete global.fetch.__requestGuardPatched;
+    }
+    if (_origXhrOpen && XHR.prototype.open.__requestGuardPatched) {
+      XHR.prototype.open = _origXhrOpen;
+      XHR.prototype.send = _origXhrSend;
+      delete XHR.prototype.open.__requestGuardPatched;
+    }
+    if (_origSendBeacon && global.navigator.sendBeacon.__requestGuardPatched) {
+      global.navigator.sendBeacon = _origSendBeacon;
+      delete global.navigator.sendBeacon.__requestGuardPatched;
+    }
+    installed = false;
+  }
+
+  var RequestGuard = {
+    defaultMiddleware: defaultMiddleware,
+
+    getBlockedHostSuffixes: function () {
+      return blockedHostSuffixes.slice();
+    },
+
+    setBlockedHostSuffixes: function (arr) {
+      blockedHostSuffixes =
+        arr && arr.length ? arr.slice() : AD_HOST_SUFFIXES.slice();
+      return this;
+    },
+
     configure: function (options) {
       options = options || {};
       if ("middleware" in options) {
@@ -201,9 +246,39 @@
       install();
       return this;
     },
+
+    setMiddleware: function (fn) {
+      config.middleware = typeof fn === "function" ? fn : defaultMiddleware;
+      install();
+      return this;
+    },
+
+    setLogAllRequests: function (on) {
+      config.logAllRequests = !!on;
+      return this;
+    },
+
+    getMiddleware: function () {
+      return config.middleware;
+    },
+
+    isAllowed: function (url) {
+      if (url == null || url === "") return false;
+      var s = String(url);
+      try {
+        var fn = config.middleware;
+        if (typeof fn !== "function") return false;
+        return fn(s) === true;
+      } catch (e) {
+        return false;
+      }
+    },
+
     install: install,
+    uninstall: uninstall,
   };
 
+  global.RequestGuard = RequestGuard;
   install();
 })(typeof window !== "undefined" ? window : this);
 

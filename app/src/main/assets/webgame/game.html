@@ -4,9 +4,9 @@
   <script src="request-guard.js"></script>
   <script src="poki-sdk-stub.js"></script>
   <script src="poki-ad-bridge-client.js"></script>
+	<meta charset="utf-8">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  	<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1, minimum-scale=1,maximum-scale=1"/>
-	<title>Happy Glass - Poki</title>
+	<title>My Perfect Hotel - Poki</title>
 	<script>
 	window.config = {
 		loader: 'unity-2020',
@@ -14,26 +14,127 @@
 		maxRatio: 24 / 9,
 		minRatio: 9 / 24,
 
-		title: 'Happy Glass',
-		thumbnail: 'https:\/\/img.poki-cdn.com\/649f916152c6defac7c09dbaf29f74e9.jfif',
+		title: 'My Perfect Hotel',
+		thumbnail: 'https:\/\/img.poki-cdn.com\/f39e22538799cae88cf1a630492c2e7b.png',
 		numScreenshots:  4 ,
 
-		unityVersion: '2021.3.45f1',
+		unityVersion: '2022.3.62f2',
 		unityWebglBuildUrl: '',
 
-		fileSize:  12 ,
+		fileSize:  8 ,
 		cachedDecompressedFileSizes: {
-			'2034c3a3f31fb182d5dab076c578d580.framework.js.br':  76997 ,
-			'95d6764c749dfc845fdc8176ba7206d7.data.br':  6509688 ,
-			'a4ab965b7735e46ca3f22b32204cb8c5.wasm.br':  5509867 ,
-			'e40682cd4a2e8826aa72fb3216daf773.loader.js':  5988 ,
+			'101a0553a2917fd4c62a7e2159d30814.data':  2054105 ,
+			'2809ee090e7f1bf0e1a32425590981e7.framework.js':  73124 ,
+			'9d94f3fbc22c5914756c67722e0cdaca.wasm':  6104744 ,
+			'ea153e321edf23b9a40b38d65ce41d01.loader.js':  6774 ,
 		},
-		"metadata": {"poki_template_version":1,"background_color":"#000000","code_filename":"a4ab965b7735e46ca3f22b32204cb8c5.wasm.br","company_name":"Game5mobile","data_filename":"95d6764c749dfc845fdc8176ba7206d7.data.br","development_player":"false","framework_filename":"2034c3a3f31fb182d5dab076c578d580.framework.js.br","height":"600","loader_filename":"e40682cd4a2e8826aa72fb3216daf773.loader.js","product_name":"Happy Glass","product_version":"1.2.4","splash_screen_style":"Dark","unity_version":"2021.3.45f1","use_data_caching":"true","use_threads":"false","use_wasm":"true","use_webgl_1_0":"true","use_webgl_2_0":"true","width":"960"}
+		"metadata": {"poki_template_version":1,"background_color":"#00C565","code_filename":"9d94f3fbc22c5914756c67722e0cdaca.wasm","company_name":"master","data_filename":"101a0553a2917fd4c62a7e2159d30814.data","decompression_fallback":"Disabled","development_player":"false","framework_filename":"2809ee090e7f1bf0e1a32425590981e7.framework.js","height":"1920","loader_filename":"ea153e321edf23b9a40b38d65ce41d01.loader.js","product_name":"My Hotel","product_version":"1.0.3","splash_screen_style":"Dark","unity_version":"2022.3.62f2","use_data_caching":"true","use_threads":"false","use_wasm":"true","use_webgl_1_0":"false","use_webgl_2_0":"true","width":"1080"}
 	};
 	</script>
+<!-- will be copied to the resulting head //-->
 </head>
 <body>
-	<script src="master-loader.js"></script>
+	<!-- loaind-start -->
+	<style>
+		#loading-container {
+		  position: fixed;
+		  top: 0;
+		  left: 0;
+		  width: 100vw;
+		  height: 100vh;
+		  backdrop-filter: blur(30px);
+		  background-size: cover;
+		  z-index: 10000;
+		}
+		.loading-header-logo {
+		  position: absolute;
+		  width: 40%;
+		  top: 120px;
+		  left: 50%;
+		  transform: translateX(-50%);
+		}
+		.loading-header-logo-image {
+		  width: 100%;
+		  border-radius: 5px;
+		}
+		.loading-progress-text {
+		  text-align: center;
+		  position: absolute;
+		  width: 100%;
+		  bottom: 330px;
+		  font-size: 20px;
+		  color: white;
+		}
+		.loading-progress-bar {
+		  position: absolute;
+		  width: 80%;
+		  height: 20px;
+		  background: #0b6084;
+		  margin: auto;
+		  left: 0;
+		  right: 0;
+		  bottom: 300px;
+		  border-radius: 10px;
+		}
+		.loading-progress-bar-inner {
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  width: 0%;
+		  height: 100%;
+		  background: #dbe8ed;
+		  border-radius: 10px;
+		}
+	  </style>
+	   <div id="loading-container" >
+		 <div class="loading-header-logo">
+		   <!-- Android WebView + iframe：相对 __assets__/ 可能解析失败，打包进 APK 时用 appassets 绝对路径 -->
+		   <img src="https://appassets.androidplatform.net/assets/webgame/__assets__/icon.png" class="loading-header-logo-image" alt="logo">
+		 </div>
+		 <div class="loading-progress-text">Loading...</div>
+		 <div class="loading-progress-bar" >
+		   <div class="loading-progress-bar-inner"></div>
+		 </div>
+	   </div>
+	   <script> 
+		let cocosStarted = false;
+		let totalCount = 40;
+		let currentFetchReturnCount = 0;
+		window.updateLoadingProgress = function(progress) {
+		   const loadingProgressBarInner = document.querySelector('.loading-progress-bar-inner');
+		   loadingProgressBarInner && (loadingProgressBarInner.style.width = `${Math.round(progress)}%`);
+		   const loadingProgressText = document.querySelector('.loading-progress-text');
+		   loadingProgressText && (loadingProgressText.textContent = `Loading... ${Math.round(progress)}%`);
+		   if(progress >= 100) {
+			window.removeLoadingContainer();
+		   }
+		}
+		window.removeLoadingContainer = function() {
+		  const loadingContainer = document.getElementById('loading-container');
+		  loadingContainer && loadingContainer.remove();
+		}
+		window.updateLoadingProgressFetch = function() {
+		  currentFetchReturnCount++;
+		  const progress = Math.round(currentFetchReturnCount / totalCount * 100);
+		  updateLoadingProgress(progress);
+		}
+		// 创建 PerformanceObserver 实例，监听资源加载
+		
+		const observer = new PerformanceObserver((list) => {
+		  list.getEntries().forEach((entry) => {
+			// 只关注「资源加载」类型的请求（排除页面、脚本执行等其他类型）
+			if (entry.entryType === 'resource') {
+			  updateLoadingProgressFetch();
+			}
+		  });
+		});
+		observer.observe({
+		  entryTypes: ['resource', 'navigation']
+		});
+	
+	// 停止监听（如需）：observer.disconnect();
+	   </script>
+<!-- loadingend -->
+	<script src="./master-loader.js"></script>
 </body>
 </html>
-

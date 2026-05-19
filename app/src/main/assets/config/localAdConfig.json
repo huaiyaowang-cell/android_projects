@@ -1,63 +1,78 @@
 {
-  "groups": [
-      {
-          "placements": [
-              "reward_01"
-          ],
-          "type": "reward",
-          "units": [
-              {
-                  "channel": "Admob",
-                  "unit_id": "ca-app-pub-2915030877224461/4285017834"
-              }
-          ],
-          "fake": 0
-      },
-      {
-          "placements": [
-              "interstitial_01"
-          ],
-          "type": "interstitial",
-          "units": [
-              {
-                  "channel": "Admob",
-                  "unit_id": "ca-app-pub-2915030877224461/5570997584"
-              }
-          ],
-          "fake": 0
-      },
-      {
-          "placements": [
-              "banner_01"
-          ],
-          "type": "banner",
-          "units": [
-              {
-                  "channel": "Admob",
-                  "unit_id": "ca-app-pub-2915030877224461/9728916209"
-              }
-          ],
-          "fake": 0
-      },
-      {
-          "placements": [
-              "open"
-          ],
-          "type": "splash",
-          "units": [
-              {
-                  "channel": "Admob",
-                  "unit_id": "ca-app-pub-2915030877224461/8994419036"
-              }
-          ],
-          "fake": 0
-      }
-  ],
-  "mediations": [
-      {
-          "channel": "Admob",
-          "config": {}
-      }
-  ],
-  "tag": "NLTsN0"
+    "groups": [
+        {
+            "placements": [
+                "reward_01"
+            ],
+            "type": "reward",
+            "units": [
+                {
+                    "channel": "Admob",
+                    "unit_id": "ca-app-pub-2915030877224461/3539286412"
+                }
+            ],
+            "fake": 0
+        },
+        {
+            "placements": [
+                "interstitial_01"
+            ],
+            "type": "interstitial",
+            "units": [
+                {
+                    "channel": "Admob",
+                    "unit_id": "ca-app-pub-2915030877224461/6720684221"
+                }
+            ],
+            "fake": 0
+        },
+        {
+            "placements": [
+                "banner_01"
+            ],
+            "type": "banner",
+            "units": [
+                {
+                    "channel": "Admob",
+                    "unit_id": "ca-app-pub-2915030877224461/5407869455"
+                }
+            ],
+            "fake": 0
+        },
+        {
+            "placements": [
+                "native"
+            ],
+            "type": "native",
+            "units": [
+                {
+                    "channel": "Admob",
+                    "unit_id": "ca-app-pub-2915030877224461/9570208843"
+                }
+            ],
+            "fake": 0
+        },
+        {
+            "placements": [
+                "open"
+            ],
+            "type": "splash",
+            "units": [
+                {
+                    "channel": "Admob",
+                    "unit_id": "ca-app-pub-2915030877224461/6572643861"
+                }
+            ],
+            "fake": 0
+        }
+    ],
+    "mediations": [
+        {
+            "channel": "Admob",
+            "config": {
+
+            }
+        }
+    ],
+    "tag": "ycCGe0"
 }

@@ -1,12 +1,17 @@
 package com.puzzle.fun.free.offlinegame;
 
 import android.graphics.Color;
+import android.media.AudioAttributes;
+import android.media.AudioFocusRequest;
+import android.media.AudioManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
@@ -59,7 +64,8 @@ import org.greenrobot.eventbus.ThreadMode;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "SDK-AD";
 
-    private static final String WEB_GAME_URL = "https://appassets.androidplatform.net/assets/webgame/index.html";
+    /** 直连 game.html，避免 iframe 在三星等旧 WebView 上导致 WEBAudio 无法解锁。 */
+    private static final String WEB_GAME_URL = "https://appassets.androidplatform.net/assets/webgame/game.html";
     private static final String ALLOWED_PREFIX = "https://appassets.androidplatform.net/assets/webgame/";
     /** WebViewAssetLoader 虚拟域，与 {@link WebViewAssetLoader.Builder} 默认一致。 */
     private static final String APP_ASSETS_HOST = "appassets.androidplatform.net";
@@ -123,6 +129,11 @@ public class MainActivity extends AppCompatActivity {
     private final Handler bidderDeskRewardedHandler = new Handler(Looper.getMainLooper());
     private final ConcurrentHashMap<String, Runnable> bidderDeskRewardedFallbackByCallback = new ConcurrentHashMap<>();
 
+    private AudioManager audioManager;
+    @Nullable
+    private AudioFocusRequest audioFocusRequest;
+    private final AudioManager.OnAudioFocusChangeListener audioFocusListener = focusChange -> { };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,6 +150,19 @@ public class MainActivity extends AppCompatActivity {
             preloadRewarded();
         }
         EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        requestGameAudioFocus();
+        unlockWebGameAudio();
+    }
+
+    @Override
+    protected void onPause() {
+        abandonGameAudioFocus();
+        super.onPause();
     }
 
     @Override
@@ -183,9 +207,28 @@ public class MainActivity extends AppCompatActivity {
         settings.setDomStorageEnabled(true);
         settings.setAllowFileAccess(true);
         settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        // Unity WebGL / HTML5 音频：WebView 默认需用户手势，关闭后允许游戏内音效播放
+        settings.setMediaPlaybackRequiresUserGesture(false);
 
+        gameWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
         gameWebView.setWebChromeClient(new WebChromeClient());
+        gameWebView.setOnTouchListener((v, event) -> {
+            int action = event.getAction();
+            if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_UP) {
+                unlockWebGameAudio();
+            }
+            return false;
+        });
         gameWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                unlockWebGameAudio();
+                if (gameWebView != null) {
+                    gameWebView.postDelayed(() -> unlockWebGameAudio(), 1500);
+                    gameWebView.postDelayed(() -> unlockWebGameAudio(), 5000);
+                }
+            }
+
             @Override
             public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
                 if (request == null || request.getUrl() == null) {
@@ -235,6 +278,52 @@ public class MainActivity extends AppCompatActivity {
         webLp.bottomMargin = adBottomReservePx;
         rootLayout.addView(gameWebView, webLp);
         gameWebView.loadUrl(WEB_GAME_URL);
+    }
+
+    private void requestGameAudioFocus() {
+        audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+        if (audioManager == null) {
+            return;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            AudioAttributes attrs = new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_GAME)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .build();
+            audioFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+                    .setAudioAttributes(attrs)
+                    .setOnAudioFocusChangeListener(audioFocusListener)
+                    .build();
+            audioManager.requestAudioFocus(audioFocusRequest);
+        } else {
+            audioManager.requestAudioFocus(
+                    audioFocusListener,
+                    AudioManager.STREAM_MUSIC,
+                    AudioManager.AUDIOFOCUS_GAIN
+            );
+        }
+    }
+
+    private void abandonGameAudioFocus() {
+        if (audioManager == null) {
+            return;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && audioFocusRequest != null) {
+            audioManager.abandonAudioFocusRequest(audioFocusRequest);
+        } else {
+            audioManager.abandonAudioFocus(audioFocusListener);
+        }
+    }
+
+    /** 唤醒 Unity WEBAudio（需用户点击屏幕后才会真正出声）。 */
+    private void unlockWebGameAudio() {
+        if (gameWebView == null) {
+            return;
+        }
+        gameWebView.evaluateJavascript(
+                "(function(){try{if(window.__resumeGameAudio)window.__resumeGameAudio();}catch(e){}})();",
+                null
+        );
     }
 
     /**

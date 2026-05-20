@@ -1,9 +1,9 @@
 /**
- * My Perfect Hotel — 父页面广告桥接（改为 Native Java 广告，与 APK WebView 一致）
+ * Count War — 父页面广告桥接（Native Java 广告，与 APK WebView 一致）
  */
 (function () {
   "use strict";
-  var gameFrame = document.getElementById("mphGameFrame");
+  var gameFrame = document.getElementById("cwGameFrame");
 
   function sendResponse(event, requestId, ok, result, error) {
     try {

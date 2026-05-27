@@ -1,4 +1,4 @@
-package com.puzzle.fun.free.offlinegame;
+package puzzle.fun.free.bustraffic;
 
 import android.app.ActivityManager;
 import android.content.Context;

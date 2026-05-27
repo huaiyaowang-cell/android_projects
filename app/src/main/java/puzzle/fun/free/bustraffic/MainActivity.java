@@ -1,4 +1,4 @@
-package com.puzzle.fun.free.offlinegame;
+package puzzle.fun.free.bustraffic;
 
 import android.graphics.Color;
 import android.media.AudioAttributes;
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
     /** Toggle AdMob test ad fallback (TEST_* ids) in code. */
     private static final boolean ENABLE_ADMOB_TEST_FALLBACK = false;
     /** 顶部 banner/native 区域预留（屏幕像素），避免遮挡游戏。 */
-    private static final float WEBVIEW_AD_TOP_RESERVE_PX = 120f;
+    private static final float WEBVIEW_AD_TOP_RESERVE_PX = 0;
     /** 底部 banner/native 区域预留（屏幕像素）。 */
     private static final float WEBVIEW_AD_BOTTOM_RESERVE_PX = 100f;
     /**

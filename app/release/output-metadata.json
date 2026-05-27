@@ -4,16 +4,16 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.puzzle.fun.free.offlinegame",
+  "applicationId": "puzzle.fun.free.bustraffic",
   "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 31,
-      "versionName": "1.3.1",
-      "outputFile": "release_v1.3.1.apk"
+      "versionCode": 40,
+      "versionName": "1.2.0",
+      "outputFile": "release_v1.2.0.apk"
     }
   ],
   "elementType": "File"

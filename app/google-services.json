@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "596747592228",
-    "project_id": "happyhotel-5492a",
-    "storage_bucket": "happyhotel-5492a.firebasestorage.app"
+    "project_number": "340970269569",
+    "project_id": "countwar-2f729",
+    "storage_bucket": "countwar-2f729.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:596747592228:android:661674b24d279890e8eeb1",
+        "mobilesdk_app_id": "1:340970269569:android:ff6b9c513f68949a3ed680",
         "android_client_info": {
-          "package_name": "com.puzzle.fun.free.offlinegame"
+          "package_name": "puzzle.fun.free.bustraffic"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDcnsGl6EjQOEBypNmwFV_Dir45K4Y7W68"
+          "current_key": "AIzaSyDv6S36Z-nhX6TILEvxbIoMbprdR6Bnuso"
         }
       ],
       "services": {

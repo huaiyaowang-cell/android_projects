@@ -1,268 +1,1055 @@
 {
-  "gameName": "happy-glass",
-  "pageUrl": "https://poki.com/zh/g/happy-glass#fullscreen",
-  "gameUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/index.html",
-  "engine": "unity",
-  "startedAt": "2026-03-23T10:18:12.901Z",
-  "stoppedAt": "2026-03-23T10:20:51.451Z",
-  "status": "stopped",
+  "manifestVersion": 1,
+  "gameName": "talking-tom-gold-run",
+  "pageUrl": "https://poki.com/zh/g/talking-tom-gold-run#fullscreen",
+  "gameUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/index.html?country=HK&ccpaApplies=0&url_referrer=https%3A%2F%2Fpoki.com%2F&tag=pg-6adefa8a31979fe74151dd4980f0d72f6ca65e93&site_id=73&iso_lang=zh&poki_url=https%3A%2F%2Fpoki.com%2Fzh%2Fg%2Ftalking-tom-gold-run&hoist=yes&nonPersonalized=n&cloudsavegames=n&familyFriendly=n&device=mobile&categories=6%2C9%2C93%2C903%2C1190&game_id=8c68f477-6c9a-4245-a0c0-f4000563c1f7&game_version_id=30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb&inspector=0&csp=1",
+  "portalInfo": {
+    "description": {
+      "faq": [],
+      "sections": [],
+      "summary": "在最受欢迎的免费在线小游戏网站上玩Talking Tom Gold Run！Poki (宝玩)可在您的手机、平板电脑或电脑上运行。无需下载，无需登录。现在就玩！"
+    },
+    "developer": "",
+    "engagement": {
+      "dislikes": "",
+      "likes": ""
+    },
+    "gameSlug": "talking-tom-gold-run",
+    "locale": "zh",
+    "media": {
+      "iconUrl": "https://img.poki-cdn.com/cdn-cgi/image/q=78,scq=50,width=1200,height=1200,fit=cover,f=png/643674f9752ef044320a39facdbe37ac/talking-tom-gold-run-logo.png",
+      "ogImageUrl": "https://img.poki-cdn.com/cdn-cgi/image/q=78,scq=50,width=1200,height=1200,fit=cover,f=png/643674f9752ef044320a39facdbe37ac/talking-tom-gold-run-logo.png",
+      "thumbnailVideoUrl": null
+    },
+    "portalUrl": "https://poki.com/zh/g/talking-tom-gold-run",
+    "rating": null,
+    "relatedGames": [],
+    "scrapedAt": "2026-05-27T03:47:41.452Z",
+    "tables": [],
+    "tags": [],
+    "title": "Talking Tom Gold Run"
+  },
+  "engine": "unknown",
+  "startedAt": "2026-05-25T09:36:40.369Z",
+  "stoppedAt": "",
+  "status": "listening",
   "stats": {
-    "totalSeen": 288,
-    "downloaded": 35,
+    "totalSeen": 126,
+    "downloaded": 124,
     "failed": 0,
     "skipped": 2
   },
   "files": [
     {
-      "type": "entry-html",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/index.html?country=HK&ccpaApplies=0&url_referrer=https%3A%2F%2Fpoki.com%2F&tag=pg-c90505d5979bad8b417045b94a3eecb6a1cb2d19&site_id=73&iso_lang=zh&poki_url=https%3A%2F%2Fpoki.com%2Fzh%2Fg%2Fhappy-glass&hoist=yes&nonPersonalized=n&cloudsavegames=n&familyFriendly=n&categories=7%2C34%2C72%2C400%2C1013%2C1190&ab=3ba159f4aa662589f569ebcd47b00ac16f3af577&experiment=control-fab00d61&special_condition=landing&game_id=5cac4523-71ea-476e-8acc-a6cb9c25cc06&game_version_id=d30b371c-de2c-47b1-bb2f-4324f6395542&inspector=0&csp=1",
+      "type": "portal-info",
+      "sourceUrl": "https://poki.com/zh/g/talking-tom-gold-run",
+      "localPath": "__info_assets__/meta.json",
+      "status": "ok",
+      "requestType": "text",
+      "updatedAt": "2026-05-25T09:36:48.425Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://img.poki-cdn.com/cdn-cgi/image/q=78,scq=50,width=1200,height=1200,fit=cover,f=png/643674f9752ef044320a39facdbe37ac/talking-tom-gold-run-logo.png",
+      "localPath": "__info_assets__/icon.png",
+      "status": "ok",
+      "requestType": "portal-asset",
+      "updatedAt": "2026-05-25T09:36:48.425Z",
+      "skipped": true
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://v.poki-cdn.com/50db3e35-9a3b-42a5-a04e-1ac4b41e0064/thumbnail.3x3.vp9.mp4",
+      "localPath": "__info_assets__/preview.mp4",
+      "status": "ok",
+      "requestType": "portal-asset",
+      "updatedAt": "2026-05-25T09:36:48.425Z",
+      "skipped": true
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/styles.css",
+      "localPath": "styles.css",
+      "status": "ok",
+      "requestType": "stylesheet",
+      "updatedAt": "2026-05-26T06:27:40.388Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/manifest.json",
+      "localPath": "manifest.json",
+      "status": "ok",
+      "requestType": "other",
+      "updatedAt": "2026-05-26T06:27:40.388Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/index.html?country=HK&ccpaApplies=0&url_referrer=https%3A%2F%2Fpoki.com%2F&tag=pg-7cace5a1f201a8916fcae3e5d988ba96ce01eb3c&site_id=73&iso_lang=zh&poki_url=https%3A%2F%2Fpoki.com%2Fzh%2Fg%2Ftalking-tom-gold-run&hoist=yes&nonPersonalized=n&cloudsavegames=n&familyFriendly=n&device=desktop&categories=6%2C9%2C93%2C903%2C1190&game_id=8c68f477-6c9a-4245-a0c0-f4000563c1f7&game_version_id=30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb&inspector=0&csp=1",
       "localPath": "index.html",
       "status": "ok",
-      "requestType": "Document"
+      "requestType": "Document",
+      "updatedAt": "2026-05-26T06:27:40.388Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/Build/e40682cd4a2e8826aa72fb3216daf773.loader.js",
-      "localPath": "Build/e40682cd4a2e8826aa72fb3216daf773.loader.js",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/js/index.mjs",
+      "localPath": "js/index.mjs",
       "status": "ok",
-      "requestType": "Script"
+      "requestType": "Script",
+      "updatedAt": "2026-05-26T06:27:40.388Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/screenshots/1-small.jpg",
-      "localPath": "screenshots/1-small.jpg",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/twgsl.js",
+      "localPath": "twgsl.js",
       "status": "ok",
-      "requestType": "Image"
+      "requestType": "Script",
+      "updatedAt": "2026-05-26T06:27:40.388Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/Build/2034c3a3f31fb182d5dab076c578d580.framework.js.br",
-      "localPath": "Build/2034c3a3f31fb182d5dab076c578d580.framework.js.br",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/glslang.js",
+      "localPath": "glslang.js",
       "status": "ok",
-      "requestType": "Script"
+      "requestType": "Script",
+      "updatedAt": "2026-05-26T06:27:40.388Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/screenshots/1.jpg",
-      "localPath": "screenshots/1.jpg",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/glslang.wasm",
+      "localPath": "glslang.wasm",
       "status": "ok",
-      "requestType": "Image"
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.388Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/Build/e40682cd4a2e8826aa72fb3216daf773.loader.js",
-      "localPath": "Build/e40682cd4a2e8826aa72fb3216daf773.loader.js",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/twgsl.wasm",
+      "localPath": "twgsl.wasm",
       "status": "ok",
-      "requestType": "script"
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.388Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/Build/95d6764c749dfc845fdc8176ba7206d7.data.br",
-      "localPath": "Build/95d6764c749dfc845fdc8176ba7206d7.data.br",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282359096/1/draco.wasm.js",
+      "localPath": "files/assets/282359096/1/draco.wasm.js",
       "status": "ok",
-      "requestType": "Fetch"
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T06:27:40.388Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/screenshots/1-small.jpg",
-      "localPath": "screenshots/1-small.jpg",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282359184/1/ammo.wasm.js",
+      "localPath": "files/assets/282359184/1/ammo.wasm.js",
       "status": "ok",
-      "requestType": "image"
+      "requestType": "Script",
+      "updatedAt": "2026-05-26T06:27:40.388Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/Build/95d6764c749dfc845fdc8176ba7206d7.data.br",
-      "localPath": "Build/95d6764c749dfc845fdc8176ba7206d7.data.br",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282359097/1/draco.wasm.wasm",
+      "localPath": "files/assets/282359097/1/draco.wasm.wasm",
       "status": "ok",
-      "requestType": "xmlhttprequest"
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.388Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/Build/2034c3a3f31fb182d5dab076c578d580.framework.js.br",
-      "localPath": "Build/2034c3a3f31fb182d5dab076c578d580.framework.js.br",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282359185/1/ammo.wasm.wasm",
+      "localPath": "files/assets/282359185/1/ammo.wasm.wasm",
       "status": "ok",
-      "requestType": "script"
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.388Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/screenshots/2-small.jpg",
-      "localPath": "screenshots/2-small.jpg",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/config.json",
+      "localPath": "config.json",
       "status": "ok",
-      "requestType": "Image"
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T06:27:40.388Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/screenshots/4-small.jpg",
-      "localPath": "screenshots/4-small.jpg",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/js/esm.mjs",
+      "localPath": "js/esm.mjs",
       "status": "ok",
-      "requestType": "Image"
+      "requestType": "Script",
+      "updatedAt": "2026-05-26T06:27:40.388Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/screenshots/2.jpg",
-      "localPath": "screenshots/2.jpg",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/287802289/1/Core_LevelData-bundle.tar",
+      "localPath": "files/assets/287802289/1/Core_LevelData-bundle.tar",
       "status": "ok",
-      "requestType": "Image"
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.388Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/screenshots/1.jpg",
-      "localPath": "screenshots/1.jpg",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/287797213/1/preloadBundle.tar",
+      "localPath": "files/assets/287797213/1/preloadBundle.tar",
       "status": "ok",
-      "requestType": "Image"
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/screenshots/3-small.jpg",
-      "localPath": "screenshots/3-small.jpg",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/289238416/1/preloadMaterialbundle-basis.tar",
+      "localPath": "files/assets/289238416/1/preloadMaterialbundle-basis.tar",
       "status": "ok",
-      "requestType": "Image"
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/screenshots/1.jpg",
-      "localPath": "screenshots/1.jpg",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/289233768/1/2combined-bundle-basis.tar",
+      "localPath": "files/assets/289233768/1/2combined-bundle-basis.tar",
       "status": "ok",
-      "requestType": "image"
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/screenshots/2.jpg",
-      "localPath": "screenshots/2.jpg",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/287855392/1/Yard1_Data(Tom)-bundle-basis.tar",
+      "localPath": "files/assets/287855392/1/Yard1_Data(Tom)-bundle-basis.tar",
       "status": "ok",
-      "requestType": "Image"
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/screenshots/3.jpg",
-      "localPath": "screenshots/3.jpg",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/287144704/1/Yard1(Tom)-bundle.tar",
+      "localPath": "files/assets/287144704/1/Yard1(Tom)-bundle.tar",
       "status": "ok",
-      "requestType": "Image"
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/StreamingAssets/AdAdaptersData.json",
-      "localPath": "StreamingAssets/AdAdaptersData.json",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/288385453/1/char_skin_0-bundle.tar",
+      "localPath": "files/assets/288385453/1/char_skin_0-bundle.tar",
       "status": "ok",
-      "requestType": "Fetch"
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/screenshots/3.jpg",
-      "localPath": "screenshots/3.jpg",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282363306/1/Enviroment_Flattened.glb?t=2a02899e841327b9907f3fdfc6b332e3",
+      "localPath": "files/assets/282363306/1/Enviroment_Flattened.glb",
       "status": "ok",
-      "requestType": "Image"
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/StreamingAssets/aa/settings.json",
-      "localPath": "StreamingAssets/aa/settings.json",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282359089/1/basis.wasm.js",
+      "localPath": "files/assets/282359089/1/basis.wasm.js",
       "status": "ok",
-      "requestType": "Fetch"
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/StreamingAssets/aa/catalog.json",
-      "localPath": "StreamingAssets/aa/catalog.json",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282359087/1/basis.wasm.wasm",
+      "localPath": "files/assets/282359087/1/basis.wasm.wasm",
       "status": "ok",
-      "requestType": "Fetch"
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/StreamingAssets/aa/WebGL/levels_assets_preload_6235708fbfa5f794abfc802c57cb3636.bundle",
-      "localPath": "StreamingAssets/aa/WebGL/levels_assets_preload_6235708fbfa5f794abfc802c57cb3636.bundle",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/2458623.json",
+      "localPath": "2458623.json",
       "status": "ok",
-      "requestType": "Fetch"
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/Build/a4ab965b7735e46ca3f22b32204cb8c5.wasm.br",
-      "localPath": "Build/a4ab965b7735e46ca3f22b32204cb8c5.wasm.br",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/284996791/1/lateLoadBundle-basis.tar",
+      "localPath": "files/assets/284996791/1/lateLoadBundle-basis.tar",
       "status": "ok",
-      "requestType": "xmlhttprequest"
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/screenshots/4-small.jpg",
-      "localPath": "screenshots/4-small.jpg",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/285890247/1/VaultUI-bundle.tar",
+      "localPath": "files/assets/285890247/1/VaultUI-bundle.tar",
       "status": "ok",
-      "requestType": "image"
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/screenshots/2-small.jpg",
-      "localPath": "screenshots/2-small.jpg",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/285827094/1/builder_tom_bundle.tar",
+      "localPath": "files/assets/285827094/1/builder_tom_bundle.tar",
       "status": "ok",
-      "requestType": "image"
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/screenshots/2.jpg",
-      "localPath": "screenshots/2.jpg",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/285795594/1/runner_tom_bundle.tar",
+      "localPath": "files/assets/285795594/1/runner_tom_bundle.tar",
       "status": "ok",
-      "requestType": "image"
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/screenshots/3-small.jpg",
-      "localPath": "screenshots/3-small.jpg",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/285795591/1/global_common_bundle.tar",
+      "localPath": "files/assets/285795591/1/global_common_bundle.tar",
       "status": "ok",
-      "requestType": "image"
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/screenshots/3.jpg",
-      "localPath": "screenshots/3.jpg",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/288386149/1/char_skin_17-bundle-basis.tar",
+      "localPath": "files/assets/288386149/1/char_skin_17-bundle-basis.tar",
       "status": "ok",
-      "requestType": "image"
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/StreamingAssets/AdAdaptersData.json",
-      "localPath": "StreamingAssets/AdAdaptersData.json",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/285827105/1/builder_common_bundle.tar",
+      "localPath": "files/assets/285827105/1/builder_common_bundle.tar",
       "status": "ok",
-      "requestType": "xmlhttprequest"
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/StreamingAssets/aa/settings.json",
-      "localPath": "StreamingAssets/aa/settings.json",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/284996788/1/earlyLoadBundle.tar",
+      "localPath": "files/assets/284996788/1/earlyLoadBundle.tar",
       "status": "ok",
-      "requestType": "xmlhttprequest"
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/StreamingAssets/aa/catalog.json",
-      "localPath": "StreamingAssets/aa/catalog.json",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/285795716/1/runner_common_bundle.tar",
+      "localPath": "files/assets/285795716/1/runner_common_bundle.tar",
       "status": "ok",
-      "requestType": "xmlhttprequest"
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/StreamingAssets/aa/WebGL/levels_assets_preload_6235708fbfa5f794abfc802c57cb3636.bundle",
-      "localPath": "StreamingAssets/aa/WebGL/levels_assets_preload_6235708fbfa5f794abfc802c57cb3636.bundle",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282363057/1/Play_3.avif?t=4b46579860dcbd44dcb661789b1b8da3",
+      "localPath": "files/assets/282363057/1/Play_3.avif",
       "status": "ok",
-      "requestType": "xmlhttprequest"
+      "requestType": "Image",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/StreamingAssets/aa/WebGL/levels_assets_levelmain11_35447766a684645bb47d8adf60e9ff1f.bundle",
-      "localPath": "StreamingAssets/aa/WebGL/levels_assets_levelmain11_35447766a684645bb47d8adf60e9ff1f.bundle",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282359978/1/X2Gold.glb?t=c79e3e7fac08a7b83f59960c18c13e6f",
+      "localPath": "files/assets/282359978/1/X2Gold.glb",
       "status": "ok",
-      "requestType": "Fetch"
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://5cac4523-71ea-476e-8acc-a6cb9c25cc06.gdn.poki.com/d30b371c-de2c-47b1-bb2f-4324f6395542/StreamingAssets/aa/WebGL/levels_assets_levelmain11_35447766a684645bb47d8adf60e9ff1f.bundle",
-      "localPath": "StreamingAssets/aa/WebGL/levels_assets_levelmain11_35447766a684645bb47d8adf60e9ff1f.bundle",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282359974/1/X2Score.glb?t=a6871f2f40a0e3a37fa77dd07d38dbbb",
+      "localPath": "files/assets/282359974/1/X2Score.glb",
       "status": "ok",
-      "requestType": "xmlhttprequest"
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
     },
     {
-      "type": "compat-script",
-      "sourceUrl": "",
-      "localPath": "poki-sdk-stub.js",
-      "status": "ok"
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282360063/1/pickup_magnet_outline_MESH.glb?t=9bfdb1ffb753d377fda0ce4801bc6202",
+      "localPath": "files/assets/282360063/1/pickup_magnet_outline_MESH.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282359985/1/Airplane_default_outline.glb?t=4bc77df58a9723a9be84efe7dbef0d3d",
+      "localPath": "files/assets/282359985/1/Airplane_default_outline.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/288230915/1/DailyLoginUI-bundle.tar",
+      "localPath": "files/assets/288230915/1/DailyLoginUI-bundle.tar",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282362923/1/HammerModel.glb?t=f81b40611534536b76e23b50bc947919",
+      "localPath": "files/assets/282362923/1/HammerModel.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/287632211/1/DailyMissionsUI-bundle.tar",
+      "localPath": "files/assets/287632211/1/DailyMissionsUI-bundle.tar",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/287745657/1/Leaderboards-bundle.tar",
+      "localPath": "files/assets/287745657/1/Leaderboards-bundle.tar",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/287875564/1/SettingsUI-bundle.tar",
+      "localPath": "files/assets/287875564/1/SettingsUI-bundle.tar",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/289224091/1/RewardPanel-bundle.tar",
+      "localPath": "files/assets/289224091/1/RewardPanel-bundle.tar",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282360889/1/tomTheme1-Sting1_SFX_OGGLOAD.opus?t=67c4584589e3205f73c02eb2cda402f2",
+      "localPath": "files/assets/282360889/1/tomTheme1-Sting1_SFX_OGGLOAD.opus",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T06:27:40.389Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/288386150/1/char_skin_18-bundle.tar",
+      "localPath": "files/assets/288386150/1/char_skin_18-bundle.tar",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T11:27:23.713Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361227/1/PoliceHelmet.glb?t=3459b7e4e1916be29b7ec4f4542c2729",
+      "localPath": "files/assets/282361227/1/PoliceHelmet.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282359315/1/NFLHelmet_MESH.json?t=3a48c234de3e42862a7d4ec638384e02",
+      "localPath": "files/assets/282359315/1/NFLHelmet_MESH.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282359992/1/Helmet.json?t=b05b6c8f73c5bc271f235b3f193f5a20",
+      "localPath": "files/assets/282359992/1/Helmet.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361030/1/UnicornAngelaAirplane.json?t=d32c954cfc3460efba1dd6d74c2d3d6f",
+      "localPath": "files/assets/282361030/1/UnicornAngelaAirplane.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361027/1/UnicornAngelaAirplane.glb?t=ad01ab01cdc02020f183db7de0597731",
+      "localPath": "files/assets/282361027/1/UnicornAngelaAirplane.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361158/1/pickup_UnicornAngelaAirplane_outline_MESH.glb?t=9440e38cc644c650beb8f12eb456d2ee",
+      "localPath": "files/assets/282361158/1/pickup_UnicornAngelaAirplane_outline_MESH.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361160/1/pickup_UnicornAngelaAirplane_outline_MESH.json?t=53a688e8f7d44b2a1f3da34654063a15",
+      "localPath": "files/assets/282361160/1/pickup_UnicornAngelaAirplane_outline_MESH.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282360052/1/AirplaneDefault.json?t=5467cbf762caca8aa9d5e64a6945bc0a",
+      "localPath": "files/assets/282360052/1/AirplaneDefault.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282359987/1/AirplaneDefault_outline.json?t=22f2f02c7c43d61f8318a6e2fef62015",
+      "localPath": "files/assets/282359987/1/AirplaneDefault_outline.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/288385455/1/char_skin_1-bundle.tar",
+      "localPath": "files/assets/288385455/1/char_skin_1-bundle.tar",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/285827096/1/builder_angela_bundle.tar",
+      "localPath": "files/assets/285827096/1/builder_angela_bundle.tar",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/285795595/1/runner_angela_bundle.tar",
+      "localPath": "files/assets/285795595/1/runner_angela_bundle.tar",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/288385971/1/char_skin_9-bundle.tar",
+      "localPath": "files/assets/288385971/1/char_skin_9-bundle.tar",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361206/1/GymnastAngelaHelmet.glb?t=acfa1a27695ab43d3f5a03941f11b34b",
+      "localPath": "files/assets/282361206/1/GymnastAngelaHelmet.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/288386043/1/char_skin_13-bundle.tar",
+      "localPath": "files/assets/288386043/1/char_skin_13-bundle.tar",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361216/1/WitchAngelaHelmet.glb?t=7faf7c76bec94cee0dc71be18412c786",
+      "localPath": "files/assets/282361216/1/WitchAngelaHelmet.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/288385968/1/char_skin_8-bundle-basis.tar",
+      "localPath": "files/assets/288385968/1/char_skin_8-bundle-basis.tar",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/288385802/1/char_skin_2-bundle-basis.tar",
+      "localPath": "files/assets/288385802/1/char_skin_2-bundle-basis.tar",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/285827097/1/builder_ginger_bundle.tar",
+      "localPath": "files/assets/285827097/1/builder_ginger_bundle.tar",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/285795638/1/runner_ginger_bundle.tar",
+      "localPath": "files/assets/285795638/1/runner_ginger_bundle.tar",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361232/1/FarmingGingerHelmet.glb?t=658f383924ecec399a764ab18827f4c4",
+      "localPath": "files/assets/282361232/1/FarmingGingerHelmet.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/288386046/1/char_skin_15-bundle-basis.tar",
+      "localPath": "files/assets/288386046/1/char_skin_15-bundle-basis.tar",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361237/1/GingerPirateHelmet.glb?t=5c405983792a1ba475e9fc6778dcca10",
+      "localPath": "files/assets/282361237/1/GingerPirateHelmet.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/288385805/1/char_skin_4-bundle.tar",
+      "localPath": "files/assets/288385805/1/char_skin_4-bundle.tar",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/285795713/1/runner_becca_bundle.tar",
+      "localPath": "files/assets/285795713/1/runner_becca_bundle.tar",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/285827102/1/builder_becca_bundle.tar",
+      "localPath": "files/assets/285827102/1/builder_becca_bundle.tar",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361776/1/SkaterBeccaHelmet.glb?t=36a9be97d58cecd68361a2887878761a",
+      "localPath": "files/assets/282361776/1/SkaterBeccaHelmet.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/288385982/1/char_skin_11-bundle.tar",
+      "localPath": "files/assets/288385982/1/char_skin_11-bundle.tar",
+      "status": "ok",
+      "requestType": "xmlhttprequest",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361194/1/Addons-Helmets-TomHighTech.glb?t=6c5a8e2775df6b051ca4bf728020766d",
+      "localPath": "files/assets/282361194/1/Addons-Helmets-TomHighTech.glb",
+      "status": "ok",
+      "requestType": "xmlhttprequest",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/288385963/1/char_skin_6-bundle-basis.tar",
+      "localPath": "files/assets/288385963/1/char_skin_6-bundle-basis.tar",
+      "status": "ok",
+      "requestType": "xmlhttprequest",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361200/1/AstronautTomHelmet.glb?t=588a80f875aed060e0767075cfd5211d",
+      "localPath": "files/assets/282361200/1/AstronautTomHelmet.glb",
+      "status": "ok",
+      "requestType": "xmlhttprequest",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/288386042/1/char_skin_12-bundle.tar",
+      "localPath": "files/assets/288386042/1/char_skin_12-bundle.tar",
+      "status": "ok",
+      "requestType": "xmlhttprequest",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361211/1/UnicornAngelaHelmet.glb?t=571d22a0ae6b0cbf7b7d8136c0dd69ca",
+      "localPath": "files/assets/282361211/1/UnicornAngelaHelmet.glb",
+      "status": "ok",
+      "requestType": "xmlhttprequest",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/288385980/1/char_skin_10-bundle-basis.tar",
+      "localPath": "files/assets/288385980/1/char_skin_10-bundle-basis.tar",
+      "status": "ok",
+      "requestType": "xmlhttprequest",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/288385807/1/char_skin_5-bundle-basis.tar",
+      "localPath": "files/assets/288385807/1/char_skin_5-bundle-basis.tar",
+      "status": "ok",
+      "requestType": "xmlhttprequest",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/285827104/1/builder_hank_bundle.tar",
+      "localPath": "files/assets/285827104/1/builder_hank_bundle.tar",
+      "status": "ok",
+      "requestType": "xmlhttprequest",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/285795714/1/runner_hank_bundle.tar",
+      "localPath": "files/assets/285795714/1/runner_hank_bundle.tar",
+      "status": "ok",
+      "requestType": "xmlhttprequest",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361221/1/SharkHankHelmet.glb?t=f7bd6426559a261746b912baf255e530",
+      "localPath": "files/assets/282361221/1/SharkHankHelmet.glb",
+      "status": "ok",
+      "requestType": "xmlhttprequest",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/288385967/1/char_skin_7-bundle.tar",
+      "localPath": "files/assets/288385967/1/char_skin_7-bundle.tar",
+      "status": "ok",
+      "requestType": "xmlhttprequest",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361332/1/Addons-Airplanes-TomHighTechOutline_MESH.json?t=238bcdfa3f0ed268d203465781561f7b",
+      "localPath": "files/assets/282361332/1/Addons-Airplanes-TomHighTechOutline_MESH.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361008/1/HighTechAirplane.json?t=59a49195e2ec3e106d1419ad5e451751",
+      "localPath": "files/assets/282361008/1/HighTechAirplane.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361330/1/Addons-Airplanes-TomHighTechOutline_MESH.glb?t=f0d83d5f413ee46f5973768f9270703a",
+      "localPath": "files/assets/282361330/1/Addons-Airplanes-TomHighTechOutline_MESH.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361005/1/HighTechAirplane.glb?t=d3d514a9d863e7de3397e5ee7fd8e0cb",
+      "localPath": "files/assets/282361005/1/HighTechAirplane.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361183/1/pickup_airplaneCrazyPlanet_outline_MESH.glb?t=c1187a4d08a13aa2280210aa1890bd39",
+      "localPath": "files/assets/282361183/1/pickup_airplaneCrazyPlanet_outline_MESH.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361015/1/AstronautTomAirplane.json?t=b7728fbc1658a899b7538816bf05121b",
+      "localPath": "files/assets/282361015/1/AstronautTomAirplane.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361185/1/pickup_airplaneCrazyPlanet_outline_MESH.json?t=dbb860f22eeddfe1ddefa7f00284c7f1",
+      "localPath": "files/assets/282361185/1/pickup_airplaneCrazyPlanet_outline_MESH.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361012/1/AstronautTomAirplane.glb?t=7e43d9f42a9c0626847e3dce52bb1e24",
+      "localPath": "files/assets/282361012/1/AstronautTomAirplane.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361036/1/WitchAngelaAirplane.json?t=cc21918cffb27f23a1df66945ee67619",
+      "localPath": "files/assets/282361036/1/WitchAngelaAirplane.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361153/1/pickup_airplaneWitch_outline_MESH.glb?t=1dafdffd4f2011c92e309f80e2538eaa",
+      "localPath": "files/assets/282361153/1/pickup_airplaneWitch_outline_MESH.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361033/1/WitchAngelaAirplane.glb?t=6f828a341b562cc84d23e113223afe17",
+      "localPath": "files/assets/282361033/1/WitchAngelaAirplane.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361155/1/pickup_airplaneWitch_outline_MESH.json?t=356fd812643e611fed1c966d094c2538",
+      "localPath": "files/assets/282361155/1/pickup_airplaneWitch_outline_MESH.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361062/1/ZombieBenAirplane.glb?t=3e586b2de1fdd88525bd24d7c5f0688a",
+      "localPath": "files/assets/282361062/1/ZombieBenAirplane.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361148/1/pickup_airplaneZombie_outline_MESH.glb?t=7209aad4aada416bd33bffa99ea73256",
+      "localPath": "files/assets/282361148/1/pickup_airplaneZombie_outline_MESH.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361065/1/ZombieBenAirplane.json?t=b174d052b731f7a39aa1f6e4fb0a23ed",
+      "localPath": "files/assets/282361065/1/ZombieBenAirplane.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361150/1/pickup_airplaneZombie_outline_MESH.json?t=0c373fbd5291c94befc23497830f8d55",
+      "localPath": "files/assets/282361150/1/pickup_airplaneZombie_outline_MESH.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361039/1/SharkHankAirplane.glb?t=5f612d8e354e34b3f3e849937f66250f",
+      "localPath": "files/assets/282361039/1/SharkHankAirplane.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361042/1/SharkHankAirplane.json?t=d14770a63fe686cc1979d0b3da78a8e2",
+      "localPath": "files/assets/282361042/1/SharkHankAirplane.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361142/1/pickup_AirplaneWaterWorld_outline_MESH.glb?t=e10b189e10e558433c320567ffef1031",
+      "localPath": "files/assets/282361142/1/pickup_AirplaneWaterWorld_outline_MESH.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361144/1/pickup_AirplaneWaterWorld_outline_MESH.json?t=717068858e6a0efe5cc1e78d5cf82116",
+      "localPath": "files/assets/282361144/1/pickup_AirplaneWaterWorld_outline_MESH.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361053/1/GingerPirateAirplane.json?t=dcaf70e0f43d7d9129031ec0f88f5631",
+      "localPath": "files/assets/282361053/1/GingerPirateAirplane.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361050/1/GingerPirateAirplane.glb?t=e907a62a6d2abf7b150ec5b8cb54a311",
+      "localPath": "files/assets/282361050/1/GingerPirateAirplane.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361178/1/pickup_airplanePirate_outline_MESH.glb?t=057cf9b0659b1b5bcc1c2add61f2036d",
+      "localPath": "files/assets/282361178/1/pickup_airplanePirate_outline_MESH.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361180/1/pickup_airplanePirate_outline_MESH.json?t=e5b011bc41ebba547b9317b832704c19",
+      "localPath": "files/assets/282361180/1/pickup_airplanePirate_outline_MESH.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361023/1/GymnastAngelaAirplane.json?t=2c355d452e4997723f7f7e6fde1155e2",
+      "localPath": "files/assets/282361023/1/GymnastAngelaAirplane.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361019/1/GymnastAngelaAirplane.glb?t=0761f8da56358d6bc1839a1d7aa3a0cf",
+      "localPath": "files/assets/282361019/1/GymnastAngelaAirplane.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361018/1/summersports_airplane_ribbon_rotation.glb?t=80991c2d2f267c63e54c564b90b6b335",
+      "localPath": "files/assets/282361018/1/summersports_airplane_ribbon_rotation.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361173/1/pickup_gymnasticAngelaAirplane_outline_MESH.glb?t=2e9e1bf6414f66b007c1c2851bf6768f",
+      "localPath": "files/assets/282361173/1/pickup_gymnasticAngelaAirplane_outline_MESH.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361175/1/pickup_gymnasticAngelaAirplane_outline_MESH.json?t=38be33640d9d7be4e5cf0f9ce14ad331",
+      "localPath": "files/assets/282361175/1/pickup_gymnasticAngelaAirplane_outline_MESH.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/288386044/1/char_skin_14-bundle-basis.tar",
+      "localPath": "files/assets/288386044/1/char_skin_14-bundle-basis.tar",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T11:27:23.715Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/288385803/1/char_skin_3-bundle.tar",
+      "localPath": "files/assets/288385803/1/char_skin_3-bundle.tar",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T11:27:23.717Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/288386109/1/char_skin_16-bundle.tar",
+      "localPath": "files/assets/288386109/1/char_skin_16-bundle.tar",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T11:27:23.717Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/285827100/1/builder_ben_bundle.tar",
+      "localPath": "files/assets/285827100/1/builder_ben_bundle.tar",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T11:27:23.717Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/285795677/1/runner_ben_bundle.tar",
+      "localPath": "files/assets/285795677/1/runner_ben_bundle.tar",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-05-26T11:27:23.717Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361248/1/ZombieBenHelmet.glb?t=520deb3416c26714ae1ddf45bcf829a4",
+      "localPath": "files/assets/282361248/1/ZombieBenHelmet.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-26T11:27:23.717Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361265/1/pickup_GymnasticCrownHelmet_outline_MESH.glb?t=9e88ea378443ca72c841a68bbe1c4e1b",
+      "localPath": "files/assets/282361265/1/pickup_GymnasticCrownHelmet_outline_MESH.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-27T04:02:32.533Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://8c68f477-6c9a-4245-a0c0-f4000563c1f7.gdn.poki.com/30e52c98-c2e7-4166-8eb8-d4bb6fcd39bb/files/assets/282361275/1/pickup_WitchHelmetAngela_outline_MESH.glb?t=01f2322475fd35f9a5267ee1da5237d9",
+      "localPath": "files/assets/282361275/1/pickup_WitchHelmetAngela_outline_MESH.glb",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-05-27T04:02:32.533Z"
     }
-  ]
+  ],
+  "updatedAt": "2026-05-27T04:02:32.533Z"
 }

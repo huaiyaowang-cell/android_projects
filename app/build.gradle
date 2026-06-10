@@ -6,17 +6,18 @@ applovin {
     apiKey = "Do7qR6FHTExrl8KTepl4WgT8HXalr0ytRTrlSomLL6gFBg20yXxobfUoJUzW7BHU9sxdcZp0aXNQQdRBEFAdvA"
 }
 android {
-    namespace 'com.puzzle.fun.free.offlinegame'
+    namespace 'com.plutodesk.mahjongblast'
     compileSdkVersion 35
     defaultConfig {
+        applicationId 'com.plutodesk.mahjongblast'
         minSdkVersion 23
         targetSdkVersion 35
         buildToolsVersion '30.0.3'
         ndk {
             abiFilters 'armeabi-v7a', 'arm64-v8a'
         }
-        versionCode 20
-        versionName '1.2.0'
+        versionCode 30
+        versionName '1.3.0'
     }
 
     buildTypes {
@@ -28,6 +29,11 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
+    }
+
+    // PlayCanvas 的 wasm/tar 等资源在 APK 里被压缩后，WebView 读取可能失败或卡在 loading
+    androidResources {
+        noCompress += ['wasm', 'tar', 'mjs', 'js', 'json', 'br', 'basis', 'glb']
     }
 
 }

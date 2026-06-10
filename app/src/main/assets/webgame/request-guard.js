@@ -206,4 +206,3 @@
 
   install();
 })(typeof window !== "undefined" ? window : this);
-

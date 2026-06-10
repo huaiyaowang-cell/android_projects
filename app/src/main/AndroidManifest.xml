@@ -14,10 +14,10 @@
         android:theme="@style/Theme.Rabigameapk">
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-2915030877224461~9649025154" />
+            android:value="ca-app-pub-2915030877224461~9916271049" />
         <meta-data
             android:name="SDK-ProductId"
-            android:value="69c25c91eb26dd23e8c0b829" />
+            android:value="6942836e9e3574e1b5d5e9e8" />
 
 
         <activity

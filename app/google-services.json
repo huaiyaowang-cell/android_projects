@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "596747592228",
-    "project_id": "happyhotel-5492a",
-    "storage_bucket": "happyhotel-5492a.firebasestorage.app"
+    "project_number": "1021768845887",
+    "project_id": "bulletbros-69ce1",
+    "storage_bucket": "bulletbros-69ce1.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:596747592228:android:661674b24d279890e8eeb1",
+        "mobilesdk_app_id": "1:1021768845887:android:c9b717dcd4828bce47468a",
         "android_client_info": {
           "package_name": "com.puzzle.fun.free.offlinegame"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDcnsGl6EjQOEBypNmwFV_Dir45K4Y7W68"
+          "current_key": "AIzaSyBlWhg2m4HPpaYQplyDa4GVX7oA-bnwcDs"
         }
       ],
       "services": {

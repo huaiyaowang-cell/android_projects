@@ -1,0 +1,8 @@
+Recoil physics shooter: fly & fight with bullets
+
+
+HOW TO PLAY:
+*Hold to aim and control your flying direction
+*Release to shoot and use recoil to move forward
+*Defeat all enemies in each level to progress
+*Avoid attacks and beat bosses to complete stages

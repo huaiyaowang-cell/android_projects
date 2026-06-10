@@ -4,8 +4,14 @@
  * 所有请求只通过「中间件」判定是否合法：
  *   middleware(请求地址字符串) → true 放行，false 拦截（非 true 一律视为拦截）
  *
- * 默认中间件：禁止访问 `AD_HOST_SUFFIXES` 中配置的域名（hostname 精确匹配或后缀匹配），
- * 其余 URL 一律放行；`blob:` / `data:` / `about:` 始终放行（无 hostname 拦截）。
+ * 默认中间件：**禁止**访问 `AD_HOST_SUFFIXES` 中配置的域名（hostname 精确匹配或后缀匹配），
+ * **其余 URL 一律放行**；`blob:` / `data:` / `about:` 始终放行（无 hostname 拦截）。
+ *
+ * @example
+ * RequestGuard.configure({
+ *   blockedHostSuffixes: ["googlesyndication.com", "doubleclick.net"],
+ *   logAllRequests: true,
+ * });
  *
  * 预置：window.__REQUEST_GUARD_CONFIG__ = { blockedHostSuffixes: [...], middleware: fn };
  */
@@ -15,12 +21,7 @@
   var AD_HOST_SUFFIXES = [
     "poki.com",
     "api.gameanalytics.com",
-    "leveldata.poki.io",
-    "game-cdn.poki.com",
-    "game-cdn.poki.io",
-    "game-cdn.poki.net",
-    "game-cdn.poki.org",
-    "game-cdn.poki.org",
+    "leveldata.poki.io"
   ];
 
   var blockedHostSuffixes = AD_HOST_SUFFIXES.slice();
@@ -281,4 +282,3 @@
   global.RequestGuard = RequestGuard;
   install();
 })(typeof window !== "undefined" ? window : this);
-

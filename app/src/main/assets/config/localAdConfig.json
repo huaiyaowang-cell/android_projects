@@ -8,7 +8,7 @@
             "units": [
                 {
                     "channel": "Admob",
-                    "unit_id": "ca-app-pub-2915030877224461/3539286412"
+                    "unit_id": "ca-app-pub-2915030877224461/4285017834"
                 }
             ],
             "fake": 0
@@ -21,7 +21,7 @@
             "units": [
                 {
                     "channel": "Admob",
-                    "unit_id": "ca-app-pub-2915030877224461/6720684221"
+                    "unit_id": "ca-app-pub-2915030877224461/5570997584"
                 }
             ],
             "fake": 0
@@ -34,20 +34,7 @@
             "units": [
                 {
                     "channel": "Admob",
-                    "unit_id": "ca-app-pub-2915030877224461/5407869455"
-                }
-            ],
-            "fake": 0
-        },
-        {
-            "placements": [
-                "native"
-            ],
-            "type": "native",
-            "units": [
-                {
-                    "channel": "Admob",
-                    "unit_id": "ca-app-pub-2915030877224461/9570208843"
+                    "unit_id": "ca-app-pub-2915030877224461/9728916209"
                 }
             ],
             "fake": 0
@@ -60,7 +47,7 @@
             "units": [
                 {
                     "channel": "Admob",
-                    "unit_id": "ca-app-pub-2915030877224461/6572643861"
+                    "unit_id": "ca-app-pub-2915030877224461/8994419036"
                 }
             ],
             "fake": 0
@@ -74,5 +61,5 @@
             }
         }
     ],
-    "tag": "ycCGe0"
+    "tag": "NLTsN0"
 }

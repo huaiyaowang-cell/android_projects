@@ -1,7 +1,7 @@
 /**
- * My Perfect Hotel — iframe 内游戏侧广告桥接
+ * Bullet Bros — iframe 内游戏侧广告桥接
  * 将 PokiSDK.commercialBreak / rewardedBreak 通过 postMessage 交给父页面执行。
- * 需在 poki-sdk-stub.js 之后、Unity loader 之前加载。
+ * 需在 poki-sdk-stub.js 之后、游戏主脚本之前加载。
  */
 (function () {
   "use strict";
@@ -60,10 +60,8 @@
 
   window.addEventListener("message", onMessage);
 
-  var origCommercial =
-    typeof PokiSDK.commercialBreak === "function"
-      ? PokiSDK.commercialBreak.bind(PokiSDK)
-      : null;
+  var origCommercial = typeof PokiSDK.commercialBreak === "function" ? PokiSDK.commercialBreak.bind(PokiSDK) : null;
+  var origRewarded = typeof PokiSDK.rewardedBreak === "function" ? PokiSDK.rewardedBreak.bind(PokiSDK) : null;
 
   PokiSDK.commercialBreak = function () {
     return postRequest({ kind: "commercialBreak" }).catch(function (err) {
@@ -85,4 +83,3 @@
 
   console.log("[poki-ad-client] 已启用父页面广告代理（commercialBreak / rewardedBreak）");
 })();
-

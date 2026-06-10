@@ -1,40 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="request-guard.js"></script>
-  <script src="poki-sdk-stub.js"></script>
-  <script src="poki-ad-bridge-client.js"></script>
-	<meta charset="utf-8">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>My Perfect Hotel - Poki</title>
-	<script>
-	window.config = {
-		loader: 'unity-2020',
-		debug: false,
-		maxRatio: 24 / 9,
-		minRatio: 9 / 24,
+<script src="request-guard.js"></script>
+<script src="poki-sdk-stub.js"></script>
+<script src="poki-ad-bridge-client.js"></script>
+<meta charset="UTF-8">
+<title>Bullet Bros</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 
-		title: 'My Perfect Hotel',
-		thumbnail: 'https:\/\/img.poki-cdn.com\/f39e22538799cae88cf1a630492c2e7b.png',
-		numScreenshots:  4 ,
+<meta name="generator" content="Scirra Construct">
+	<meta name="author" content="gametornado">
+	<link rel="manifest" href="appmanifest.json">
+	<link rel="apple-touch-icon" sizes="128x128" href="icons/icon-128.png">
+	<link rel="apple-touch-icon" sizes="256x256" href="icons/icon-256.png">
+	<link rel="apple-touch-icon" sizes="512x512" href="icons/icon-512.png">
+	<link rel="icon" type="image/png" href="icons/icon-512.png">
+	<meta name="theme-color" content="#00acff">
+<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="file.css">
 
-		unityVersion: '2022.3.62f2',
-		unityWebglBuildUrl: '',
-
-		fileSize:  8 ,
-		cachedDecompressedFileSizes: {
-			'101a0553a2917fd4c62a7e2159d30814.data':  2054105 ,
-			'2809ee090e7f1bf0e1a32425590981e7.framework.js':  73124 ,
-			'9d94f3fbc22c5914756c67722e0cdaca.wasm':  6104744 ,
-			'ea153e321edf23b9a40b38d65ce41d01.loader.js':  6774 ,
-		},
-		"metadata": {"poki_template_version":1,"background_color":"#00C565","code_filename":"9d94f3fbc22c5914756c67722e0cdaca.wasm","company_name":"master","data_filename":"101a0553a2917fd4c62a7e2159d30814.data","decompression_fallback":"Disabled","development_player":"false","framework_filename":"2809ee090e7f1bf0e1a32425590981e7.framework.js","height":"1920","loader_filename":"ea153e321edf23b9a40b38d65ce41d01.loader.js","product_name":"My Hotel","product_version":"1.0.3","splash_screen_style":"Dark","unity_version":"2022.3.62f2","use_data_caching":"true","use_threads":"false","use_wasm":"true","use_webgl_1_0":"false","use_webgl_2_0":"true","width":"1080"}
-	};
-	</script>
-<!-- will be copied to the resulting head //-->
 </head>
 <body>
-	<!-- loaind-start -->
 	<style>
 		#loading-container {
 		  position: fixed;
@@ -88,8 +74,7 @@
 	  </style>
 	   <div id="loading-container" >
 		 <div class="loading-header-logo">
-		   <!-- Android WebView + iframe：相对 __assets__/ 可能解析失败，打包进 APK 时用 appassets 绝对路径 -->
-		   <img src="https://appassets.androidplatform.net/assets/webgame/__assets__/icon.png" class="loading-header-logo-image" alt="logo">
+		   <img src="__assets__/icon.png" class="loading-header-logo-image" alt="logo">
 		 </div>
 		 <div class="loading-progress-text">Loading...</div>
 		 <div class="loading-progress-bar" >
@@ -98,7 +83,7 @@
 	   </div>
 	   <script> 
 		let cocosStarted = false;
-		let totalCount = 40;
+		let totalCount = 70;
 		let currentFetchReturnCount = 0;
 		window.updateLoadingProgress = function(progress) {
 		   const loadingProgressBarInner = document.querySelector('.loading-progress-bar-inner');
@@ -134,7 +119,38 @@
 	
 	// 停止监听（如需）：observer.disconnect();
 	   </script>
-<!-- loadingend -->
-	<script src="./master-loader.js"></script>
+<script>
+if (location.protocol.substr(0, 4) === "file")
+{
+	alert("Web exports won't work until you upload them. (When running on the file: protocol, browsers block many features from working for security reasons.)");
+}
+</script>
+<script>
+// Disable fullscreen requests to avoid game layer covering parent-page ads.
+(function () {
+  function denyFullscreen() {
+    return Promise.reject(new Error("Fullscreen disabled by host page"));
+  }
+  var proto = typeof Element !== "undefined" ? Element.prototype : null;
+  if (!proto) return;
+  proto.requestFullscreen = denyFullscreen;
+  proto.webkitRequestFullscreen = denyFullscreen;
+  proto.mozRequestFullScreen = denyFullscreen;
+  proto.msRequestFullscreen = denyFullscreen;
+})();
+</script>
+	<script src="box2d.wasm.js"></script>
+	
+	<noscript>
+		<div id="notSupportedWrap">
+			<h2 id="notSupportedTitle">This content requires JavaScript</h2>
+			<p class="notSupportedMessage">JavaScript appears to be disabled. Please enable it to view this content.</p>
+		</div>
+	</noscript>
+	<script src="scripts/supportcheck.js"></script>
+	<script src="scripts/offlineclient.js" type="module"></script>
+	<script src="scripts/main.js" type="module"></script>
+	
+
 </body>
 </html>

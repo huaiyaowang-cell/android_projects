@@ -1,5 +1,5 @@
 /**
- * Count War — iframe 广告桥接（happy-glass + Unity window.commercialBreak / rewardedBreak）
+ * Marina Club Rush — iframe / APK WebView 广告桥接（Unity commercialBreak / rewardedBreak）
  */
 (function () {
   "use strict";
@@ -166,7 +166,7 @@
 
     PokiSDK.commercialBreak = showCommercialBreak;
     PokiSDK.gameplayStop = function () {
-      console.log("[count-war][插屏] gameplayStop → commercialBreak");
+      console.log("[marina-club-rush][插屏] gameplayStop → commercialBreak");
       return showCommercialBreak();
     };
     PokiSDK.rewardedBreak = showRewardedBreak;
@@ -189,7 +189,7 @@
     var requestId = genRequestId();
     var kind = payload && payload.kind;
     if (kind === "commercialBreak") {
-      console.log("[count-war][插屏] iframe → 父页 postMessage", { requestId: requestId, kind: kind });
+      console.log("[marina-club-rush][插屏] iframe → 父页 postMessage", { requestId: requestId, kind: kind });
     }
     return new Promise(function (resolve, reject) {
       pending[requestId] = { resolve: resolve, reject: reject };

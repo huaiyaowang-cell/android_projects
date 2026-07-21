@@ -1,79 +1,141 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <script src="request-guard.js"></script>
-  <script src="native-admob-jssdk.js"></script>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1, minimum-scale=1,maximum-scale=1"/>
-  <title>Count War</title>
+  <title>Marina Club Rush</title>
   <style>
-    html, body {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background: #000;
-      font-family: Arial, sans-serif;
-    }
-    #cwLayout {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-    #cwTopAdSlot, #cwBottomAdSlot {
-      width: 100%;
-      overflow: hidden;
-      flex-shrink: 0;
-      display: flex;
-      justify-content: center;
-      background: #000;
-    }
-    #cwGameFrame {
-      width: 100%;
-      border: 0;
-      flex: 1;
-      min-height: 0;
-      background: #000;
-    }
+    html, body { width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden; background: #000; font-family: Arial, sans-serif; }
+    #mcrLayout { width: 100%; height: 100%; display: flex; flex-direction: column; }
+    #mcrTopAdSlot, #mcrBottomAdSlot { width: 100%; overflow: hidden; flex-shrink: 0; display: flex; justify-content: center; align-items: center; background: #000; }
+    #mcrGameFrame { width: 100%; border: 0; flex: 1; min-height: 0; background: #000; }
+    #mcrTopAdSlot ins.adsbygoogle,
+    #mcrBottomAdSlot ins.adsbygoogle { display: block; margin: 0 auto; }
   </style>
+  <script async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4202034217897578"
+    crossorigin="anonymous">
+  </script>
+  <script>
+    window.alert = function() {
+      console.log("alert", arguments);
+    };
+
+    window.__googleAdsReady = false;
+    (function trackGoogleAdsSdkReady() {
+      function markReady() {
+        window.__googleAdsReady = true;
+        console.log("[poki-ad-parent] Google Ads SDK ready");
+      }
+      function markFailed() {
+        window.__googleAdsReady = false;
+        console.warn("[poki-ad-parent] Google Ads SDK failed to load");
+      }
+      var sdkScript = document.querySelector('script[src*="googlesyndication.com/pagead/js/adsbygoogle.js"]');
+      if (!sdkScript) return;
+      if (sdkScript.readyState === "complete" || sdkScript.readyState === "loaded") {
+        markReady();
+      } else {
+        sdkScript.addEventListener("load", markReady);
+        sdkScript.addEventListener("error", markFailed);
+      }
+      setTimeout(function () {
+        if (!window.__googleAdsReady && window.adsbygoogle && window.adsbygoogle.loaded) {
+          markReady();
+        }
+      }, 3000);
+    })();
+
+    window.adsbygoogle = window.adsbygoogle || [];
+    var adBreak = adConfig = function (o) { window.adsbygoogle.push(o); };
+    adConfig({ preloadAdBreaks: "on" });
+
+    var _mcrBannerPushed = false;
+    function pushMcrBannerAds() {
+      if (_mcrBannerPushed) return;
+      _mcrBannerPushed = true;
+      try {
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {
+        console.warn("[poki-ad-parent] banner push failed", e);
+      }
+    }
+
+    function initMcrBannerAds() {
+      function tryPush() {
+        if (window.__googleAdsReady || (window.adsbygoogle && window.adsbygoogle.loaded)) {
+          pushMcrBannerAds();
+          return true;
+        }
+        return false;
+      }
+      if (tryPush()) return;
+      var sdkScript = document.querySelector('script[src*="googlesyndication.com/pagead/js/adsbygoogle.js"]');
+      if (sdkScript) sdkScript.addEventListener("load", tryPush, { once: true });
+      setTimeout(function () {
+        if (!document.querySelector("ins.adsbygoogle[data-adsbygoogle-status]")) tryPush();
+      }, 3000);
+    }
+
+    function retryUnfilledMcrBanners() {
+      var slots = [
+        { id: "mcrTopAdSlot", width: "320px", height: "50px", slot: "9174285658" },
+        { id: "mcrBottomAdSlot", width: "320px", height: "100px", slot: "4864961822" }
+      ];
+      slots.forEach(function (cfg) {
+        var container = document.getElementById(cfg.id);
+        if (!container) return;
+        var adEl = container.querySelector("ins.adsbygoogle");
+        if (!adEl) return;
+        var status = adEl.getAttribute("data-ad-status");
+        if (status !== "unfilled" && status !== "unfill-optimized") return;
+        container.innerHTML = "";
+        var ins = document.createElement("ins");
+        ins.className = "adsbygoogle";
+        ins.style.display = "inline-block";
+        ins.style.width = cfg.width;
+        ins.style.height = cfg.height;
+        ins.setAttribute("data-ad-client", "ca-pub-4202034217897578");
+        ins.setAttribute("data-ad-slot", cfg.slot);
+        container.appendChild(ins);
+        try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+      });
+    }
+  </script>
 </head>
 <body>
-  <div id="cwLayout">
-    <div id="cwTopAdSlot"></div>
+  <div id="mcrLayout">
+    <div id="mcrTopAdSlot">
+      <ins class="adsbygoogle"
+        style="display:inline-block;width:320px;height:50px"
+        data-ad-client="ca-pub-4202034217897578"
+        data-ad-slot="9174285658"></ins>
+    </div>
     <iframe
       src="game.html"
-      id="cwGameFrame"
-      name="cwGameFrame"
+      id="mcrGameFrame"
+      name="mcrGameFrame"
       scrolling="no"
-      allow="autoplay *; fullscreen *"
-      title="Count War"
+      allow="autoplay; fullscreen"
+      title="Marina Club Rush"
     ></iframe>
-    <div id="cwBottomAdSlot"></div>
+    <div id="mcrBottomAdSlot">
+      <ins class="adsbygoogle"
+        style="display:inline-block;width:320px;height:100px"
+        data-ad-client="ca-pub-4202034217897578"
+        data-ad-slot="4864961822"></ins>
+    </div>
   </div>
   <script>
-    // 纯本地 APK：网页广告位隐藏，广告由 Android Native 侧展示
-    var topSlot = document.getElementById("cwTopAdSlot");
-    var bottomSlot = document.getElementById("cwBottomAdSlot");
-    if (topSlot) { topSlot.style.display = "none"; topSlot.style.height = "0"; }
-    if (bottomSlot) { bottomSlot.style.display = "none"; bottomSlot.style.height = "0"; }
-
-    function unlockIframeAudio() {
-      var frame = document.getElementById("cwGameFrame");
-      if (!frame || !frame.contentWindow) return;
-      try {
-        frame.contentWindow.postMessage({ type: "unlock_audio" }, "*");
-      } catch (e) {}
-      try {
-        if (frame.contentWindow.__resumeGameAudio) frame.contentWindow.__resumeGameAudio();
-      } catch (e2) {}
-    }
-    ["touchstart", "touchend", "click", "pointerdown"].forEach(function (ev) {
-      document.addEventListener(ev, unlockIframeAudio, { passive: true, capture: true });
-    });
+    document.getElementById("mcrTopAdSlot").style.height = "50px";
+    document.getElementById("mcrBottomAdSlot").style.height = "100px";
+    initMcrBannerAds();
+    setTimeout(retryUnfilledMcrBanners, 8000);
   </script>
-  <script src="poki-ad-bridge-parent.js"></script>
+  <script src="poki-ad-bridge-parent-0.0.1.js"></script>
 </body>
 </html>

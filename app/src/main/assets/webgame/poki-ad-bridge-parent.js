@@ -1,9 +1,9 @@
 /**
- * Count War — 父页面广告桥接（Native Java 广告，与 APK WebView 一致）
+ * Marina Club Rush — 父页面广告桥接（Native Java 广告，与 APK WebView 一致）
  */
 (function () {
   "use strict";
-  var gameFrame = document.getElementById("cwGameFrame");
+  var gameFrame = document.getElementById("mcrGameFrame");
 
   function sendResponse(event, requestId, ok, result, error) {
     try {

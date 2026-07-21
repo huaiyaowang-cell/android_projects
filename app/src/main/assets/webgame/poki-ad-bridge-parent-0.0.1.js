@@ -1,10 +1,10 @@
 /**
- * Count War — 父页面广告桥接（AdSense / adBreak，与 happy-glass 同款；iframe id 为 cwGameFrame）
+ * Marina Club Rush — 父页面广告桥接（AdSense / adBreak）
  */
 (function () {
   "use strict";
 
-  var gameFrame = document.getElementById("cwGameFrame");
+  var gameFrame = document.getElementById("mcrGameFrame");
 
   function isOfflineEnvironment() {
     var isFileProtocol = false;
@@ -26,11 +26,11 @@
 
   function showCommercialBreak() {
     return new Promise(function (resolve) {
-      if (isOfflineEnvironment() || !window.__googleAdsReady) return resolve({});
+      if (!window.__googleAdsReady) return resolve({});
       if (typeof window.adBreak !== "function") return resolve({});
       window.adBreak({
         type: "browse",
-        name: "count-war-commercial",
+        name: "marina-club-rush-commercial",
         beforeAd: function () {},
         afterAd: function () {},
         adBreakDone: function () {
@@ -43,75 +43,22 @@
 
   function showRewardedBreak() {
     return new Promise(function (resolve) {
-      if (isOfflineEnvironment() || !window.__googleAdsReady) return resolve({ rewardGranted: false });
+      if (!window.__googleAdsReady) return resolve({ rewardGranted: false });
       if (typeof window.adBreak !== "function") return resolve({ rewardGranted: false });
-
-      var settled = false;
-      var rewardEarnedByViewCallback = false;
-      var pendingFalseTimer = null;
-
-      function finish(granted) {
-        if (settled) return;
-        settled = true;
-        try {
-          if (pendingFalseTimer) clearTimeout(pendingFalseTimer);
-        } catch (e) {}
-        pendingFalseTimer = null;
-        try { history.pushState(null, null, location.href); } catch (e2) {}
-        resolve({ rewardGranted: !!granted });
-      }
-
-      function tryFinishAfterDone(placementInfo) {
-        if (settled) return;
-        var st = placementInfo && placementInfo.breakStatus;
-        var viewedByStatus = st != null && String(st).toLowerCase() === "viewed";
-        if (viewedByStatus || rewardEarnedByViewCallback) {
-          finish(true);
-          return;
-        }
-        try {
-          if (pendingFalseTimer) clearTimeout(pendingFalseTimer);
-        } catch (e) {}
-        pendingFalseTimer = setTimeout(function () {
-          pendingFalseTimer = null;
-          if (settled) return;
-          finish(rewardEarnedByViewCallback);
-        }, 150);
-      }
-
       window.adBreak({
         type: "reward",
-        name: "count-war-reward",
+        name: "marina-club-rush-reward",
         beforeAd: function () {},
         afterAd: function () {},
         beforeReward: function (showAdFn) {
-          if (showAdFn) {
-            try {
-              showAdFn();
-            } catch (eShow) {}
-          }
+          showAdFn && showAdFn();
         },
-        adDismissed: function () {
-          try {
-            if (pendingFalseTimer) {
-              clearTimeout(pendingFalseTimer);
-              pendingFalseTimer = null;
-            }
-          } catch (e) {}
-          if (!settled) finish(false);
-        },
-        adViewed: function () {
-          rewardEarnedByViewCallback = true;
-          try {
-            if (pendingFalseTimer) {
-              clearTimeout(pendingFalseTimer);
-              pendingFalseTimer = null;
-            }
-          } catch (e) {}
-          if (!settled) finish(true);
-        },
+        adDismissed: function () {},
+        adViewed: function () {},
         adBreakDone: function (placementInfo) {
-          tryFinishAfterDone(placementInfo);
+          var viewed = placementInfo && placementInfo.breakStatus === "viewed";
+          if (viewed) resolve({ rewardGranted: true });
+          else resolve({ rewardGranted: false });
         },
       });
     });

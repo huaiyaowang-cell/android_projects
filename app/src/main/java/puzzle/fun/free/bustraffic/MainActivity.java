@@ -801,7 +801,7 @@ public class MainActivity extends AppCompatActivity {
         if (ENABLE_OPEN_AD_AUTO_FLOW) {
             maybeShowNativeOpenAd("onAdSdkInitComplete");
         }
-        ADManager.Companion.getAsInstance().ShowNativeAD(this);
+        //ADManager.Companion.getAsInstance().ShowNativeAD(this);
         ADManager.Companion.getAsInstance().createBanner(this, rootLayout, "banner_01", new IAdListener() {
             @Override
             public void reward(@Nullable String s, boolean b, @Nullable HashMap<String, Object> hashMap) {

@@ -1,164 +1,183 @@
 {
-  "gameName": "count-war",
-  "pageUrl": "https://poki.com/zh/g/count-war",
-  "gameUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/index.html?country=TW&ccpaApplies=0&url_referrer=https%3A%2F%2Fpoki.com%2F&tag=pg-b04f896cbc8d4d36999be7517873ebd7a921c0a0&site_id=73&iso_lang=zh&poki_url=https%3A%2F%2Fpoki.com%2Fzh%2Fg%2Fcount-war&hoist=yes&nonPersonalized=n&cloudsavegames=n&familyFriendly=n&device=desktop&categories=77%2C927%2C933%2C1014%2C1190&game_id=bd47f8cf-4104-4de0-a213-804297a5f77f&game_version_id=beb4a67d-b43c-4db0-91cd-d73adad9f4aa&inspector=0&csp=1",
+  "manifestVersion": 1,
+  "gameName": "marina-club-rush",
+  "pageUrl": "https://poki.com/zh/g/marina-club-rush#fullscreen",
+  "gameUrl": "https://12c714e4-03c7-4af7-b4d0-25b6deb0364f.gdn.poki.com/64ea3b3e-03d6-464e-a322-44fae59f2c32/index.html?country=SE&ccpaApplies=0&url_referrer=https%3A%2F%2Fpoki.com%2F&tag=pg-b495d365565d8a77f8e4f376e93d7d45296aebe0&site_id=73&iso_lang=zh&poki_url=https%3A%2F%2Fpoki.com%2Fzh%2Fg%2Fmarina-club-rush&hoist=yes&nonPersonalized=n&cloudsavegames=n&familyFriendly=n&device=mobile&categories=18%2C69%2C91&game_id=12c714e4-03c7-4af7-b4d0-25b6deb0364f&game_version_id=64ea3b3e-03d6-464e-a322-44fae59f2c32&inspector=0&csp=1",
+  "portalInfo": {
+    "description": {
+      "faq": [],
+      "sections": [],
+      "summary": "在最受欢迎的免费在线小游戏网站上玩Marina Club Rush！Poki (宝玩)可在您的手机、平板电脑或电脑上运行。无需下载，无需登录。现在就玩！"
+    },
+    "developer": "",
+    "engagement": {
+      "dislikes": "",
+      "likes": ""
+    },
+    "gameSlug": "marina-club-rush",
+    "locale": "zh",
+    "media": {
+      "iconUrl": "https://img.poki-cdn.com/cdn-cgi/image/q=78,scq=50,width=1200,height=1200,fit=cover,f=png/2e23801d55e26740cda57e6b2977234e/marina-club-rush-logo.png",
+      "ogImageUrl": "https://img.poki-cdn.com/cdn-cgi/image/q=78,scq=50,width=1200,height=1200,fit=cover,f=png/2e23801d55e26740cda57e6b2977234e/marina-club-rush-logo.png",
+      "thumbnailVideoUrl": "https://v.poki-cdn.com/31c9f5f9-e791-4739-819b-d8076ad43eb7/advertisement.h264_low.mp4"
+    },
+    "portalUrl": "https://poki.com/zh/g/marina-club-rush",
+    "rating": null,
+    "relatedGames": [],
+    "scrapedAt": "2026-06-17T03:16:04.449Z",
+    "tables": [],
+    "tags": [],
+    "title": "Marina Club Rush"
+  },
   "engine": "unity",
-  "startedAt": "2026-05-09T08:52:29.963Z",
-  "stoppedAt": "",
+  "startedAt": "2026-06-16T03:57:04.773Z",
+  "stoppedAt": "2026-06-16T08:32:58.170Z",
   "status": "listening",
   "stats": {
-    "totalSeen": 263,
-    "downloaded": 21,
+    "totalSeen": 17,
+    "downloaded": 15,
     "failed": 0,
-    "skipped": 1
+    "skipped": 2
   },
   "files": [
     {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/Build/7943b1736380558df407533a08415f43.loader.js",
-      "localPath": "Build/7943b1736380558df407533a08415f43.loader.js",
+      "type": "portal-info",
+      "sourceUrl": "https://poki.com/zh/g/marina-club-rush",
+      "localPath": "__info_assets__/meta.json",
       "status": "ok",
-      "requestType": "Script"
+      "requestType": "text",
+      "updatedAt": "2026-06-16T03:57:45.225Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/1-small.jpg",
-      "localPath": "screenshots/1-small.jpg",
+      "sourceUrl": "https://img.poki-cdn.com/cdn-cgi/image/q=78,scq=50,width=1200,height=1200,fit=cover,f=png/2e23801d55e26740cda57e6b2977234e/marina-club-rush-logo.png",
+      "localPath": "__info_assets__/icon.png",
       "status": "ok",
-      "requestType": "Image"
+      "requestType": "portal-asset",
+      "skipped": true,
+      "updatedAt": "2026-06-16T03:57:45.225Z"
     },
     {
       "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/Build/7943b1736380558df407533a08415f43.loader.js",
-      "localPath": "Build/7943b1736380558df407533a08415f43.loader.js",
+      "sourceUrl": "https://v.poki-cdn.com/31c9f5f9-e791-4739-819b-d8076ad43eb7/advertisement.h264_low.mp4",
+      "localPath": "__info_assets__/preview.mp4",
       "status": "ok",
-      "requestType": "script"
+      "requestType": "portal-asset",
+      "updatedAt": "2026-06-16T03:57:45.225Z",
+      "skipped": true
     },
     {
       "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/1-small.jpg",
-      "localPath": "screenshots/1-small.jpg",
-      "status": "ok",
-      "requestType": "image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/Build/68c85b6609a9789c8ac70522b812be45.framework.js",
-      "localPath": "Build/68c85b6609a9789c8ac70522b812be45.framework.js",
-      "status": "ok",
-      "requestType": "Script"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/1.jpg",
-      "localPath": "screenshots/1.jpg",
-      "status": "ok",
-      "requestType": "Image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/Build/b24fedab7b0e5a88a5bcbe49ae403c3c.data",
-      "localPath": "Build/b24fedab7b0e5a88a5bcbe49ae403c3c.data",
-      "status": "ok",
-      "requestType": "xmlhttprequest"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/Build/68c85b6609a9789c8ac70522b812be45.framework.js",
-      "localPath": "Build/68c85b6609a9789c8ac70522b812be45.framework.js",
-      "status": "ok",
-      "requestType": "script"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/1.jpg",
-      "localPath": "screenshots/1.jpg",
-      "status": "ok",
-      "requestType": "image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/2-small.jpg",
-      "localPath": "screenshots/2-small.jpg",
-      "status": "ok",
-      "requestType": "Image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/4-small.jpg",
-      "localPath": "screenshots/4-small.jpg",
-      "status": "ok",
-      "requestType": "Image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/3-small.jpg",
-      "localPath": "screenshots/3-small.jpg",
-      "status": "ok",
-      "requestType": "Image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/2.jpg",
-      "localPath": "screenshots/2.jpg",
-      "status": "ok",
-      "requestType": "Image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/2-small.jpg",
-      "localPath": "screenshots/2-small.jpg",
-      "status": "ok",
-      "requestType": "image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/4-small.jpg",
-      "localPath": "screenshots/4-small.jpg",
-      "status": "ok",
-      "requestType": "image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/2.jpg",
-      "localPath": "screenshots/2.jpg",
-      "status": "ok",
-      "requestType": "image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/3-small.jpg",
-      "localPath": "screenshots/3-small.jpg",
-      "status": "ok",
-      "requestType": "image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/3.jpg",
-      "localPath": "screenshots/3.jpg",
-      "status": "ok",
-      "requestType": "Image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/Build/3c29c9bbd1eb934e9fa2d7bb59921309.wasm",
-      "localPath": "Build/3c29c9bbd1eb934e9fa2d7bb59921309.wasm",
-      "status": "ok",
-      "requestType": "xmlhttprequest"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/3.jpg",
-      "localPath": "screenshots/3.jpg",
-      "status": "ok",
-      "requestType": "image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/index.html?country=TW&ccpaApplies=0&url_referrer=https%3A%2F%2Fpoki.com%2F&tag=pg-b04f896cbc8d4d36999be7517873ebd7a921c0a0&site_id=73&iso_lang=zh&poki_url=https%3A%2F%2Fpoki.com%2Fzh%2Fg%2Fcount-war&hoist=yes&nonPersonalized=n&cloudsavegames=n&familyFriendly=n&device=mobile&categories=77%2C927%2C933%2C1014%2C1190&game_id=bd47f8cf-4104-4de0-a213-804297a5f77f&game_version_id=beb4a67d-b43c-4db0-91cd-d73adad9f4aa&inspector=0&csp=1",
+      "sourceUrl": "https://12c714e4-03c7-4af7-b4d0-25b6deb0364f.gdn.poki.com/64ea3b3e-03d6-464e-a322-44fae59f2c32/index.html?country=TR&ccpaApplies=0&url_referrer=https%3A%2F%2Fpoki.com%2F&tag=pg-b495d365565d8a77f8e4f376e93d7d45296aebe0&site_id=73&iso_lang=zh&poki_url=https%3A%2F%2Fpoki.com%2Fzh%2Fg%2Fmarina-club-rush&hoist=yes&nonPersonalized=n&cloudsavegames=n&familyFriendly=n&device=mobile&categories=18%2C69%2C91&game_id=12c714e4-03c7-4af7-b4d0-25b6deb0364f&game_version_id=64ea3b3e-03d6-464e-a322-44fae59f2c32&inspector=0&csp=1",
       "localPath": "index.html",
       "status": "ok",
-      "requestType": "Document"
+      "requestType": "Document",
+      "updatedAt": "2026-06-16T03:57:45.225Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://12c714e4-03c7-4af7-b4d0-25b6deb0364f.gdn.poki.com/64ea3b3e-03d6-464e-a322-44fae59f2c32/Build/CF144.loader.js",
+      "localPath": "Build/CF144.loader.js",
+      "status": "ok",
+      "requestType": "Script",
+      "updatedAt": "2026-06-16T03:57:45.225Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://12c714e4-03c7-4af7-b4d0-25b6deb0364f.gdn.poki.com/64ea3b3e-03d6-464e-a322-44fae59f2c32/screenshots/1-small.jpg",
+      "localPath": "screenshots/1-small.jpg",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-16T03:57:45.225Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://12c714e4-03c7-4af7-b4d0-25b6deb0364f.gdn.poki.com/64ea3b3e-03d6-464e-a322-44fae59f2c32/Build/CF144.framework.js.br",
+      "localPath": "Build/CF144.framework.js.br",
+      "status": "ok",
+      "requestType": "Script",
+      "updatedAt": "2026-06-16T03:57:45.225Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://12c714e4-03c7-4af7-b4d0-25b6deb0364f.gdn.poki.com/64ea3b3e-03d6-464e-a322-44fae59f2c32/screenshots/1.jpg",
+      "localPath": "screenshots/1.jpg",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-16T03:57:45.225Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://12c714e4-03c7-4af7-b4d0-25b6deb0364f.gdn.poki.com/64ea3b3e-03d6-464e-a322-44fae59f2c32/screenshots/2-small.jpg",
+      "localPath": "screenshots/2-small.jpg",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-16T03:57:45.225Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://12c714e4-03c7-4af7-b4d0-25b6deb0364f.gdn.poki.com/64ea3b3e-03d6-464e-a322-44fae59f2c32/screenshots/4-small.jpg",
+      "localPath": "screenshots/4-small.jpg",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-16T03:57:45.225Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://12c714e4-03c7-4af7-b4d0-25b6deb0364f.gdn.poki.com/64ea3b3e-03d6-464e-a322-44fae59f2c32/screenshots/3-small.jpg",
+      "localPath": "screenshots/3-small.jpg",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-16T03:57:45.225Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://12c714e4-03c7-4af7-b4d0-25b6deb0364f.gdn.poki.com/64ea3b3e-03d6-464e-a322-44fae59f2c32/screenshots/2.jpg",
+      "localPath": "screenshots/2.jpg",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-16T03:57:45.225Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://12c714e4-03c7-4af7-b4d0-25b6deb0364f.gdn.poki.com/64ea3b3e-03d6-464e-a322-44fae59f2c32/Build/CF144.data.br",
+      "localPath": "Build/CF144.data.br",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-06-16T03:57:45.225Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://12c714e4-03c7-4af7-b4d0-25b6deb0364f.gdn.poki.com/64ea3b3e-03d6-464e-a322-44fae59f2c32/Build/CF144.wasm.br",
+      "localPath": "Build/CF144.wasm.br",
+      "status": "ok",
+      "requestType": "xmlhttprequest",
+      "updatedAt": "2026-06-16T03:57:45.225Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://12c714e4-03c7-4af7-b4d0-25b6deb0364f.gdn.poki.com/64ea3b3e-03d6-464e-a322-44fae59f2c32/screenshots/3.jpg",
+      "localPath": "screenshots/3.jpg",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-16T03:57:45.225Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://12c714e4-03c7-4af7-b4d0-25b6deb0364f.gdn.poki.com/64ea3b3e-03d6-464e-a322-44fae59f2c32/StreamingAssets/Music_0.mp3.txt",
+      "localPath": "StreamingAssets/Music_0.mp3.txt",
+      "status": "ok",
+      "requestType": "Fetch",
+      "updatedAt": "2026-06-16T03:57:45.225Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://12c714e4-03c7-4af7-b4d0-25b6deb0364f.gdn.poki.com/64ea3b3e-03d6-464e-a322-44fae59f2c32/screenshots/4.jpg",
+      "localPath": "screenshots/4.jpg",
+      "status": "ok",
+      "requestType": "image",
+      "updatedAt": "2026-06-16T08:32:59.079Z"
     }
-  ]
+  ],
+  "updatedAt": "2026-06-17T03:16:07.503Z"
 }

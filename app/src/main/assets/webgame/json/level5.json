@@ -1,0 +1,287 @@
+{
+  "worldWidth": 3200,
+  "worldHeight": 1600,
+  "scale": 1.6,
+  "theme": "grassland",
+  "spawns": [
+    {
+      "x": 173,
+      "y": 474,
+      "type": "player",
+      "behaviour": "walks"
+    },
+    {
+      "x": 603,
+      "y": 692,
+      "type": "animal",
+      "animal": "standardChicken",
+      "behaviour": "walks",
+      "facingDir": 1
+    },
+    {
+      "x": 842,
+      "y": 725,
+      "type": "animal",
+      "animal": "standardChicken",
+      "behaviour": "walks",
+      "facingDir": 1
+    },
+    {
+      "x": 953,
+      "y": 648,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 1319,
+      "y": 543,
+      "type": "animal",
+      "animal": "penguin",
+      "behaviour": "walks",
+      "facingDir": 1
+    },
+    {
+      "x": 1871,
+      "y": 550,
+      "type": "animal",
+      "animal": "penguin",
+      "behaviour": "walks",
+      "facingDir": 1
+    },
+    {
+      "x": 2267,
+      "y": 562,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 2487,
+      "y": 530,
+      "type": "enemy",
+      "behaviour": "walks"
+    }
+  ],
+  "ground": {
+    "vertices": [
+      [
+        0,
+        1600
+      ],
+      [
+        0,
+        698
+      ],
+      [
+        94,
+        651
+      ],
+      [
+        188,
+        609
+      ],
+      [
+        282,
+        558
+      ],
+      [
+        376,
+        525
+      ],
+      [
+        526,
+        797
+      ],
+      [
+        676,
+        809
+      ],
+      [
+        826,
+        806
+      ],
+      [
+        976,
+        750
+      ],
+      [
+        1282,
+        693
+      ],
+      [
+        1433,
+        927
+      ],
+      [
+        1535,
+        946
+      ],
+      [
+        1636,
+        928
+      ],
+      [
+        1737,
+        927
+      ],
+      [
+        1889,
+        699
+      ],
+      [
+        2154,
+        689
+      ],
+      [
+        2419,
+        695
+      ],
+      [
+        2809,
+        556
+      ],
+      [
+        3200,
+        432
+      ],
+      [
+        3200,
+        500
+      ],
+      [
+        3200,
+        1600
+      ]
+    ]
+  },
+  "platforms": [
+    {
+      "vertices": [
+        [
+          2812,
+          227
+        ],
+        [
+          3203,
+          227
+        ],
+        [
+          3203,
+          316
+        ],
+        [
+          2812,
+          316
+        ]
+      ]
+    }
+  ],
+  "water": [
+    {
+      "vertices": [
+        [
+          1272,
+          719
+        ],
+        [
+          1940,
+          719
+        ],
+        [
+          1940,
+          974
+        ],
+        [
+          1272,
+          974
+        ]
+      ]
+    }
+  ],
+  "staticStructures": [
+    {
+      "vertices": [
+        [
+          2827,
+          309
+        ],
+        [
+          2847,
+          309
+        ],
+        [
+          2847,
+          556
+        ],
+        [
+          2827,
+          556
+        ]
+      ]
+    }
+  ],
+  "destructibleGroups": [],
+  "destructibleSingles": [
+    {
+      "x": 1391,
+      "y": 664,
+      "w": 343,
+      "h": 29,
+      "angle": 0
+    },
+    {
+      "x": 1799,
+      "y": 668,
+      "w": 251,
+      "h": 37,
+      "angle": 0
+    }
+  ],
+  "destructibleRounds": [
+    {
+      "x": 2697,
+      "y": 220,
+      "r": 30
+    },
+    {
+      "x": 2701,
+      "y": 303,
+      "r": 30
+    },
+    {
+      "x": 2704,
+      "y": 385,
+      "r": 37
+    }
+  ],
+  "gunPowerUps": [
+    {
+      "x": 1135,
+      "y": 669
+    }
+  ],
+  "healthPowerUps": [],
+  "swingingBalls": [],
+  "crushingBlocks": [
+    {
+      "x": 753,
+      "y": 327,
+      "w": 107,
+      "h": 165,
+      "travel": 384,
+      "period": 3,
+      "damage": 25
+    },
+    {
+      "x": 2081,
+      "y": 216,
+      "w": 134,
+      "h": 163,
+      "travel": 381,
+      "period": 3,
+      "damage": 25
+    }
+  ],
+  "explodableBlocks": [],
+  "movingPlatformsH": [],
+  "movingPlatformsV": []
+}

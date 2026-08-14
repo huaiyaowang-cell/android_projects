@@ -1,0 +1,305 @@
+{
+  "worldWidth": 3200,
+  "worldHeight": 1600,
+  "scale": 1.6,
+  "theme": "grassland",
+  "spawns": [
+    {
+      "x": 237,
+      "y": 496,
+      "type": "player",
+      "behaviour": "walks"
+    },
+    {
+      "x": 572,
+      "y": 542,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 865,
+      "y": 518,
+      "type": "animal",
+      "animal": "penguin",
+      "behaviour": "walks",
+      "facingDir": 1
+    },
+    {
+      "x": 1282,
+      "y": 172,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 1709,
+      "y": 330,
+      "type": "animal",
+      "animal": "shark",
+      "behaviour": "swims",
+      "facingDir": 1
+    },
+    {
+      "x": 2443,
+      "y": 462,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 3023,
+      "y": 207,
+      "type": "animal",
+      "animal": "shark",
+      "behaviour": "swims",
+      "facingDir": -1
+    }
+  ],
+  "ground": {
+    "vertices": [
+      [
+        0,
+        1600
+      ],
+      [
+        0,
+        631
+      ],
+      [
+        83,
+        628
+      ],
+      [
+        166,
+        648
+      ],
+      [
+        249,
+        632
+      ],
+      [
+        333,
+        630
+      ],
+      [
+        663,
+        623
+      ],
+      [
+        993,
+        637
+      ],
+      [
+        1097,
+        631
+      ],
+      [
+        1200,
+        624
+      ],
+      [
+        1303,
+        634
+      ],
+      [
+        1439,
+        645
+      ],
+      [
+        1576,
+        636
+      ],
+      [
+        1712,
+        630
+      ],
+      [
+        1849,
+        622
+      ],
+      [
+        1954,
+        924
+      ],
+      [
+        2059,
+        936
+      ],
+      [
+        2164,
+        923
+      ],
+      [
+        2269,
+        575
+      ],
+      [
+        2316,
+        586
+      ],
+      [
+        2363,
+        584
+      ],
+      [
+        2410,
+        565
+      ],
+      [
+        2458,
+        561
+      ],
+      [
+        2505,
+        588
+      ],
+      [
+        2552,
+        575
+      ],
+      [
+        2768,
+        498
+      ],
+      [
+        2984,
+        421
+      ],
+      [
+        3200,
+        355
+      ],
+      [
+        3200,
+        500
+      ],
+      [
+        3200,
+        1600
+      ]
+    ]
+  },
+  "platforms": [
+    {
+      "vertices": [
+        [
+          506,
+          374
+        ],
+        [
+          608,
+          374
+        ],
+        [
+          608,
+          435
+        ],
+        [
+          506,
+          435
+        ]
+      ]
+    },
+    {
+      "vertices": [
+        [
+          1382,
+          256
+        ],
+        [
+          1502,
+          256
+        ],
+        [
+          1502,
+          366
+        ],
+        [
+          1382,
+          366
+        ]
+      ]
+    }
+  ],
+  "water": [
+    {
+      "vertices": [
+        [
+          1845,
+          645
+        ],
+        [
+          2282,
+          645
+        ],
+        [
+          2282,
+          949
+        ],
+        [
+          1845,
+          949
+        ]
+      ]
+    }
+  ],
+  "staticStructures": [],
+  "destructibleGroups": [
+    {
+      "x": 1167,
+      "y": 474,
+      "w": 172,
+      "h": 168,
+      "count": 5
+    },
+    {
+      "x": 2603,
+      "y": 335,
+      "w": 159,
+      "h": 227,
+      "count": 5
+    }
+  ],
+  "destructibleSingles": [],
+  "destructibleRounds": [],
+  "gunPowerUps": [
+    {
+      "x": 1063,
+      "y": 572
+    }
+  ],
+  "healthPowerUps": [],
+  "swingingBalls": [],
+  "spinningBlades": [],
+  "rotatingPlatforms": [],
+  "ropeBridges": [
+    {
+      "x1": 608,
+      "y1": 378,
+      "x2": 1382,
+      "y2": 258
+    }
+  ],
+  "mincers": [],
+  "crushingBlocks": [],
+  "explodableBlocks": [
+    {
+      "x": 879,
+      "y": 242,
+      "w": 80,
+      "h": 60,
+      "hp": 3,
+      "blastRadius": 300,
+      "blastPower": 18
+    },
+    {
+      "x": 1421,
+      "y": 588,
+      "w": 80,
+      "h": 60,
+      "hp": 3,
+      "blastRadius": 300,
+      "blastPower": 18
+    }
+  ],
+  "movingPlatformsH": [],
+  "movingPlatformsV": []
+}

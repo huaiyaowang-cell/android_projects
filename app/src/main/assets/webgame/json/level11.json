@@ -1,0 +1,207 @@
+{
+  "worldWidth": 3200,
+  "worldHeight": 1600,
+  "scale": 1.6,
+  "theme": "grassland",
+  "spawns": [
+    {
+      "x": 1397,
+      "y": 310,
+      "type": "player",
+      "behaviour": "walks"
+    },
+    {
+      "x": 733,
+      "y": 471,
+      "type": "animal",
+      "animal": "triceratops",
+      "behaviour": "walks",
+      "facingDir": 1
+    },
+    {
+      "x": 2128,
+      "y": 440,
+      "type": "animal",
+      "animal": "tRex",
+      "behaviour": "walks",
+      "facingDir": -1
+    },
+    {
+      "x": 538,
+      "y": 702,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 2496,
+      "y": 435,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 2908,
+      "y": 759,
+      "type": "enemy",
+      "behaviour": "walks"
+    }
+  ],
+  "ground": {
+    "vertices": [
+      [
+        0,
+        1600
+      ],
+      [
+        0,
+        760
+      ],
+      [
+        103,
+        691
+      ],
+      [
+        207,
+        635
+      ],
+      [
+        310,
+        566
+      ],
+      [
+        359,
+        496
+      ],
+      [
+        495,
+        835
+      ],
+      [
+        633,
+        768
+      ],
+      [
+        825,
+        698
+      ],
+      [
+        1018,
+        637
+      ],
+      [
+        1243,
+        618
+      ],
+      [
+        1468,
+        637
+      ],
+      [
+        1693,
+        642
+      ],
+      [
+        1968,
+        683
+      ],
+      [
+        2243,
+        718
+      ],
+      [
+        2518,
+        751
+      ],
+      [
+        2745,
+        837
+      ],
+      [
+        2973,
+        927
+      ],
+      [
+        3200,
+        995
+      ],
+      [
+        3200,
+        1001
+      ],
+      [
+        3200,
+        1600
+      ]
+    ]
+  },
+  "platforms": [
+    {
+      "vertices": [
+        [
+          2480,
+          542
+        ],
+        [
+          2544,
+          547
+        ],
+        [
+          2585,
+          560
+        ],
+        [
+          2552,
+          591
+        ],
+        [
+          2480,
+          605
+        ],
+        [
+          2415,
+          598
+        ],
+        [
+          2377,
+          560
+        ],
+        [
+          2409,
+          523
+        ]
+      ]
+    }
+  ],
+  "water": [],
+  "staticStructures": [],
+  "destructibleGroups": [],
+  "destructibleSingles": [],
+  "destructibleRounds": [],
+  "gunPowerUps": [
+    {
+      "x": 1393,
+      "y": 561
+    }
+  ],
+  "healthPowerUps": [],
+  "swingingBalls": [],
+  "spinningBlades": [],
+  "rotatingPlatforms": [],
+  "ropeBridges": [],
+  "mincers": [],
+  "crushingBlocks": [],
+  "explodableBlocks": [],
+  "fireJets": [
+    {
+      "x": 957,
+      "y": 635,
+      "aimDir": 270
+    },
+    {
+      "x": 1839,
+      "y": 638,
+      "aimDir": 270
+    }
+  ],
+  "movingPlatformsH": [],
+  "movingPlatformsV": []
+}

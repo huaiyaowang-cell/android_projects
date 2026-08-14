@@ -1,0 +1,114 @@
+{
+  "font0": {
+    "en": "Fredoka",
+    "fr": "Fredoka",
+    "de": "Fredoka",
+    "pt": "Fredoka",
+    "es": "Fredoka"
+  },
+  "congrats0": {
+    "en": "WELL DONE!",
+    "fr": "BRAVO !",
+    "de": "GUT GEMACHT!",
+    "pt": "MUITO BEM!",
+    "es": "¡MUY BIEN!"
+  },
+  "congrats1": {
+    "en": "EXCELLENT!",
+    "fr": "EXCELLENT !",
+    "de": "AUSGEZEICHNET!",
+    "pt": "EXCELENTE!",
+    "es": "¡EXCELENTE!"
+  },
+  "congrats2": {
+    "en": "WIN!",
+    "fr": "VICTOIRE !",
+    "de": "SIEG!",
+    "pt": "VITÓRIA!",
+    "es": "¡VICTORIA!"
+  },
+  "congrats3": {
+    "en": "AWESOME!",
+    "fr": "GÉNIAL !",
+    "de": "SUPER!",
+    "pt": "INCRÍVEL!",
+    "es": "¡GENIAL!"
+  },
+  "congrats4": {
+    "en": "AMAZING!",
+    "fr": "INCROYABLE !",
+    "de": "ERSTAUNLICH!",
+    "pt": "FANTÁSTICO!",
+    "es": "¡INCREÍBLE!"
+  },
+  "reward0": {
+    "en": "BLADE X2",
+    "fr": "LAME X2",
+    "de": "KLINGE X2",
+    "pt": "LÂMINA X2",
+    "es": "HOJA X2"
+  },
+  "reward1": {
+    "en": "SPEED X2",
+    "fr": "VITESSE X2",
+    "de": "TEMPO X2",
+    "pt": "VELOZ X2",
+    "es": "RÁPIDO X2"
+  },
+  "reward2": {
+    "en": "RAIL GUN",
+    "fr": "RAILGUN",
+    "de": "RAILGUN",
+    "pt": "RAILGUN",
+    "es": "RAILGUN"
+  },
+  "reward3": {
+    "en": "BIG BLADE",
+    "fr": "MÉGA LAME",
+    "de": "MEGA KLINGE",
+    "pt": "MEGA LÂMINA",
+    "es": "MEGA HOJA"
+  },
+  "stageComplete": {
+    "en": "STAGE COMPLETE!",
+    "fr": "ÉTAPE TERMINÉE !",
+    "de": "LEVEL GESCHAFFT!",
+    "pt": "FASE COMPLETA!",
+    "es": "¡ETAPA COMPLETA!"
+  },
+  "nextWeapon": {
+    "en": "NEXT WEAPON",
+    "fr": "ARME SUIVANTE",
+    "de": "NÄCHSTE WAFFE",
+    "pt": "PRÓXIMA ARMA",
+    "es": "SIGUIENTE ARMA"
+  },
+  "weaponUnlocked": {
+    "en": "WEAPON UNLOCKED!",
+    "fr": "ARME DÉBLOQUÉE !",
+    "de": "WAFFE FREIGESCHALTET!",
+    "pt": "ARMA DESBLOQUEADA!",
+    "es": "¡ARMA DESBLOQUEADA!"
+  },
+  "upgradeNow": {
+    "en": "UPGRADE NOW",
+    "fr": "AMÉLIORER",
+    "de": "JETZT AUFRÜSTEN",
+    "pt": "MELHORAR JÁ",
+    "es": "MEJORAR YA"
+  },
+  "fightEverything": {
+    "en": "FIGHT!",
+    "fr": "COMBAT !",
+    "de": "KAMPF!",
+    "pt": "LUTA!",
+    "es": "¡LUCHA!"
+  },
+  "stage": {
+    "en": "STAGE",
+    "fr": "ÉTAPE",
+    "de": "LEVEL",
+    "pt": "FASE",
+    "es": "ETAPA"
+  }
+}

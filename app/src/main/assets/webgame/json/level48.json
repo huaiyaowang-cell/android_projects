@@ -1,0 +1,301 @@
+{
+  "worldWidth": 3200,
+  "worldHeight": 1600,
+  "scale": 1.6,
+  "theme": "grassland",
+  "spawns": [
+    {
+      "x": 325,
+      "y": 1112,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 1047,
+      "y": 261,
+      "type": "animal",
+      "animal": "alpaca",
+      "behaviour": "walks",
+      "facingDir": 1
+    },
+    {
+      "x": 1130,
+      "y": 1206,
+      "type": "animal",
+      "animal": "alpaca",
+      "behaviour": "walks",
+      "facingDir": -1
+    },
+    {
+      "x": 1507,
+      "y": 244,
+      "type": "player",
+      "behaviour": "walks"
+    },
+    {
+      "x": 1816,
+      "y": 1197,
+      "type": "animal",
+      "animal": "alpaca",
+      "behaviour": "walks",
+      "facingDir": 1
+    },
+    {
+      "x": 1940,
+      "y": 265,
+      "type": "animal",
+      "animal": "alpaca",
+      "behaviour": "walks",
+      "facingDir": -1
+    },
+    {
+      "x": 2333,
+      "y": 1249,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 2705,
+      "y": 1183,
+      "type": "enemy",
+      "behaviour": "walks"
+    }
+  ],
+  "ground": {
+    "vertices": [
+      [
+        0,
+        1600
+      ],
+      [
+        0,
+        1198
+      ],
+      [
+        571,
+        1288
+      ],
+      [
+        1142,
+        1385
+      ],
+      [
+        1209,
+        1401
+      ],
+      [
+        1277,
+        1400
+      ],
+      [
+        1344,
+        1367
+      ],
+      [
+        1411,
+        1383
+      ],
+      [
+        1464,
+        1392
+      ],
+      [
+        1517,
+        1391
+      ],
+      [
+        1570,
+        1375
+      ],
+      [
+        1623,
+        1374
+      ],
+      [
+        1677,
+        1392
+      ],
+      [
+        1730,
+        1383
+      ],
+      [
+        3200,
+        1383
+      ],
+      [
+        3200,
+        1600
+      ]
+    ]
+  },
+  "platforms": [
+    {
+      "vertices": [
+        [
+          954,
+          377
+        ],
+        [
+          1170,
+          367
+        ],
+        [
+          1387,
+          342
+        ],
+        [
+          1604,
+          339
+        ],
+        [
+          1820,
+          360
+        ],
+        [
+          2037,
+          385
+        ],
+        [
+          2037,
+          616
+        ],
+        [
+          1820,
+          655
+        ],
+        [
+          1604,
+          651
+        ],
+        [
+          1387,
+          656
+        ],
+        [
+          1170,
+          639
+        ],
+        [
+          954,
+          624
+        ]
+      ]
+    }
+  ],
+  "water": [],
+  "staticStructures": [],
+  "destructibleGroups": [],
+  "destructibleSingles": [
+    {
+      "x": 1213,
+      "y": 100,
+      "w": 44,
+      "h": 42,
+      "angle": 0
+    },
+    {
+      "x": 1291,
+      "y": 67,
+      "w": 29,
+      "h": 36,
+      "angle": 0
+    },
+    {
+      "x": 1250,
+      "y": 182,
+      "w": 49,
+      "h": 45,
+      "angle": 0
+    },
+    {
+      "x": 1670,
+      "y": 76,
+      "w": 39,
+      "h": 43,
+      "angle": 0
+    },
+    {
+      "x": 1706,
+      "y": 177,
+      "w": 51,
+      "h": 54,
+      "angle": 0
+    },
+    {
+      "x": 1774,
+      "y": 82,
+      "w": 41,
+      "h": 46,
+      "angle": 0
+    }
+  ],
+  "destructibleRounds": [
+    {
+      "x": 1388,
+      "y": 43,
+      "r": 33
+    },
+    {
+      "x": 1471,
+      "y": 41,
+      "r": 23
+    },
+    {
+      "x": 1531,
+      "y": 41,
+      "r": 31
+    }
+  ],
+  "gunPowerUps": [
+    {
+      "x": 2099,
+      "y": 1300
+    }
+  ],
+  "healthPowerUps": [],
+  "swingingBalls": [
+    {
+      "x": 1487,
+      "y": 647,
+      "chainLength": 552,
+      "radius": 78,
+      "damage": 15
+    }
+  ],
+  "spinningBlades": [],
+  "rotatingPlatforms": [],
+  "ropeBridges": [],
+  "mincers": [
+    {
+      "x": 2092,
+      "y": 860,
+      "radius": 147,
+      "spinSpeed": 1,
+      "damage": 15
+    },
+    {
+      "x": 839,
+      "y": 850,
+      "radius": 158,
+      "spinSpeed": 1,
+      "damage": 15
+    }
+  ],
+  "crushingBlocks": [],
+  "explodableBlocks": [],
+  "fireJets": [
+    {
+      "x": 3103,
+      "y": 1359,
+      "aimDir": 270
+    },
+    {
+      "x": 106,
+      "y": 1190,
+      "aimDir": 270
+    }
+  ],
+  "movingPlatformsH": [],
+  "movingPlatformsV": []
+}

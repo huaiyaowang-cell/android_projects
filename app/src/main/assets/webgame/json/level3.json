@@ -1,0 +1,192 @@
+{
+  "worldWidth": 3200,
+  "worldHeight": 1600,
+  "scale": 1.6,
+  "theme": "grassland",
+  "spawns": [
+    {
+      "x": 174,
+      "y": 423,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 327,
+      "y": 346,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 833,
+      "y": 595,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 1328,
+      "y": 407,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 1732,
+      "y": 373,
+      "type": "player",
+      "behaviour": "walks"
+    },
+    {
+      "x": 2196,
+      "y": 351,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 2534,
+      "y": 494,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 2833,
+      "y": 387,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 3093,
+      "y": 112,
+      "type": "enemy",
+      "behaviour": "walks"
+    }
+  ],
+  "ground": {
+    "vertices": [
+      [
+        0,
+        1600
+      ],
+      [
+        0,
+        632
+      ],
+      [
+        131,
+        569
+      ],
+      [
+        261,
+        512
+      ],
+      [
+        392,
+        449
+      ],
+      [
+        392,
+        500
+      ],
+      [
+        590,
+        720
+      ],
+      [
+        722,
+        714
+      ],
+      [
+        854,
+        711
+      ],
+      [
+        986,
+        717
+      ],
+      [
+        1184,
+        463
+      ],
+      [
+        1539,
+        677
+      ],
+      [
+        1743,
+        622
+      ],
+      [
+        1947,
+        591
+      ],
+      [
+        2151,
+        535
+      ],
+      [
+        2354,
+        506
+      ],
+      [
+        2736,
+        839
+      ],
+      [
+        3200,
+        839
+      ],
+      [
+        3200,
+        1600
+      ]
+    ]
+  },
+  "platforms": [],
+  "water": [],
+  "staticStructures": [],
+  "destructibleGroups": [],
+  "destructibleSingles": [
+    {
+      "x": 2881,
+      "y": 674,
+      "w": 617,
+      "h": 16,
+      "angle": 0
+    }
+  ],
+  "destructibleRounds": [],
+  "gunPowerUps": [
+    {
+      "x": 449,
+      "y": 489
+    },
+    {
+      "x": 1754,
+      "y": 553
+    }
+  ],
+  "healthPowerUps": [
+    {
+      "x": 948,
+      "y": 654
+    }
+  ],
+  "swingingBalls": [],
+  "spinningBlades": [],
+  "rotatingPlatforms": [],
+  "ropeBridges": [],
+  "mincers": [],
+  "crushingBlocks": [],
+  "explodableBlocks": [
+    {
+      "x": 2268,
+      "y": 92,
+      "w": 80,
+      "h": 60,
+      "hp": 3,
+      "blastRadius": 300,
+      "blastPower": 18
+    }
+  ],
+  "fireJets": [],
+  "movingPlatformsH": [],
+  "movingPlatformsV": []
+}

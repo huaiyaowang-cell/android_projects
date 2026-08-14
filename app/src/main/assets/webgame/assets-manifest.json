@@ -1,164 +1,864 @@
 {
-  "gameName": "count-war",
-  "pageUrl": "https://poki.com/zh/g/count-war",
-  "gameUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/index.html?country=TW&ccpaApplies=0&url_referrer=https%3A%2F%2Fpoki.com%2F&tag=pg-b04f896cbc8d4d36999be7517873ebd7a921c0a0&site_id=73&iso_lang=zh&poki_url=https%3A%2F%2Fpoki.com%2Fzh%2Fg%2Fcount-war&hoist=yes&nonPersonalized=n&cloudsavegames=n&familyFriendly=n&device=desktop&categories=77%2C927%2C933%2C1014%2C1190&game_id=bd47f8cf-4104-4de0-a213-804297a5f77f&game_version_id=beb4a67d-b43c-4db0-91cd-d73adad9f4aa&inspector=0&csp=1",
-  "engine": "unity",
-  "startedAt": "2026-05-09T08:52:29.963Z",
-  "stoppedAt": "",
+  "manifestVersion": 1,
+  "gameName": "stickman-fury",
+  "pageUrl": "https://poki.com/zh/g/stickman-fury#fullscreen",
+  "gameUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/index.html?country=HK&ccpaApplies=0&url_referrer=https%3A%2F%2Fpoki.com%2F&tag=pg-da499a66b0803a7f0c5211da3ea5079c2ff98979&site_id=73&iso_lang=zh&poki_url=https%3A%2F%2Fpoki.com%2Fzh%2Fg%2Fstickman-fury&hoist=yes&nonPersonalized=n&cloudsavegames=n&familyFriendly=n&device=mobile&categories=3%2C64%2C80%2C389%2C927&ab=ec6067815ba1d32de458588ecd20022afad7d079&experiment=a-249b9969&game_id=1c81968d-62d5-42e2-901c-5df3fd23e03d&game_version_id=50521fc8-8444-4b3e-9311-a3f00dde294a&inspector=0&csp=1",
+  "portalInfo": {
+    "description": {
+      "faq": [],
+      "sections": [],
+      "summary": "在最受欢迎的免费在线小游戏网站上玩Stickman Fury！Poki (宝玩)可在您的手机、平板电脑或电脑上运行。无需下载，无需登录。现在就玩！"
+    },
+    "developer": "",
+    "engagement": {
+      "dislikes": "",
+      "likes": ""
+    },
+    "gameSlug": "stickman-fury",
+    "locale": "zh",
+    "media": {
+      "iconUrl": "https://img.poki-cdn.com/cdn-cgi/image/q=78,scq=50,width=1200,height=1200,fit=cover,f=png/e423cd1c909817b0046dbd71ec9c0bff/stickman-fury-logo.png",
+      "ogImageUrl": "https://img.poki-cdn.com/cdn-cgi/image/q=78,scq=50,width=1200,height=1200,fit=cover,f=png/e423cd1c909817b0046dbd71ec9c0bff/stickman-fury-logo.png",
+      "thumbnailVideoUrl": null
+    },
+    "portalUrl": "https://poki.com/zh/g/stickman-fury",
+    "rating": null,
+    "relatedGames": [],
+    "scrapedAt": "2026-07-07T09:50:36.163Z",
+    "tables": [],
+    "tags": [],
+    "title": "Stickman Fury"
+  },
+  "engine": "unknown",
+  "startedAt": "2026-06-22T10:33:13.592Z",
+  "stoppedAt": "2026-06-23T06:09:40.943Z",
   "status": "listening",
   "stats": {
-    "totalSeen": 263,
-    "downloaded": 21,
+    "totalSeen": 102,
+    "downloaded": 99,
     "failed": 0,
-    "skipped": 1
+    "skipped": 3
   },
   "files": [
     {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/Build/7943b1736380558df407533a08415f43.loader.js",
-      "localPath": "Build/7943b1736380558df407533a08415f43.loader.js",
+      "type": "portal-info",
+      "sourceUrl": "https://poki.com/zh/g/stickman-fury",
+      "localPath": "__info_assets__/meta.json",
       "status": "ok",
-      "requestType": "Script"
+      "requestType": "text",
+      "updatedAt": "2026-07-07T09:26:20.533Z",
+      "skipped": true
     },
     {
       "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/1-small.jpg",
-      "localPath": "screenshots/1-small.jpg",
+      "sourceUrl": "https://img.poki-cdn.com/cdn-cgi/image/q=78,scq=50,width=1200,height=1200,fit=cover,f=png/e423cd1c909817b0046dbd71ec9c0bff/stickman-fury-logo.png",
+      "localPath": "__info_assets__/icon.png",
       "status": "ok",
-      "requestType": "Image"
+      "requestType": "portal-asset",
+      "updatedAt": "2026-06-22T10:38:44.191Z",
+      "skipped": true
     },
     {
       "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/Build/7943b1736380558df407533a08415f43.loader.js",
-      "localPath": "Build/7943b1736380558df407533a08415f43.loader.js",
+      "sourceUrl": "https://poki.com/zh/g/stickman-fury",
+      "localPath": "__info_assets__/preview.webp",
       "status": "ok",
-      "requestType": "script"
+      "requestType": "portal-asset",
+      "updatedAt": "2026-06-22T10:38:44.191Z",
+      "skipped": true
     },
     {
       "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/1-small.jpg",
-      "localPath": "screenshots/1-small.jpg",
-      "status": "ok",
-      "requestType": "image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/Build/68c85b6609a9789c8ac70522b812be45.framework.js",
-      "localPath": "Build/68c85b6609a9789c8ac70522b812be45.framework.js",
-      "status": "ok",
-      "requestType": "Script"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/1.jpg",
-      "localPath": "screenshots/1.jpg",
-      "status": "ok",
-      "requestType": "Image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/Build/b24fedab7b0e5a88a5bcbe49ae403c3c.data",
-      "localPath": "Build/b24fedab7b0e5a88a5bcbe49ae403c3c.data",
-      "status": "ok",
-      "requestType": "xmlhttprequest"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/Build/68c85b6609a9789c8ac70522b812be45.framework.js",
-      "localPath": "Build/68c85b6609a9789c8ac70522b812be45.framework.js",
-      "status": "ok",
-      "requestType": "script"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/1.jpg",
-      "localPath": "screenshots/1.jpg",
-      "status": "ok",
-      "requestType": "image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/2-small.jpg",
-      "localPath": "screenshots/2-small.jpg",
-      "status": "ok",
-      "requestType": "Image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/4-small.jpg",
-      "localPath": "screenshots/4-small.jpg",
-      "status": "ok",
-      "requestType": "Image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/3-small.jpg",
-      "localPath": "screenshots/3-small.jpg",
-      "status": "ok",
-      "requestType": "Image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/2.jpg",
-      "localPath": "screenshots/2.jpg",
-      "status": "ok",
-      "requestType": "Image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/2-small.jpg",
-      "localPath": "screenshots/2-small.jpg",
-      "status": "ok",
-      "requestType": "image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/4-small.jpg",
-      "localPath": "screenshots/4-small.jpg",
-      "status": "ok",
-      "requestType": "image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/2.jpg",
-      "localPath": "screenshots/2.jpg",
-      "status": "ok",
-      "requestType": "image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/3-small.jpg",
-      "localPath": "screenshots/3-small.jpg",
-      "status": "ok",
-      "requestType": "image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/3.jpg",
-      "localPath": "screenshots/3.jpg",
-      "status": "ok",
-      "requestType": "Image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/Build/3c29c9bbd1eb934e9fa2d7bb59921309.wasm",
-      "localPath": "Build/3c29c9bbd1eb934e9fa2d7bb59921309.wasm",
-      "status": "ok",
-      "requestType": "xmlhttprequest"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/screenshots/3.jpg",
-      "localPath": "screenshots/3.jpg",
-      "status": "ok",
-      "requestType": "image"
-    },
-    {
-      "type": "asset",
-      "sourceUrl": "https://bd47f8cf-4104-4de0-a213-804297a5f77f.gdn.poki.com/beb4a67d-b43c-4db0-91cd-d73adad9f4aa/index.html?country=TW&ccpaApplies=0&url_referrer=https%3A%2F%2Fpoki.com%2F&tag=pg-b04f896cbc8d4d36999be7517873ebd7a921c0a0&site_id=73&iso_lang=zh&poki_url=https%3A%2F%2Fpoki.com%2Fzh%2Fg%2Fcount-war&hoist=yes&nonPersonalized=n&cloudsavegames=n&familyFriendly=n&device=mobile&categories=77%2C927%2C933%2C1014%2C1190&game_id=bd47f8cf-4104-4de0-a213-804297a5f77f&game_version_id=beb4a67d-b43c-4db0-91cd-d73adad9f4aa&inspector=0&csp=1",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/index.html?country=CN&ccpaApplies=0&url_referrer=https%3A%2F%2Fpoki.com%2F&tag=pg-da499a66b0803a7f0c5211da3ea5079c2ff98979&site_id=73&iso_lang=zh&poki_url=https%3A%2F%2Fpoki.com%2Fzh%2Fg%2Fstickman-fury&hoist=yes&nonPersonalized=n&cloudsavegames=n&familyFriendly=n&device=mobile&categories=3%2C64%2C80%2C389%2C927&ab=ec6067815ba1d32de458588ecd20022afad7d079&experiment=a-249b9969&game_id=1c81968d-62d5-42e2-901c-5df3fd23e03d&game_version_id=50521fc8-8444-4b3e-9311-a3f00dde294a&inspector=0&csp=1",
       "localPath": "index.html",
       "status": "ok",
-      "requestType": "Document"
+      "requestType": "Document",
+      "updatedAt": "2026-06-22T10:38:44.191Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/fonts/Fredoka_SemiCondensed-SemiBold.ttf",
+      "localPath": "fonts/Fredoka_SemiCondensed-SemiBold.ttf",
+      "status": "ok",
+      "requestType": "Font",
+      "updatedAt": "2026-06-22T10:38:44.191Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/planck.min.js",
+      "localPath": "planck.min.js",
+      "status": "ok",
+      "requestType": "Script",
+      "updatedAt": "2026-06-22T10:38:44.191Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/gsap.min.js",
+      "localPath": "gsap.min.js",
+      "status": "ok",
+      "requestType": "Script",
+      "updatedAt": "2026-06-22T10:38:44.191Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/Howler.min.js",
+      "localPath": "Howler.min.js",
+      "status": "ok",
+      "requestType": "Script",
+      "updatedAt": "2026-06-22T10:38:44.191Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/VisibilityManager.js",
+      "localPath": "VisibilityManager.js",
+      "status": "ok",
+      "requestType": "Script",
+      "updatedAt": "2026-06-22T10:38:44.191Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/app.js",
+      "localPath": "app.js",
+      "status": "ok",
+      "requestType": "Script",
+      "updatedAt": "2026-06-22T10:38:44.191Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/loader.png",
+      "localPath": "images/loader.png",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/loadSpinner.png",
+      "localPath": "images/loadSpinner.png",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/audio/sound.mp3",
+      "localPath": "audio/sound.mp3",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/preloaderBg.jpg",
+      "localPath": "images/preloaderBg.jpg",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/audio/music.mp3",
+      "localPath": "audio/music.mp3",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level1.json",
+      "localPath": "json/level1.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level2.json",
+      "localPath": "json/level2.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level3.json",
+      "localPath": "json/level3.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/text.json",
+      "localPath": "json/text.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level0.json",
+      "localPath": "json/level0.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/animalParts.json",
+      "localPath": "json/animalParts.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level8.json",
+      "localPath": "json/level8.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level5.json",
+      "localPath": "json/level5.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level4.json",
+      "localPath": "json/level4.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level9.json",
+      "localPath": "json/level9.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level10.json",
+      "localPath": "json/level10.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level6.json",
+      "localPath": "json/level6.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level11.json",
+      "localPath": "json/level11.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level7.json",
+      "localPath": "json/level7.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level12.json",
+      "localPath": "json/level12.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level13.json",
+      "localPath": "json/level13.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level21.json",
+      "localPath": "json/level21.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level14.json",
+      "localPath": "json/level14.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level16.json",
+      "localPath": "json/level16.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level15.json",
+      "localPath": "json/level15.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level17.json",
+      "localPath": "json/level17.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level22.json",
+      "localPath": "json/level22.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level18.json",
+      "localPath": "json/level18.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level20.json",
+      "localPath": "json/level20.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level23.json",
+      "localPath": "json/level23.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level19.json",
+      "localPath": "json/level19.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level24.json",
+      "localPath": "json/level24.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level25.json",
+      "localPath": "json/level25.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level26.json",
+      "localPath": "json/level26.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level27.json",
+      "localPath": "json/level27.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level28.json",
+      "localPath": "json/level28.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level29.json",
+      "localPath": "json/level29.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level30.json",
+      "localPath": "json/level30.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level31.json",
+      "localPath": "json/level31.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level32.json",
+      "localPath": "json/level32.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level33.json",
+      "localPath": "json/level33.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level34.json",
+      "localPath": "json/level34.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level35.json",
+      "localPath": "json/level35.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level36.json",
+      "localPath": "json/level36.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level42.json",
+      "localPath": "json/level42.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level38.json",
+      "localPath": "json/level38.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level39.json",
+      "localPath": "json/level39.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level37.json",
+      "localPath": "json/level37.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level41.json",
+      "localPath": "json/level41.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level40.json",
+      "localPath": "json/level40.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level43.json",
+      "localPath": "json/level43.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level44.json",
+      "localPath": "json/level44.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level45.json",
+      "localPath": "json/level45.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level46.json",
+      "localPath": "json/level46.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level47.json",
+      "localPath": "json/level47.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level48.json",
+      "localPath": "json/level48.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level49.json",
+      "localPath": "json/level49.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level50.json",
+      "localPath": "json/level50.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level51.json",
+      "localPath": "json/level51.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level52.json",
+      "localPath": "json/level52.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level53.json",
+      "localPath": "json/level53.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level54.json",
+      "localPath": "json/level54.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/level55.json",
+      "localPath": "json/level55.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/weapons.json",
+      "localPath": "json/weapons.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/json/tuning.json",
+      "localPath": "json/tuning.json",
+      "status": "ok",
+      "requestType": "XHR",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/bg0.jpg",
+      "localPath": "images/bg0.jpg",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/bg1.jpg",
+      "localPath": "images/bg1.jpg",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/bg2.jpg",
+      "localPath": "images/bg2.jpg",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/bg3.jpg",
+      "localPath": "images/bg3.jpg",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/groundTexture0.jpg",
+      "localPath": "images/groundTexture0.jpg",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/groundTexture1.jpg",
+      "localPath": "images/groundTexture1.jpg",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/groundTexture2.jpg",
+      "localPath": "images/groundTexture2.jpg",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/groundTexture3.jpg",
+      "localPath": "images/groundTexture3.jpg",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/platformTexture.jpg",
+      "localPath": "images/platformTexture.jpg",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/structureTexture.jpg",
+      "localPath": "images/structureTexture.jpg",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/uiButs.png",
+      "localPath": "images/uiButs.png",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/uiElements.png",
+      "localPath": "images/uiElements.png",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/bear.png",
+      "localPath": "images/bear.png",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/tRex.png",
+      "localPath": "images/tRex.png",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/human.png",
+      "localPath": "images/human.png",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/shark.png",
+      "localPath": "images/shark.png",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/giraffe.png",
+      "localPath": "images/giraffe.png",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/triceratops.png",
+      "localPath": "images/triceratops.png",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/penguin.png",
+      "localPath": "images/penguin.png",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/chicken.png",
+      "localPath": "images/chicken.png",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/gorilla.png",
+      "localPath": "images/gorilla.png",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/flamingo.png",
+      "localPath": "images/flamingo.png",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/alpaca.png",
+      "localPath": "images/alpaca.png",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/kangaroo.png",
+      "localPath": "images/kangaroo.png",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/monsterTruck.png",
+      "localPath": "images/monsterTruck.png",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://1c81968d-62d5-42e2-901c-5df3fd23e03d.gdn.poki.com/50521fc8-8444-4b3e-9311-a3f00dde294a/images/weapons.png",
+      "localPath": "images/weapons.png",
+      "status": "ok",
+      "requestType": "Image",
+      "updatedAt": "2026-06-22T10:38:44.192Z"
+    },
+    {
+      "type": "asset",
+      "sourceUrl": "https://v.poki-cdn.com/34ac45d8-3e4b-43bf-8997-7739f27590d4/thumbnail.3x3.vp9.mp4",
+      "localPath": "__info_assets__/preview.mp4",
+      "status": "ok",
+      "requestType": "portal-asset",
+      "updatedAt": "2026-07-06T07:47:55.251Z"
     }
-  ]
+  ],
+  "updatedAt": "2026-07-07T09:50:39.204Z"
 }

@@ -1,0 +1,231 @@
+{
+  "worldWidth": 3200,
+  "worldHeight": 1600,
+  "scale": 1.6,
+  "theme": "grassland",
+  "spawns": [
+    {
+      "x": 497,
+      "y": 824,
+      "type": "player",
+      "behaviour": "walks"
+    },
+    {
+      "x": 960,
+      "y": 755,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 1227,
+      "y": 151,
+      "type": "animal",
+      "animal": "gorilla",
+      "behaviour": "walks",
+      "facingDir": 1
+    },
+    {
+      "x": 1710,
+      "y": 143,
+      "type": "animal",
+      "animal": "gorilla",
+      "behaviour": "walks",
+      "facingDir": 1
+    },
+    {
+      "x": 1816,
+      "y": 727,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 2719,
+      "y": 715,
+      "type": "enemy",
+      "behaviour": "walks"
+    }
+  ],
+  "ground": {
+    "vertices": [
+      [
+        0,
+        1600
+      ],
+      [
+        0,
+        975
+      ],
+      [
+        52,
+        1007
+      ],
+      [
+        105,
+        1009
+      ],
+      [
+        157,
+        973
+      ],
+      [
+        210,
+        991
+      ],
+      [
+        554,
+        954
+      ],
+      [
+        899,
+        897
+      ],
+      [
+        1244,
+        862
+      ],
+      [
+        1286,
+        871
+      ],
+      [
+        1328,
+        870
+      ],
+      [
+        1370,
+        838
+      ],
+      [
+        1412,
+        841
+      ],
+      [
+        1454,
+        867
+      ],
+      [
+        1496,
+        871
+      ],
+      [
+        1539,
+        837
+      ],
+      [
+        1581,
+        854
+      ],
+      [
+        1985,
+        867
+      ],
+      [
+        2390,
+        860
+      ],
+      [
+        2795,
+        847
+      ],
+      [
+        3200,
+        861
+      ],
+      [
+        3200,
+        861
+      ],
+      [
+        3200,
+        1600
+      ]
+    ]
+  },
+  "platforms": [
+    {
+      "vertices": [
+        [
+          1016,
+          261
+        ],
+        [
+          1873,
+          261
+        ],
+        [
+          1873,
+          302
+        ],
+        [
+          1016,
+          302
+        ]
+      ]
+    }
+  ],
+  "water": [],
+  "staticStructures": [],
+  "destructibleGroups": [],
+  "destructibleSingles": [],
+  "destructibleRounds": [
+    {
+      "x": 1364,
+      "y": 47,
+      "r": 44
+    },
+    {
+      "x": 1402,
+      "y": 147,
+      "r": 37
+    },
+    {
+      "x": 1538,
+      "y": 43,
+      "r": 35
+    },
+    {
+      "x": 1508,
+      "y": 163,
+      "r": 40
+    }
+  ],
+  "gunPowerUps": [
+    {
+      "x": 1442,
+      "y": 616
+    }
+  ],
+  "healthPowerUps": [],
+  "swingingBalls": [
+    {
+      "x": 1442,
+      "y": 294,
+      "chainLength": 455,
+      "radius": 40,
+      "damage": 15
+    }
+  ],
+  "crushingBlocks": [],
+  "explodableBlocks": [],
+  "movingPlatformsH": [],
+  "movingPlatformsV": [
+    {
+      "x": 2090,
+      "y": 806,
+      "w": 162,
+      "h": 20,
+      "rangeUp": 582,
+      "rangeDown": 0,
+      "period": 15
+    },
+    {
+      "x": 820,
+      "y": 833,
+      "w": 117,
+      "h": 20,
+      "rangeUp": 567,
+      "rangeDown": 0,
+      "period": 15
+    }
+  ]
+}

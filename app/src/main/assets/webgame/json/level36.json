@@ -1,0 +1,334 @@
+{
+  "worldWidth": 3200,
+  "worldHeight": 1600,
+  "scale": 1.6,
+  "theme": "grassland",
+  "spawns": [
+    {
+      "x": 480,
+      "y": 1298,
+      "type": "player",
+      "behaviour": "walks"
+    },
+    {
+      "x": 784,
+      "y": 1379,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 984,
+      "y": 468,
+      "type": "animal",
+      "animal": "standardChicken",
+      "behaviour": "walks",
+      "facingDir": 1
+    },
+    {
+      "x": 1182,
+      "y": 613,
+      "type": "animal",
+      "animal": "standardChicken",
+      "behaviour": "walks",
+      "facingDir": 1
+    },
+    {
+      "x": 1346,
+      "y": 729,
+      "type": "animal",
+      "animal": "standardChicken",
+      "behaviour": "walks",
+      "facingDir": -1
+    },
+    {
+      "x": 1457,
+      "y": 871,
+      "type": "animal",
+      "animal": "standardChicken",
+      "behaviour": "walks",
+      "facingDir": 1
+    },
+    {
+      "x": 1742,
+      "y": 579,
+      "type": "animal",
+      "animal": "chicken",
+      "behaviour": "walks",
+      "facingDir": -1
+    },
+    {
+      "x": 2148,
+      "y": 1377,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 3008,
+      "y": 1384,
+      "type": "enemy",
+      "behaviour": "walks"
+    }
+  ],
+  "ground": {
+    "vertices": [
+      [
+        0,
+        1600
+      ],
+      [
+        0,
+        1310
+      ],
+      [
+        242,
+        1377
+      ],
+      [
+        484,
+        1439
+      ],
+      [
+        726,
+        1508
+      ],
+      [
+        968,
+        1540
+      ],
+      [
+        1526,
+        1513
+      ],
+      [
+        2084,
+        1511
+      ],
+      [
+        2642,
+        1510
+      ],
+      [
+        3200,
+        1532
+      ],
+      [
+        3200,
+        1520
+      ],
+      [
+        3200,
+        1600
+      ]
+    ]
+  },
+  "platforms": [
+    {
+      "vertices": [
+        [
+          2251,
+          1828
+        ],
+        [
+          2272,
+          1471
+        ],
+        [
+          2301,
+          880
+        ],
+        [
+          2303,
+          878
+        ],
+        [
+          2320,
+          887
+        ],
+        [
+          2351,
+          1492
+        ],
+        [
+          2365,
+          1828
+        ]
+      ]
+    }
+  ],
+  "water": [],
+  "staticStructures": [
+    {
+      "vertices": [
+        [
+          1905,
+          1343
+        ],
+        [
+          2025,
+          1343
+        ],
+        [
+          2004,
+          1371
+        ],
+        [
+          1926,
+          1371
+        ]
+      ]
+    },
+    {
+      "vertices": [
+        [
+          1985,
+          1157
+        ],
+        [
+          2105,
+          1157
+        ],
+        [
+          2084,
+          1186
+        ],
+        [
+          2006,
+          1186
+        ]
+      ]
+    },
+    {
+      "vertices": [
+        [
+          2079,
+          1002
+        ],
+        [
+          2199,
+          1002
+        ],
+        [
+          2178,
+          1031
+        ],
+        [
+          2100,
+          1031
+        ]
+      ]
+    },
+    {
+      "vertices": [
+        [
+          2178,
+          866
+        ],
+        [
+          2298,
+          866
+        ],
+        [
+          2277,
+          895
+        ],
+        [
+          2199,
+          895
+        ]
+      ]
+    }
+  ],
+  "destructibleGroups": [],
+  "destructibleSingles": [],
+  "destructibleRounds": [
+    {
+      "x": 87,
+      "y": 532,
+      "r": 29
+    },
+    {
+      "x": 105,
+      "y": 613,
+      "r": 30
+    },
+    {
+      "x": 74,
+      "y": 697,
+      "r": 29
+    },
+    {
+      "x": 102,
+      "y": 800,
+      "r": 38
+    }
+  ],
+  "gunPowerUps": [
+    {
+      "x": 1055,
+      "y": 1486
+    }
+  ],
+  "healthPowerUps": [],
+  "swingingBalls": [],
+  "crushingBlocks": [
+    {
+      "x": 1225,
+      "y": 1079,
+      "w": 144,
+      "h": 159,
+      "travel": 370,
+      "period": 3,
+      "damage": 25
+    },
+    {
+      "x": 1509,
+      "y": 1079,
+      "w": 147,
+      "h": 155,
+      "travel": 362,
+      "period": 3,
+      "damage": 25
+    },
+    {
+      "x": 1789,
+      "y": 1083,
+      "w": 156,
+      "h": 151,
+      "travel": 353,
+      "period": 3,
+      "damage": 25
+    }
+  ],
+  "explodableBlocks": [
+    {
+      "x": 1642,
+      "y": 1468,
+      "w": 80,
+      "h": 60,
+      "hp": 3,
+      "blastRadius": 300,
+      "blastPower": 18
+    },
+    {
+      "x": 1355,
+      "y": 1475,
+      "w": 80,
+      "h": 60,
+      "hp": 3,
+      "blastRadius": 300,
+      "blastPower": 18
+    }
+  ],
+  "movingPlatformsH": [],
+  "movingPlatformsV": [
+    {
+      "x": 2482,
+      "y": 1482,
+      "w": 183,
+      "h": 20,
+      "rangeUp": 700,
+      "rangeDown": 0,
+      "period": 15
+    }
+  ]
+}

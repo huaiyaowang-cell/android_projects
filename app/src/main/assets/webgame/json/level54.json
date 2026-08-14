@@ -1,0 +1,344 @@
+{
+  "worldWidth": 3200,
+  "worldHeight": 1600,
+  "scale": 1.6,
+  "theme": "grassland",
+  "spawns": [
+    {
+      "x": 511,
+      "y": 355,
+      "type": "player",
+      "behaviour": "walks"
+    },
+    {
+      "x": 1015,
+      "y": 137,
+      "type": "animal",
+      "animal": "bear",
+      "behaviour": "walks",
+      "facingDir": 1
+    },
+    {
+      "x": 1077,
+      "y": 779,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 1345,
+      "y": 522,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 1843,
+      "y": 539,
+      "type": "animal",
+      "animal": "flamingo",
+      "behaviour": "walks",
+      "facingDir": 1
+    },
+    {
+      "x": 1949,
+      "y": 146,
+      "type": "animal",
+      "animal": "bear",
+      "behaviour": "walks",
+      "facingDir": -1
+    },
+    {
+      "x": 2229,
+      "y": 817,
+      "type": "animal",
+      "animal": "shark",
+      "behaviour": "swims",
+      "facingDir": 1
+    },
+    {
+      "x": 2247,
+      "y": 247,
+      "type": "animal",
+      "animal": "flamingo",
+      "behaviour": "walks",
+      "facingDir": -1
+    },
+    {
+      "x": 2842,
+      "y": 555,
+      "type": "enemy",
+      "behaviour": "walks"
+    }
+  ],
+  "ground": {
+    "vertices": [
+      [
+        0,
+        1600
+      ],
+      [
+        0,
+        692
+      ],
+      [
+        148,
+        611
+      ],
+      [
+        295,
+        502
+      ],
+      [
+        443,
+        413
+      ],
+      [
+        443,
+        500
+      ],
+      [
+        724,
+        680
+      ],
+      [
+        776,
+        691
+      ],
+      [
+        828,
+        695
+      ],
+      [
+        880,
+        664
+      ],
+      [
+        932,
+        680
+      ],
+      [
+        1041,
+        913
+      ],
+      [
+        1150,
+        912
+      ],
+      [
+        1259,
+        904
+      ],
+      [
+        1369,
+        641
+      ],
+      [
+        1684,
+        633
+      ],
+      [
+        1999,
+        648
+      ],
+      [
+        2122,
+        991
+      ],
+      [
+        2204,
+        1000
+      ],
+      [
+        2286,
+        992
+      ],
+      [
+        2368,
+        990
+      ],
+      [
+        2492,
+        654
+      ],
+      [
+        2846,
+        656
+      ],
+      [
+        3200,
+        648
+      ],
+      [
+        3200,
+        648
+      ],
+      [
+        3200,
+        1600
+      ]
+    ]
+  },
+  "platforms": [
+    {
+      "vertices": [
+        [
+          2111,
+          378
+        ],
+        [
+          2148,
+          373
+        ],
+        [
+          2186,
+          372
+        ],
+        [
+          2223,
+          368
+        ],
+        [
+          2260,
+          373
+        ],
+        [
+          2298,
+          376
+        ],
+        [
+          2335,
+          377
+        ],
+        [
+          2372,
+          388
+        ],
+        [
+          2372,
+          441
+        ],
+        [
+          2335,
+          442
+        ],
+        [
+          2298,
+          419
+        ],
+        [
+          2260,
+          415
+        ],
+        [
+          2223,
+          421
+        ],
+        [
+          2186,
+          442
+        ],
+        [
+          2148,
+          445
+        ],
+        [
+          2111,
+          443
+        ]
+      ]
+    }
+  ],
+  "water": [
+    {
+      "vertices": [
+        [
+          1917,
+          687
+        ],
+        [
+          2588,
+          687
+        ],
+        [
+          2588,
+          1033
+        ],
+        [
+          1917,
+          1033
+        ]
+      ]
+    },
+    {
+      "vertices": [
+        [
+          904,
+          682
+        ],
+        [
+          1366,
+          682
+        ],
+        [
+          1366,
+          929
+        ],
+        [
+          904,
+          929
+        ]
+      ]
+    }
+  ],
+  "staticStructures": [],
+  "destructibleGroups": [
+    {
+      "x": 20,
+      "y": 299,
+      "w": 199,
+      "h": 238,
+      "count": 5
+    }
+  ],
+  "destructibleSingles": [],
+  "destructibleRounds": [],
+  "gunPowerUps": [
+    {
+      "x": 3050,
+      "y": 597
+    },
+    {
+      "x": 774,
+      "y": 647
+    }
+  ],
+  "healthPowerUps": [],
+  "swingingBalls": [],
+  "spinningBlades": [],
+  "rotatingPlatforms": [],
+  "ropeBridges": [],
+  "mincers": [],
+  "crushingBlocks": [
+    {
+      "x": 2634,
+      "y": 217,
+      "w": 190,
+      "h": 156,
+      "travel": 363,
+      "period": 3,
+      "damage": 25
+    },
+    {
+      "x": 1560,
+      "y": 187,
+      "w": 204,
+      "h": 158,
+      "travel": 370,
+      "period": 3,
+      "damage": 25
+    }
+  ],
+  "explodableBlocks": [],
+  "fireJets": [],
+  "movingPlatformsH": [],
+  "movingPlatformsV": []
+}

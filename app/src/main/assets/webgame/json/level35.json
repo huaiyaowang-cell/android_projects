@@ -1,0 +1,286 @@
+{
+  "worldWidth": 3200,
+  "worldHeight": 1600,
+  "scale": 1.6,
+  "theme": "grassland",
+  "spawns": [
+    {
+      "x": 543,
+      "y": 806,
+      "type": "player",
+      "behaviour": "walks"
+    },
+    {
+      "x": 988,
+      "y": 876,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 1327,
+      "y": 189,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 1526,
+      "y": 887,
+      "type": "animal",
+      "animal": "flamingo",
+      "behaviour": "walks",
+      "facingDir": 1
+    },
+    {
+      "x": 1782,
+      "y": 859,
+      "type": "animal",
+      "animal": "flamingo",
+      "behaviour": "walks",
+      "facingDir": 1
+    },
+    {
+      "x": 2129,
+      "y": 842,
+      "type": "animal",
+      "animal": "flamingo",
+      "behaviour": "walks",
+      "facingDir": 1
+    },
+    {
+      "x": 2827,
+      "y": 677,
+      "type": "enemy",
+      "behaviour": "walks"
+    }
+  ],
+  "ground": {
+    "vertices": [
+      [
+        0,
+        1600
+      ],
+      [
+        0,
+        780
+      ],
+      [
+        207,
+        854
+      ],
+      [
+        414,
+        912
+      ],
+      [
+        621,
+        990
+      ],
+      [
+        828,
+        1064
+      ],
+      [
+        1159,
+        1055
+      ],
+      [
+        1490,
+        1067
+      ],
+      [
+        1581,
+        1027
+      ],
+      [
+        1673,
+        1006
+      ],
+      [
+        1764,
+        978
+      ],
+      [
+        1855,
+        952
+      ],
+      [
+        2101,
+        962
+      ],
+      [
+        2347,
+        949
+      ],
+      [
+        2560,
+        874
+      ],
+      [
+        2773,
+        816
+      ],
+      [
+        2987,
+        759
+      ],
+      [
+        3200,
+        691
+      ],
+      [
+        3200,
+        690
+      ],
+      [
+        3200,
+        1600
+      ]
+    ]
+  },
+  "platforms": [],
+  "water": [],
+  "staticStructures": [
+    {
+      "vertices": [
+        [
+          1302,
+          772
+        ],
+        [
+          1303,
+          910
+        ],
+        [
+          1577,
+          1067
+        ],
+        [
+          1304,
+          1067
+        ],
+        [
+          1303,
+          1071
+        ],
+        [
+          804,
+          1071
+        ],
+        [
+          1301,
+          773
+        ]
+      ]
+    },
+    {
+      "vertices": [
+        [
+          2452,
+          662
+        ],
+        [
+          2828,
+          913
+        ],
+        [
+          2459,
+          913
+        ],
+        [
+          2458,
+          959
+        ],
+        [
+          2172,
+          959
+        ],
+        [
+          2452,
+          803
+        ],
+        [
+          2452,
+          663
+        ]
+      ]
+    }
+  ],
+  "destructibleGroups": [
+    {
+      "x": 2501,
+      "y": 142,
+      "w": 102,
+      "h": 190,
+      "count": 5
+    },
+    {
+      "x": 1705,
+      "y": 49,
+      "w": 278,
+      "h": 87,
+      "count": 5
+    }
+  ],
+  "destructibleSingles": [],
+  "destructibleRounds": [],
+  "gunPowerUps": [
+    {
+      "x": 1843,
+      "y": 224
+    }
+  ],
+  "healthPowerUps": [],
+  "swingingBalls": [],
+  "spinningBlades": [],
+  "rotatingPlatforms": [],
+  "ropeBridges": [],
+  "mincers": [
+    {
+      "x": 1629,
+      "y": 629,
+      "radius": 95,
+      "spinSpeed": 1,
+      "damage": 15
+    },
+    {
+      "x": 2102,
+      "y": 626,
+      "radius": 93,
+      "spinSpeed": 1,
+      "damage": 15
+    }
+  ],
+  "crushingBlocks": [],
+  "explodableBlocks": [],
+  "movingPlatformsH": [
+    {
+      "x": 1333,
+      "y": 315,
+      "w": 120,
+      "h": 37,
+      "rangeLeft": 0,
+      "rangeRight": 1095,
+      "period": 20
+    }
+  ],
+  "movingPlatformsV": [
+    {
+      "x": 1148,
+      "y": 334,
+      "w": 124,
+      "h": 20,
+      "rangeUp": 0,
+      "rangeDown": 362,
+      "period": 15
+    },
+    {
+      "x": 2552,
+      "y": 350,
+      "w": 124,
+      "h": 20,
+      "rangeUp": 0,
+      "rangeDown": 260,
+      "period": 15
+    }
+  ]
+}

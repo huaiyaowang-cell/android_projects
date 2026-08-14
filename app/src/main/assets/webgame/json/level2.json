@@ -1,0 +1,226 @@
+{
+  "worldWidth": 3200,
+  "worldHeight": 1600,
+  "scale": 1.6,
+  "spawns": [
+    {
+      "x": 1022,
+      "y": 863,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 1401,
+      "y": 237,
+      "type": "animal",
+      "animal": "flamingo",
+      "behaviour": "walks",
+      "facingDir": 1
+    },
+    {
+      "x": 1620,
+      "y": 764,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 1652,
+      "y": 182,
+      "type": "player",
+      "behaviour": "walks"
+    },
+    {
+      "x": 1850,
+      "y": 229,
+      "type": "animal",
+      "animal": "flamingo",
+      "behaviour": "walks",
+      "facingDir": -1
+    },
+    {
+      "x": 2254,
+      "y": 851,
+      "type": "enemy",
+      "behaviour": "walks"
+    }
+  ],
+  "ground": {
+    "vertices": [
+      [
+        3192,
+        851
+      ],
+      [
+        3198,
+        1598
+      ],
+      [
+        0,
+        1595
+      ],
+      [
+        3,
+        893
+      ],
+      [
+        1146,
+        1074
+      ],
+      [
+        1227,
+        874
+      ],
+      [
+        1342,
+        874
+      ],
+      [
+        1347,
+        885
+      ],
+      [
+        1395,
+        885
+      ],
+      [
+        1400,
+        874
+      ],
+      [
+        1837,
+        874
+      ],
+      [
+        1840,
+        891
+      ],
+      [
+        1898,
+        891
+      ],
+      [
+        1906,
+        874
+      ],
+      [
+        2040,
+        874
+      ],
+      [
+        2146,
+        1126
+      ],
+      [
+        2155,
+        1126
+      ],
+      [
+        3187,
+        853
+      ]
+    ]
+  },
+  "platforms": [],
+  "water": [],
+  "staticStructures": [],
+  "destructibleGroups": [
+    {
+      "x": 1344,
+      "y": 414,
+      "w": 54,
+      "h": 469,
+      "count": 5
+    },
+    {
+      "x": 1840,
+      "y": 421,
+      "w": 61,
+      "h": 469,
+      "count": 5
+    }
+  ],
+  "destructibleSingles": [
+    {
+      "x": 1617,
+      "y": 394,
+      "w": 619,
+      "h": 34,
+      "angle": 0
+    }
+  ],
+  "destructibleRounds": [
+    {
+      "x": 156,
+      "y": 151,
+      "r": 42
+    },
+    {
+      "x": 190,
+      "y": 458,
+      "r": 30
+    },
+    {
+      "x": 223,
+      "y": 58,
+      "r": 37
+    },
+    {
+      "x": 240,
+      "y": 304,
+      "r": 31
+    },
+    {
+      "x": 276,
+      "y": 516,
+      "r": 34
+    },
+    {
+      "x": 2946,
+      "y": 61,
+      "r": 40
+    },
+    {
+      "x": 3025,
+      "y": 208,
+      "r": 20
+    },
+    {
+      "x": 2966,
+      "y": 293,
+      "r": 37
+    },
+    {
+      "x": 3013,
+      "y": 431,
+      "r": 28
+    },
+    {
+      "x": 2869,
+      "y": 476,
+      "r": 28
+    }
+  ],
+  "gunPowerUps": [],
+  "healthPowerUps": [],
+  "swingingBalls": [],
+  "spinningBlades": [
+    {
+      "x": 3011,
+      "y": 700,
+      "radius": 126,
+      "spinSpeed": 10,
+      "damage": 15
+    },
+    {
+      "x": 175,
+      "y": 744,
+      "radius": 115,
+      "spinSpeed": -10,
+      "damage": 15
+    }
+  ],
+  "crushingBlocks": [],
+  "explodableBlocks": [],
+  "movingPlatformsH": [],
+  "movingPlatformsV": []
+}

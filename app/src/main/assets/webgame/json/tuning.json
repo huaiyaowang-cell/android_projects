@@ -1,0 +1,134 @@
+{
+  "global": {
+    "gravity": -30,
+    "massScale": 1,
+    "showBoxes": 0,
+    "breakForce": 490,
+    "hitPower": 781,
+    "useTextures": 1,
+    "perspDepth": 100,
+    "crateDepth": 20
+  },
+  "animals": {
+    "human": {
+      "moveForce": 125,
+      "jumpForce": 56,
+      "legSwing": 39.5,
+      "walkSpeed": 17.4,
+      "walkBob": 0,
+      "jointStiffness": 210,
+      "uprightStrength": 770,
+      "cameraZoom": 1.05
+    },
+    "bear": {
+      "moveForce": 180,
+      "jumpForce": 35,
+      "legSwing": 22,
+      "walkSpeed": 13.5,
+      "walkBob": 0,
+      "jointStiffness": 150,
+      "uprightStrength": 60,
+      "cameraZoom": 1.05
+    },
+    "tRex": {
+      "moveForce": 135,
+      "jumpForce": 35,
+      "legSwing": 16,
+      "walkSpeed": 9,
+      "walkBob": 0,
+      "jointStiffness": 110,
+      "uprightStrength": 290,
+      "cameraZoom": 1.1
+    },
+    "shark": {
+      "moveForce": 130,
+      "jumpForce": 43,
+      "legSwing": 12,
+      "walkSpeed": 16.7,
+      "walkBob": 0,
+      "jointStiffness": 200,
+      "uprightStrength": 200,
+      "cameraZoom": 1.05
+    },
+    "giraffe": {
+      "moveForce": 130,
+      "jumpForce": 40,
+      "legSwing": 30,
+      "walkSpeed": 8,
+      "walkBob": 40,
+      "jointStiffness": 85,
+      "uprightStrength": 200,
+      "cameraZoom": 1.5
+    },
+    "triceratops": {
+      "moveForce": 130,
+      "jumpForce": 40,
+      "legSwing": 30,
+      "walkSpeed": 8,
+      "walkBob": 40,
+      "jointStiffness": 85,
+      "uprightStrength": 200,
+      "cameraZoom": 1.5
+    },
+    "penguin": {
+      "moveForce": 130,
+      "jumpForce": 40,
+      "legSwing": 30,
+      "walkSpeed": 8,
+      "walkBob": 40,
+      "jointStiffness": 85,
+      "uprightStrength": 200,
+      "cameraZoom": 1.5
+    },
+    "kangaroo": {
+      "moveForce": 130,
+      "jumpForce": 32,
+      "legSwing": 30,
+      "walkSpeed": 8,
+      "walkBob": 40,
+      "jointStiffness": 85,
+      "uprightStrength": 200,
+      "cameraZoom": 1.5
+    },
+    "gorilla": {
+      "moveForce": 130,
+      "jumpForce": 40,
+      "legSwing": 30,
+      "walkSpeed": 8,
+      "walkBob": 40,
+      "jointStiffness": 85,
+      "uprightStrength": 200,
+      "cameraZoom": 1.5
+    },
+    "chicken": {
+      "moveForce": 25,
+      "jumpForce": 12,
+      "legSwing": 30,
+      "walkSpeed": 16.1,
+      "walkBob": 40,
+      "jointStiffness": 85,
+      "uprightStrength": 200,
+      "cameraZoom": 1.5
+    },
+    "flamingo": {
+      "moveForce": 130,
+      "jumpForce": 40,
+      "legSwing": 30,
+      "walkSpeed": 8,
+      "walkBob": 40,
+      "jointStiffness": 85,
+      "uprightStrength": 200,
+      "cameraZoom": 1.5
+    },
+    "alpaca": {
+      "moveForce": 130,
+      "jumpForce": 40,
+      "legSwing": 30,
+      "walkSpeed": 8,
+      "walkBob": 40,
+      "jointStiffness": 85,
+      "uprightStrength": 200,
+      "cameraZoom": 1.5
+    }
+  }
+}

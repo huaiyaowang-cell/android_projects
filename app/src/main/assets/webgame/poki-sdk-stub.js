@@ -91,7 +91,9 @@
     muteAd: _pn,
     sendHighscore: _pn,
     togglePlayerAdvertisingConsent: _pn,
-    disableDOMChangeObservation: _pn
+    disableDOMChangeObservation: _pn,
+    movePill: _pn,
+    measure: function() { return 0; }
   };
   console.log("[poki-dl] PokiSDK stub active");
 

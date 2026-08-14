@@ -1,0 +1,335 @@
+{
+  "worldWidth": 3200,
+  "worldHeight": 1600,
+  "scale": 1.6,
+  "theme": "grassland",
+  "spawns": [
+    {
+      "x": 419,
+      "y": 704,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 953,
+      "y": 403,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 1133,
+      "y": 672,
+      "type": "animal",
+      "animal": "bear",
+      "behaviour": "walks",
+      "facingDir": 1
+    },
+    {
+      "x": 1816,
+      "y": 737,
+      "type": "animal",
+      "animal": "giraffe",
+      "behaviour": "walks",
+      "facingDir": 1
+    },
+    {
+      "x": 2175,
+      "y": 234,
+      "type": "player",
+      "behaviour": "walks"
+    },
+    {
+      "x": 2392,
+      "y": 228,
+      "type": "enemy",
+      "behaviour": "walks"
+    },
+    {
+      "x": 2801,
+      "y": 727,
+      "type": "animal",
+      "animal": "bear",
+      "behaviour": "walks",
+      "facingDir": 1
+    },
+    {
+      "x": 3092,
+      "y": 615,
+      "type": "enemy",
+      "behaviour": "walks"
+    }
+  ],
+  "ground": {
+    "vertices": [
+      [
+        0,
+        1600
+      ],
+      [
+        0,
+        781
+      ],
+      [
+        404,
+        785
+      ],
+      [
+        808,
+        762
+      ],
+      [
+        1042,
+        797
+      ],
+      [
+        1277,
+        851
+      ],
+      [
+        1511,
+        893
+      ],
+      [
+        1800,
+        885
+      ],
+      [
+        2088,
+        878
+      ],
+      [
+        2377,
+        889
+      ],
+      [
+        2583,
+        891
+      ],
+      [
+        2788,
+        881
+      ],
+      [
+        2994,
+        900
+      ],
+      [
+        3200,
+        883
+      ],
+      [
+        3200,
+        883
+      ],
+      [
+        3200,
+        1600
+      ]
+    ]
+  },
+  "platforms": [
+    {
+      "vertices": [
+        [
+          921,
+          559
+        ],
+        [
+          994,
+          565
+        ],
+        [
+          1021,
+          578
+        ],
+        [
+          982,
+          624
+        ],
+        [
+          921,
+          636
+        ],
+        [
+          858,
+          615
+        ],
+        [
+          822,
+          578
+        ],
+        [
+          852,
+          537
+        ]
+      ]
+    },
+    {
+      "vertices": [
+        [
+          1382,
+          310
+        ],
+        [
+          1791,
+          310
+        ],
+        [
+          1791,
+          351
+        ],
+        [
+          1382,
+          351
+        ]
+      ]
+    },
+    {
+      "vertices": [
+        [
+          2039,
+          312
+        ],
+        [
+          2523,
+          312
+        ],
+        [
+          2523,
+          353
+        ],
+        [
+          2039,
+          353
+        ]
+      ]
+    },
+    {
+      "vertices": [
+        [
+          2603,
+          502
+        ],
+        [
+          2781,
+          502
+        ],
+        [
+          2781,
+          539
+        ],
+        [
+          2603,
+          539
+        ]
+      ]
+    },
+    {
+      "vertices": [
+        [
+          3026,
+          697
+        ],
+        [
+          3230,
+          697
+        ],
+        [
+          3230,
+          730
+        ],
+        [
+          3026,
+          730
+        ]
+      ]
+    }
+  ],
+  "water": [],
+  "staticStructures": [],
+  "destructibleGroups": [],
+  "destructibleSingles": [
+    {
+      "x": 1919,
+      "y": 296,
+      "w": 321,
+      "h": 20,
+      "angle": 0
+    }
+  ],
+  "destructibleRounds": [],
+  "gunPowerUps": [
+    {
+      "x": 1981,
+      "y": 790
+    }
+  ],
+  "healthPowerUps": [],
+  "swingingBalls": [
+    {
+      "x": 2460,
+      "y": 439,
+      "chainLength": 329,
+      "radius": 67,
+      "damage": 15
+    },
+    {
+      "x": 1433,
+      "y": 390,
+      "chainLength": 204,
+      "radius": 59,
+      "damage": 15
+    }
+  ],
+  "crushingBlocks": [],
+  "explodableBlocks": [
+    {
+      "x": 1576,
+      "y": 276,
+      "w": 80,
+      "h": 60,
+      "hp": 3,
+      "blastRadius": 300,
+      "blastPower": 18
+    },
+    {
+      "x": 1666,
+      "y": 275,
+      "w": 80,
+      "h": 60,
+      "hp": 3,
+      "blastRadius": 300,
+      "blastPower": 18
+    },
+    {
+      "x": 1617,
+      "y": 205,
+      "w": 80,
+      "h": 60,
+      "hp": 3,
+      "blastRadius": 300,
+      "blastPower": 18
+    }
+  ],
+  "movingPlatformsH": [
+    {
+      "x": 1434,
+      "y": 384,
+      "w": 120,
+      "h": 39,
+      "rangeLeft": 0,
+      "rangeRight": 1077,
+      "period": 20
+    },
+    {
+      "x": 2464,
+      "y": 437,
+      "w": 120,
+      "h": 37,
+      "rangeLeft": 1093,
+      "rangeRight": 0,
+      "period": 20
+    }
+  ],
+  "movingPlatformsV": []
+}

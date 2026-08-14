@@ -1,41 +1,139 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <script src="audio-unlock.js"></script>
   <script src="request-guard.js"></script>
   <script src="native-admob-jssdk.js"></script>
   <script src="poki-sdk-stub.js"></script>
   <script src="poki-ad-bridge-client.js"></script>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  	<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1, minimum-scale=1,maximum-scale=1"/>
-	<title>Count War - Poki</title>
-	<script>
-	window.config = {
-		loader: 'unity-2020',
-		debug: false,
-		maxRatio: 24 / 9,
-		minRatio: 9 / 24,
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1, minimum-scale=1,maximum-scale=1"/>
+  <title>Stickman Fury - Game</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      overflow: hidden;
+    }
 
-		title: 'Count War',
-		thumbnail: 'screenshots/1-small.jpg',
-		numScreenshots:  4 ,
+    #canvas-wrapper {
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      inset: 0;
+    }
 
-		unityVersion: '6000.2.2f1',
-		unityWebglBuildUrl: '',
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      -ms-touch-action: none;
+      image-rendering: -o-crisp-edges;
+      image-rendering: optimize-contrast;
+      -ms-interpolation-mode: nearest-neighbor;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+      -moz-tap-highlight-color: rgba(0,0,0,0);
+      tap-highlight-color: rgba(0,0,0,0);
+      user-select: none;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
 
-		fileSize:  7 ,
-		cachedDecompressedFileSizes: {
-			'3c29c9bbd1eb934e9fa2d7bb59921309.wasm':  4294860 ,
-			'68c85b6609a9789c8ac70522b812be45.framework.js':  74148 ,
-			'7943b1736380558df407533a08415f43.loader.js':  8178 ,
-			'af54da4ad3e11133d0adb3c21ca17759.symbols.json':  1166011 ,
-			'b24fedab7b0e5a88a5bcbe49ae403c3c.data':  1765122 ,
-		},
-		"metadata": {"poki_template_version":1,"background_color":"#231F20","code_filename":"3c29c9bbd1eb934e9fa2d7bb59921309.wasm","company_name":"Nineties Games","data_filename":"b24fedab7b0e5a88a5bcbe49ae403c3c.data","development_player":"false","framework_filename":"68c85b6609a9789c8ac70522b812be45.framework.js","height":"600","loader_filename":"7943b1736380558df407533a08415f43.loader.js","product_name":"Pocket Car City","product_version":"0.1.0","splash_screen_style":"Dark","symbols_filename":"af54da4ad3e11133d0adb3c21ca17759.symbols.json","unity_version":"6000.2.2f1","use_data_caching":"true","use_threads":"false","use_wasm":"true","use_webgl_1_0":"false","use_webgl_2_0":"true","width":"960"}
-	};
-	</script>
+    #sfDiag {
+      position: fixed;
+      inset: 0;
+      display: none;
+      padding: 12px 14px;
+      box-sizing: border-box;
+      background: rgba(0,0,0,.92);
+      color: #fff;
+      font: 12px/1.35 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      overflow: auto;
+      z-index: 2147483647;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  </style>
+
+  <link rel="preload" href="fonts/Fredoka_SemiCondensed-SemiBold.ttf" as="font" type="font/ttf" crossorigin>
+  <style type="text/css">
+    @font-face {
+      font-family: "Fredoka";
+      src: url("fonts/Fredoka_SemiCondensed-SemiBold.ttf") format("truetype");
+      font-display: block;
+    }
+  </style>
+
+  <script>
+    (function () {
+      var buf = [];
+      function ensure() {
+        var el = document.getElementById("sfDiag");
+        if (el) return el;
+        el = document.createElement("div");
+        el.id = "sfDiag";
+        document.documentElement.appendChild(el);
+        return el;
+      }
+      function push(line) {
+        buf.push(String(line));
+        var el = ensure();
+        el.style.display = "block";
+        el.textContent = buf.join("\n");
+      }
+      window.__sfReport = function (msg, extra) {
+        try {
+          push("[stickman-fury] " + msg + (extra != null ? ("\n" + String(extra)) : ""));
+        } catch (e) {}
+      };
+      window.addEventListener("error", function (e) {
+        var m = e && e.message ? e.message : "unknown error";
+        var src = e && e.filename ? (" @ " + e.filename + ":" + (e.lineno || 0) + ":" + (e.colno || 0)) : "";
+        window.__sfReport("runtime error: " + m + src);
+      });
+      window.addEventListener("unhandledrejection", function (e) {
+        var r = e && e.reason != null ? e.reason : "unknown rejection";
+        window.__sfReport("unhandled rejection: " + (r && r.message ? r.message : String(r)));
+      });
+    })();
+  </script>
 </head>
 <body>
-	<script src="master-loader.js"></script>
+  <div id="canvas-wrapper">
+    <canvas id="canvas" moz-opaque></canvas>
+  </div>
+  <div id="sfDiag"></div>
+
+  <script src="planck.min.js" onerror="__sfReport('failed to load planck.min.js')"></script>
+  <script src="gsap.min.js" onerror="__sfReport('failed to load gsap.min.js')"></script>
+  <script src="Howler.min.js" onerror="__sfReport('failed to load Howler.min.js')"></script>
+  <script src="VisibilityManager.js" onerror="__sfReport('failed to load VisibilityManager.js')"></script>
+  <script src="app.js" onerror="__sfReport('failed to load app.js')"></script>
+  <script>
+    (function () {
+      var langs = navigator.languages || [navigator.language];
+      var browserLang = (langs[0] || "en").slice(0, 2);
+      var supported = ["en", "fr", "de", "pt", "es"];
+      var tempLang = supported.indexOf(browserLang) >= 0 ? browserLang : "en";
+
+      PokiSDK.init().then(function () {
+        console.log("Poki SDK successfully initialized");
+        loadLang(tempLang);
+      }).catch(function () {
+        console.log("Initialized, something went wrong, load you game anyway");
+        loadLang(tempLang);
+      });
+    })();
+  </script>
 </body>
 </html>

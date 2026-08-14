@@ -10,7 +10,7 @@ android {
     compileSdkVersion 35
     defaultConfig {
         minSdkVersion 23
-        targetSdkVersion 35
+        targetSdkVersion 34
         buildToolsVersion '30.0.3'
         ndk {
             abiFilters 'armeabi-v7a', 'arm64-v8a'

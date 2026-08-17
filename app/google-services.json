@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "340970269569",
-    "project_id": "countwar-2f729",
-    "storage_bucket": "countwar-2f729.firebasestorage.app"
+    "project_number": "653991926666",
+    "project_id": "perfectlanding-2b65b",
+    "storage_bucket": "perfectlanding-2b65b.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:340970269569:android:ff6b9c513f68949a3ed680",
+        "mobilesdk_app_id": "1:653991926666:android:00835e21997ba55dc58673",
         "android_client_info": {
           "package_name": "puzzle.fun.free.bustraffic"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDv6S36Z-nhX6TILEvxbIoMbprdR6Bnuso"
+          "current_key": "AIzaSyCjTc-Xj8JSK6aLuuxib1JicD_fEYlObqs"
         }
       ],
       "services": {

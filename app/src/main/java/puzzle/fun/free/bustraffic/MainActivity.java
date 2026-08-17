@@ -1,5 +1,6 @@
 package puzzle.fun.free.bustraffic;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.AudioAttributes;
 import android.media.AudioFocusRequest;
@@ -7,6 +8,7 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Message;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -77,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
      */
     private static final String[] BIDDER_DESK_PLACEMENTS = new String[]{
             "reward_01", "interstitial_01","native",
-            "banner_01",
             "open"
     };
     private static final String PLACEMENT_REWARDED = "reward_01";
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
     /** 顶部 banner/native 区域预留（屏幕像素），避免遮挡游戏。 */
     private static final float WEBVIEW_AD_TOP_RESERVE_PX = 0;
     /** 底部 banner/native 区域预留（屏幕像素）。 */
-    private static final float WEBVIEW_AD_BOTTOM_RESERVE_PX = 100f;
+    private static final float WEBVIEW_AD_BOTTOM_RESERVE_PX = 150f;
     /**
      * BidderDesk 激励若中途关闭且 SDK 不回调 {@code invoke}，H5 会一直等；超时补发 {@code closed}（与 web 端 120s 兜底一致）。
      */
@@ -110,6 +111,8 @@ public class MainActivity extends AppCompatActivity {
 
     private FrameLayout rootLayout;
     private WebView gameWebView;
+    /** 底部横幅兜底：直接用 WebView 加载兜底链接的 AdSense 横幅页，启动即出，不依赖 BidderDesk 初始化。 */
+    private WebView fallbackBannerWebView;
     private WebViewAssetLoader assetLoader;
     private Button openAdTestButton;
 
@@ -140,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
         enterFullscreen();
         setupRoot();
         setupWebView();
+        setupFallbackBanner();
         setupOpenAdTestButton();
         if (ENABLE_ADMOB_TEST_FALLBACK) {
             preloadInterstitial();
@@ -278,6 +282,97 @@ public class MainActivity extends AppCompatActivity {
         webLp.bottomMargin = adBottomReservePx;
         rootLayout.addView(gameWebView, webLp);
         gameWebView.loadUrl(WEB_GAME_URL);
+    }
+
+    /**
+     * 底部横幅兜底：用 WebView 直接加载兜底链接的 AdSense 横幅页，
+     * 启动即加载、不依赖 BidderDesk SDK 初始化，解决横幅延迟几十秒的问题。
+     * 与 BidderDesk 的 createBanner 二选一，避免底部出现两个横幅。
+     */
+    private void setupFallbackBanner() {
+        fallbackBannerWebView = new WebView(this);
+        WebSettings bs = fallbackBannerWebView.getSettings();
+        bs.setJavaScriptEnabled(true);
+        bs.setDomStorageEnabled(true);
+        bs.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        bs.setMediaPlaybackRequiresUserGesture(false);
+        fallbackBannerWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+
+        fallbackBannerWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageStarted(WebView view, String url, android.graphics.Bitmap favicon) {
+                Log.i("FallbackBanner", "page started: " + url);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                Log.i("FallbackBanner", "page finished: " + url);
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                Uri uri = request.getUrl();
+                if (uri != null && ("http".equals(uri.getScheme()) || "https".equals(uri.getScheme()))) {
+                    openUrlInBrowser(uri.toString());
+                    return true;
+                }
+                return false;
+            }
+
+            @SuppressWarnings("deprecation")
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (url != null && (url.startsWith("http://") || url.startsWith("https://"))) {
+                    openUrlInBrowser(url);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        // 兜底 iframe 通过 window.open 打开落地页，转发到外部浏览器，避免在 WebView 内开空白窗
+        fallbackBannerWebView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public boolean onConsoleMessage(android.webkit.ConsoleMessage cm) {
+                Log.i("FallbackBanner", "console: " + cm.message());
+                return true;
+            }
+
+            @Override
+            public boolean onCreateWindow(WebView view, boolean isDialog, boolean isUserGesture, Message resultMsg) {
+                WebView temp = new WebView(view.getContext());
+                temp.setWebViewClient(new WebViewClient() {
+                    @Override
+                    public void onPageStarted(WebView v, String url, android.graphics.Bitmap favicon) {
+                        openUrlInBrowser(url);
+                        v.destroy();
+                    }
+                });
+                WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
+                transport.setWebView(temp);
+                resultMsg.sendToTarget();
+                return true;
+            }
+        });
+
+        // 横幅高度与游戏 WebView 底部预留（WEBVIEW_AD_BOTTOM_RESERVE_PX）保持一致，
+        // 避免横幅盖住游戏底部内容，也不留多余空白。
+        int bannerH = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_PX, WEBVIEW_AD_BOTTOM_RESERVE_PX,
+                getResources().getDisplayMetrics());
+        FrameLayout.LayoutParams bp = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, bannerH);
+        bp.gravity = android.view.Gravity.BOTTOM | android.view.Gravity.CENTER_HORIZONTAL;
+        rootLayout.addView(fallbackBannerWebView, bp);
+        fallbackBannerWebView.loadUrl("https://puzzle.rabigame.fun/r_game/admob_ads/banner_admob/index.html");
+    }
+
+    private void openUrlInBrowser(String url) {
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+        } catch (Exception e) {
+            Log.w(TAG, "openUrlInBrowser failed: " + url, e);
+        }
     }
 
     private void requestGameAudioFocus() {
@@ -744,6 +839,10 @@ public class MainActivity extends AppCompatActivity {
             gameWebView.destroy();
             gameWebView = null;
         }
+        if (fallbackBannerWebView != null) {
+            fallbackBannerWebView.destroy();
+            fallbackBannerWebView = null;
+        }
         if (bannerView != null) {
             bannerView.destroy();
             bannerView = null;
@@ -802,22 +901,5 @@ public class MainActivity extends AppCompatActivity {
             maybeShowNativeOpenAd("onAdSdkInitComplete");
         }
         ADManager.Companion.getAsInstance().ShowNativeAD(this);
-        ADManager.Companion.getAsInstance().createBanner(this, rootLayout, "banner_01", new IAdListener() {
-            @Override
-            public void reward(@Nullable String s, boolean b, @Nullable HashMap<String, Object> hashMap) {
-            }
-
-            @Override
-            public void loadAd(@Nullable String s) {
-            }
-
-            @Override
-            public void loadAd(@Nullable HashMap<String, Object> hashMap) {
-            }
-
-            @Override
-            public void close(@Nullable String s) {
-            }
-        });
     }
 }

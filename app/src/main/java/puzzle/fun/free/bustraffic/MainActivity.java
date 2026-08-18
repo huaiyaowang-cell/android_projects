@@ -18,6 +18,7 @@ import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceError;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -53,6 +54,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -113,6 +115,9 @@ public class MainActivity extends AppCompatActivity {
     private WebView gameWebView;
     /** 底部横幅兜底：直接用 WebView 加载兜底链接的 AdSense 横幅页，启动即出，不依赖 BidderDesk 初始化。 */
     private WebView fallbackBannerWebView;
+    /** 横幅兜底页冷启动加载失败时的自动重试次数。 */
+    private static final int BANNER_MAX_RETRIES = 4;
+    private final AtomicInteger bannerRetryCount = new AtomicInteger(0);
     private WebViewAssetLoader assetLoader;
     private Button openAdTestButton;
 
@@ -309,6 +314,28 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("FallbackBanner", "page finished: " + url);
             }
 
+            /** 冷启动网络未就绪时远程横幅页可能加载失败并停在错误页，自动重试避免长期“网页无法打开”。 */
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                Log.w("FallbackBanner", "page error: " + errorCode + " " + description + " url=" + failingUrl);
+                retryBannerLoad(view);
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                Log.w("FallbackBanner", "page error(req): " + error.getErrorCode() + " " + error.getDescription() + " url=" + request.getUrl());
+                retryBannerLoad(view);
+            }
+
+            @Override
+            public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+                int status = errorResponse.getStatusCode();
+                Log.w("FallbackBanner", "http error: " + status + " url=" + request.getUrl());
+                if (status >= 400) {
+                    retryBannerLoad(view);
+                }
+            }
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 Uri uri = request.getUrl();
@@ -365,6 +392,25 @@ public class MainActivity extends AppCompatActivity {
         bp.gravity = android.view.Gravity.BOTTOM | android.view.Gravity.CENTER_HORIZONTAL;
         rootLayout.addView(fallbackBannerWebView, bp);
         fallbackBannerWebView.loadUrl("https://puzzle.rabigame.fun/r_game/admob_ads/banner_admob/index.html");
+    }
+
+    /** 横幅兜底页加载失败自动重试（指数退避），上限 BANNER_MAX_RETRIES 次。 */
+    private void retryBannerLoad(WebView view) {
+        int attempt = bannerRetryCount.incrementAndGet();
+        if (attempt > BANNER_MAX_RETRIES) {
+            Log.w("FallbackBanner", "横幅重试已达上限，停止重试");
+            return;
+        }
+        long delayMs = 2000L * attempt;
+        Log.i("FallbackBanner", "横幅将在 " + delayMs + "ms 后第 " + attempt + " 次重试");
+        final WebView v = view;
+        v.postDelayed(() -> {
+            try {
+                v.loadUrl("https://puzzle.rabigame.fun/r_game/admob_ads/banner_admob/index.html");
+            } catch (Exception e) {
+                Log.w("FallbackBanner", "横幅重试加载失败", e);
+            }
+        }, delayMs);
     }
 
     private void openUrlInBrowser(String url) {
@@ -576,42 +622,88 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         Log.d(TAG, "BidderDesk rewarded not shown, ready=" + bidderDeskAdsReady + ", placement=" + placement);
-        if (!ENABLE_ADMOB_TEST_FALLBACK) {
-            sendAdEvent("rewarded", placement, callbackId, "failed", null, "NOT_READY", "BidderDesk not ready and AdMob fallback disabled");
+        if (ENABLE_ADMOB_TEST_FALLBACK) {
+            if (rewardedAd != null) {
+                RewardedAd current = rewardedAd;
+                rewardedAd = null;
+                current.setFullScreenContentCallback(new FullScreenContentCallback() {
+                    @Override
+                    public void onAdShowedFullScreenContent() {
+                        sendAdEvent("rewarded", placement, callbackId, "opened", null, null, null);
+                    }
+
+                    @Override
+                    public void onAdFailedToShowFullScreenContent(com.google.android.gms.ads.AdError adError) {
+                        String msg = adError == null ? "Rewarded failed to show" : adError.getMessage();
+                        String code = adError == null ? "SHOW_FAILED" : String.valueOf(adError.getCode());
+                        sendAdEvent("rewarded", placement, callbackId, "failed", null, code, msg);
+                        preloadRewarded();
+                    }
+
+                    @Override
+                    public void onAdDismissedFullScreenContent() {
+                        sendAdEvent("rewarded", placement, callbackId, "closed", null, null, null);
+                        preloadRewarded();
+                    }
+                });
+                current.show(this, rewardItem -> sendRewardEvent(placement, callbackId, rewardItem));
+                return;
+            }
+        }
+        enqueueRewardedRetry(placement, callbackId);
+    }
+
+    private static final long REWARDED_RETRY_INTERVAL_MS = 2500L;
+    private static final long REWARDED_RETRY_TIMEOUT_MS = 40000L;
+
+    private final Handler rewardedRetryHandler = new Handler(Looper.getMainLooper());
+    private Runnable rewardedRetryTask;
+    private String rewardedRetryPlacement;
+    private String rewardedRetryCallbackId;
+    private long rewardedRetryStartMs;
+
+    private void enqueueRewardedRetry(String placement, String callbackId) {
+        if (rewardedRetryTask != null) {
+            // 已有挂起的激励请求，复用，避免叠加
+            Log.d(TAG, "rewarded 重试已挂起，忽略重复请求 callbackId=" + callbackId);
             return;
         }
-        if (rewardedAd == null) {
-            sendAdEvent("rewarded", placement, callbackId, "failed", null, "NOT_READY", "Rewarded not loaded");
-            preloadRewarded();
+        rewardedRetryPlacement = placement;
+        rewardedRetryCallbackId = callbackId;
+        rewardedRetryStartMs = System.currentTimeMillis();
+        scheduleRewardedRetry();
+    }
+
+    private void scheduleRewardedRetry() {
+        long elapsed = System.currentTimeMillis() - rewardedRetryStartMs;
+        if (elapsed >= REWARDED_RETRY_TIMEOUT_MS) {
+            Log.d(TAG, "rewarded 重试超时，发送 failed");
+            String placement = rewardedRetryPlacement;
+            String cb = rewardedRetryCallbackId;
+            clearRewardedRetry();
+            sendAdEvent("rewarded", placement, cb, "failed", null, "TIMEOUT", "Reward ad not ready in time");
             return;
         }
-        RewardedAd current = rewardedAd;
-        rewardedAd = null;
-        current.setFullScreenContentCallback(new FullScreenContentCallback() {
-            @Override
-            public void onAdShowedFullScreenContent() {
-                sendAdEvent("rewarded", placement, callbackId, "opened", null, null, null);
+        rewardedRetryTask = () -> {
+            rewardedRetryTask = null;
+            Log.d(TAG, "rewarded 重试 placement=" + rewardedRetryPlacement
+                    + " elapsed=" + (System.currentTimeMillis() - rewardedRetryStartMs) + "ms");
+            if (tryShowBidderDeskFullscreenAd("rewarded", rewardedRetryPlacement, rewardedRetryCallbackId)) {
+                clearRewardedRetry();
+                return;
             }
+            scheduleRewardedRetry();
+        };
+        rewardedRetryHandler.postDelayed(rewardedRetryTask, REWARDED_RETRY_INTERVAL_MS);
+    }
 
-            @Override
-            public void onAdFailedToShowFullScreenContent(com.google.android.gms.ads.AdError adError) {
-                String msg = adError == null ? "Rewarded failed to show" : adError.getMessage();
-                String code = adError == null ? "SHOW_FAILED" : String.valueOf(adError.getCode());
-                sendAdEvent("rewarded", placement, callbackId, "failed", null, code, msg);
-                preloadRewarded();
-            }
-
-            /**
-             * 激励全屏被关闭即回调（提前关或正常关都会走），与是否发放奖励无关；
-             * 奖励仅由 {@code show(..., OnUserEarnedRewardListener)} 触发 {@link #sendRewardEvent}。
-             */
-            @Override
-            public void onAdDismissedFullScreenContent() {
-                sendAdEvent("rewarded", placement, callbackId, "closed", null, null, null);
-                preloadRewarded();
-            }
-        });
-        current.show(this, rewardItem -> sendRewardEvent(placement, callbackId, rewardItem));
+    private void clearRewardedRetry() {
+        if (rewardedRetryTask != null) {
+            rewardedRetryHandler.removeCallbacks(rewardedRetryTask);
+            rewardedRetryTask = null;
+        }
+        rewardedRetryPlacement = null;
+        rewardedRetryCallbackId = null;
     }
 
     private void showBanner(String placement, String callbackId, String position) {
@@ -833,6 +925,7 @@ public class MainActivity extends AppCompatActivity {
         rootLayout.removeCallbacks(openAdRetryTask);
         bidderDeskRewardedHandler.removeCallbacksAndMessages(null);
         bidderDeskRewardedFallbackByCallback.clear();
+        clearRewardedRetry();
         EventBus.getDefault().unregister(this);
         if (gameWebView != null) {
             gameWebView.removeJavascriptInterface("AndroidBridge");

@@ -51,67 +51,101 @@
   }, 2000);
   setTimeout(function() { clearInterval(_hlTimer); }, 30000);
 
-  window.PokiSDK = {
-    init: _pp,
-    gameplayStart: _pn,
-    gameplayStop: function () {
-      console.log("[count-war][插屏] 关卡结束 gameplayStop → commercialBreak");
-      return window.PokiSDK.commercialBreak();
+  function _breakWithCb(cb) {
+    if (typeof cb === "function") {
+      try { cb(); } catch (e) {}
+    }
+    return Promise.resolve();
+  }
+  function _rewardedWithCb(cb) {
+    if (typeof cb === "function") {
+      try { cb(); } catch (e) {}
+    }
+    return Promise.resolve(true);
+  }
+
+  var _pokiBase = {
+    init: function() {
+      window.PokiSDK_OK = true;
+      return Promise.resolve();
     },
-    commercialBreak: function() {
-      console.log("commercialBreak");
-      return Promise.resolve(true);
+    setDebug: _pn,
+    setLogging: _pn,
+    gameLoadingStart: _pn,
+    gameLoadingFinished: function() {
+      _pn("gameLoadingFinished");
+      _hideLoading();
+      return Promise.resolve();
     },
-    rewardedBreak: function(arg) {
-      if (typeof arg === "function") {
-        try { arg(); } catch (e) {}
-      } else if (arg && typeof arg === "object" && typeof arg.onStart === "function") {
-        try { arg.onStart(); } catch (e) {}
-      }
-      console.log("rewardedBreak", arg);
-      return new Promise(function(resolve) {
-        setTimeout(function() { resolve(true); }, 5000);
-      });
+    gameLoadingProgress: _pn,
+    gameInteractive: function() {
+      _hideLoading();
+      return Promise.resolve();
     },
+    gameplayStart: function() {
+      console.log("[poki-dl] gameplayStart");
+      return Promise.resolve();
+    },
+    gameplayStop: function() {
+      console.log("[poki-dl] gameplayStop");
+      return Promise.resolve();
+    },
+    commercialBreak: _breakWithCb,
+    rewardedBreak: _rewardedWithCb,
+    measure: _pn,
+    captureError: _pn,
+    logError: _pn,
+    customEvent: _pn,
+    trackEvent: _pn,
+    logEvent: _pn,
+    happyTime: _pn,
+    roundStart: _pn,
+    roundEnd: _pn,
     displayAd: _pn,
     destroyAd: _pn,
-    setDebug: _pn,
+    muteAd: _pn,
+    requestAd: _pp,
+    cancelAd: _pn,
     getURLParam: function() { return ""; },
     shareableURL: function() { return Promise.resolve(""); },
     isAdBlocked: function() { return false; },
-    gameLoadingStart: _pn,
-    gameLoadingFinished: _hideLoading,
-    gameLoadingProgress: _pn,
-    gameInteractive: _hideLoading,
-    customEvent: _pn,
-    happyTime: _pn,
-    logError: _pn,
-    roundStart: _pn,
-    roundEnd: _pn,
-    muteAd: _pn,
+    isPlayingOnPoki: function() { return false; },
+    getLanguage: function() { return "en"; },
+    getDevice: function() { return "desktop"; },
     sendHighscore: _pn,
+    submitScore: _pn,
+    setPlayerAge: _pn,
+    setConsentString: _pn,
+    setVolume: _pn,
     togglePlayerAdvertisingConsent: _pn,
     disableDOMChangeObservation: _pn,
     movePill: _pn,
-    measure: function() { return 0; }
+    openExternalLink: _pn,
+    playtestSetCanvas: _pn,
+    playtestCaptureHtmlOnce: _pn,
+    playtestCaptureHtmlForce: _pn,
+    playtestCaptureHtmlOn: _pn,
+    playtestCaptureHtmlOff: _pn
   };
-  console.log("[poki-dl] PokiSDK stub active");
 
-  window.commercialBreak = function() {
-    return window.PokiSDK.commercialBreak();
-  };
-  window.rewardedBreak = function() {
-    return window.PokiSDK.rewardedBreak.apply(window.PokiSDK, arguments);
-  };
-  window.shareableURL = function(json) {
-    return window.PokiSDK.shareableURL(json);
-  };
-  window.initPokiBridge = function(bridgeName) {
-    if (bridgeName != null && bridgeName !== "") {
-      window.pokiBridge = String(bridgeName);
-      window.__pokiBridgeName = String(bridgeName);
+  var _pokiStub = new Proxy(_pokiBase, {
+    get: function(target, prop) {
+      if (prop in target) return target[prop];
+      if (prop === "then" || typeof prop === "symbol") return undefined;
+      return _pn;
     }
-  };
+  });
+
+  try {
+    Object.defineProperty(window, "PokiSDK", {
+      value: _pokiStub,
+      writable: false,
+      configurable: false
+    });
+  } catch (e) {
+    window.PokiSDK = _pokiStub;
+  }
+  console.log("[poki-dl] PokiSDK stub active (proxy)");
 
   var _origGBI = Document.prototype.getElementById;
   Document.prototype.getElementById = function(id) {
